@@ -9,7 +9,7 @@ const loginPage: NextPage = () => {
       event.preventDefault();
       const formData = {
         email: (event.currentTarget.elements[0] as HTMLInputElement).value,
-        password: (event.currentTarget.elements[1] as HTMLInputElement).value,
+        otp: (event.currentTarget.elements[1] as HTMLInputElement).value,
       };
       //await validation(formData, loginSchema);
 
@@ -61,10 +61,10 @@ const loginPage: NextPage = () => {
                           bg-dark-background active:border-primary focus:text-primary-orange rounded-xl h-12 min-w-[14px]
                            focus:outline-none focus:border-primary
                           focus:ring-1 focus:ring-primary focus:bg-elevated"
-        type="password"
-        name="password"
-        id="password"
-        placeholder="Password"
+        type="number"
+        name="OTP"
+        id="otp"
+        placeholder="OTP"
       />
       <button
         className="mt-10 rounded-xl bg-primary min-w-[150px] text-xl
