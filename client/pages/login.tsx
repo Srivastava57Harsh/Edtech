@@ -2,16 +2,19 @@ import type { NextPage } from 'next';
 import Router from 'next/router';
 import { useState } from 'react';
 import { FormEvent, useEffect } from 'react';
+import { validation } from '../shared/helper/validator';
+import { loginSchema } from '../shared/models/loginSchema';
 
 const loginPage: NextPage = () => {
   async function loginUser(event: FormEvent<HTMLFormElement>) {
     try {
       event.preventDefault();
       const formData = {
-        email: (event.currentTarget.elements[0] as HTMLInputElement).value,
+        phone: (event.currentTarget.elements[0] as HTMLInputElement).value,
         otp: (event.currentTarget.elements[1] as HTMLInputElement).value,
       };
-      //await validation(formData, loginSchema);
+      console.log(formData);
+      await validation(formData, loginSchema);
 
       // if (!localStorage.getItem('jwtToken')) {
       //   const response = await axios({
@@ -34,16 +37,6 @@ const loginPage: NextPage = () => {
 
   const GetOTP = () => (
     <>
-      <input
-        className="pl-6 border border-slate-600 text-xl font-bold
-                          bg-dark-background active:border-primary focus:text-primary-orange rounded-xl h-12 min-w-[14px]
-                           focus:outline-none focus:border-primary
-                          focus:ring-1 focus:ring-primary focus:bg-elevated"
-        type="number"
-        name="name"
-        placeholder="Phone"
-        id="name"
-      />
       <button
         className="mt-10 rounded-xl bg-primary min-w-[150px] text-xl
                       h-12 hover:shadow-md hover:shadow-primary-500/40 text-white"
@@ -58,7 +51,7 @@ const loginPage: NextPage = () => {
     <>
       <input
         className="mt-4 pl-6 border border-slate-600 text-xl font-bold
-                          bg-dark-background active:border-primary focus:text-primary-orange rounded-xl h-12 min-w-[14px]
+                          bg-dark-background active:border-primary focus:text-primary-orange rounded-xl h-12 min-w-[14px] active:shadow-2xl
                            focus:outline-none focus:border-primary
                           focus:ring-1 focus:ring-primary focus:bg-elevated"
         type="number"
@@ -96,7 +89,19 @@ const loginPage: NextPage = () => {
           Databuddy<span className="text-primary-orange">.</span>
         </h2>
         <h3 className="mb-9 text-slate-600">Learn with technology</h3>
-        <div className="flex flex-col items-center  w-2/3 sm:w-1/3 ">{showOTPField ? <SubmitOTP /> : <GetOTP />}</div>
+        <div className="flex flex-col items-center  w-2/3 sm:w-1/3 ">
+          <input
+            className="pl-6 border border-slate-600 text-xl font-bold
+                          bg-dark-background active:border-primary focus:text-primary-orange rounded-xl h-12 min-w-[14px] active:drop-shadow-xl focus:shadow-black
+                           focus:outline-none focus:border-primary
+                          focus:ring-1 focus:ring-primary focus:bg-elevated"
+            type="number"
+            name="name"
+            placeholder="Phone"
+            id="name"
+          />
+          {showOTPField ? <SubmitOTP /> : <GetOTP />}
+        </div>
       </form>
     </>
   );
