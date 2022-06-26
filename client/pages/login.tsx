@@ -66,7 +66,8 @@ const loginPage: NextPage = () => {
       await validation(formData, phoneValidate);
       setPhoneValid(true);
       await sendOTP();
-    } catch (err) {
+    } catch (err: any) {
+      sendToast(err.message || 'Something went wrong', 'warn');
       console.log({ err });
     }
   };
