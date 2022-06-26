@@ -1,10 +1,18 @@
-import { object, string, TypeOf } from "yup";
+import { object, string, TypeOf } from 'yup';
 
 export const loginSchema = object({
-    phone: string()
-        .required("Please enter a Number")
-        .email("Please enter a valid Number"),
-    otp: string().required("Please enter the OTP"),
+  phone: string()
+    .required('Please enter a Number')
+    .min(10, 'Enter a valid Phone Number')
+    .max(10, 'Enter a valid Phone Number'),
+  otp: string().required('Please enter the OTP').min(6, 'Enter a valid OTP').max(6, 'Enter a valid OTP'),
+});
+
+export const phoneValidate = object({
+  phone: string()
+    .required('Please enter a Number')
+    .min(10, 'Enter a valid Phone Number')
+    .max(10, 'Enter a valid Phone Number'),
 });
 
 export type login = TypeOf<typeof loginSchema>;
