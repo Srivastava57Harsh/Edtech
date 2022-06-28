@@ -17,6 +17,8 @@ const signUpPage: NextPage = () => {
         lastname: (event.currentTarget.elements[1] as HTMLInputElement).value,
         email: (event.currentTarget.elements[2] as HTMLInputElement).value,
         phone: (event.currentTarget.elements[3] as HTMLInputElement).value,
+        password: (event.currentTarget.elements[4] as HTMLInputElement).value,
+        passwordConfirmation: (event.currentTarget.elements[5] as HTMLInputElement).value,
       };
       console.log(formData);
       await validation(formData, signupSchema);
@@ -134,6 +136,16 @@ const signUpPage: NextPage = () => {
             name="password"
             placeholder="Password"
             id="password"
+          />
+          <input
+            className="mt-4 pl-4 border border-slate-600 text-md w-[360px]
+                          bg-dark-background active:border-primary focus:text-primary-orange rounded-xl h-12 active:drop-shadow-xl focus:shadow-black
+                          focus:outline-none focus:border-primary
+                          focus:ring-1 focus:ring-primary focus:bg-elevated"
+            type="password"
+            name="confirm-password"
+            placeholder="Password"
+            id="confirm-password"
           />
           {showOTPField ? <SubmitOTP /> : <GetOTP />}
         </div>
