@@ -4,6 +4,9 @@ import { useState } from 'react';
 import { FormEvent, useEffect } from 'react';
 import { validation } from '../shared/helper/validator';
 import { signupSchema } from '../shared/models/signUpSchema';
+import { ToastContainer } from 'react-toastify';
+import { sendToast } from '../shared/helper/toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const signUpPage: NextPage = () => {
   async function SignUpUser(event: FormEvent<HTMLFormElement>) {
@@ -70,8 +73,7 @@ const signUpPage: NextPage = () => {
 
   return (
     <>
-      {/*
-      <ToastContainer /> */}
+      <ToastContainer />
 
       <form
         className="flex flex-col justify-center items-center text-primary min-w-full min-h-screen bg-gradient-to-r from-background to-bg-blue"
