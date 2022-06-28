@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import axios from 'axios';
 import Router from 'next/router';
 import { useState } from 'react';
 import { FormEvent, useEffect } from 'react';
@@ -22,7 +23,11 @@ const signUpPage: NextPage = () => {
       };
       console.log(formData);
       await validation(formData, signupSchema);
-
+      const response = await axios({
+        method: 'post',
+        url: '../../src/api/auth/signup',
+        data: formData,
+      });
       await Router.push('/login');
     } catch (err: any) {
       console.log(err);

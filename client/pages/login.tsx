@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import axios from 'axios';
 import Router from 'next/router';
 import { FormEvent, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
@@ -17,6 +18,14 @@ const LoginPage: NextPage = () => {
       };
       console.log(formData);
       await validation(formData, loginSchema);
+      if (!localStorage.getItem('jwtToken')) {
+        const response = await axios({
+          method: 'post',
+          url: '../../src/api/auth/login',
+          data: formData,
+        });
+        localStorage.setItem('jwtToken', response.data.jwtToken);
+      }
       //login here
       await Router.push('/dashboard');
     } catch (err: any) {
