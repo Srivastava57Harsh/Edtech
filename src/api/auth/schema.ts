@@ -13,6 +13,12 @@ const getProfile = {
   authorization: yup.string().required(),
 };
 
+const verify = {
+  phone: yup.number().required(),
+  status: yup.boolean().required(),
+};
+
 export const loginSchema = new yup.ObjectSchema(login);
 export const signUpSchema = new yup.ObjectSchema(signUp);
 export const getProfileSchema = new yup.ObjectSchema(getProfile);
+export const verificationSchema = new yup.ObjectSchema(verify);
