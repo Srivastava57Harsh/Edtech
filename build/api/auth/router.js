@@ -31,12 +31,27 @@ async function handleSignUp(req, res) {
     }
 }
 async function handleLogin(req, res) {
-    var _a;
+    var _a, _b;
     try {
         const result = await (0, controller_1.loginUser)(req.body.email, req.body.password);
         res.status(result.status).json({
             message: result.message,
-            token: (_a = result.token) !== null && _a !== void 0 ? _a : '',
+            accessToken: (_a = result.accessToken) !== null && _a !== void 0 ? _a : '',
+            refreshToken: (_b = result.refreshToken) !== null && _b !== void 0 ? _b : '',
+        });
+    }
+    catch (e) {
+        logger_1.default.error(e);
+        res.status(e.status || 500).json({
+            message: e.message || 'Request Failed',
+        });
+    }
+}
+async function handleVerification(req, res) {
+    try {
+        const result = await (0, controller_1.verifyUser)(req.body.phone, req.body.status);
+        res.status(result.status).json({
+            message: result.message,
         });
     }
     catch (e) {
@@ -65,6 +80,7 @@ async function handleGetProfile(req, res) {
 }
 authRouter.post('/login', validator_1.loginValidator, handleLogin);
 authRouter.post('/signUp', validator_1.signUpValidator, handleSignUp);
-authRouter.get('/', validator_1.getProfileValidator, handleGetProfile);
+authRouter.post('/verification', validator_1.verificationValidator, handleVerification);
+authRouter.get('/getProfile', validator_1.getProfileValidator, handleGetProfile);
 exports.default = authRouter;
 //# sourceMappingURL=router.js.map

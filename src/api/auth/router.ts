@@ -30,7 +30,8 @@ async function handleLogin(req: Request, res: Response) {
     const result = await loginUser(req.body.email, req.body.password);
     res.status(result.status).json({
       message: result.message,
-      token: result.token ?? '',
+      accessToken: result.accessToken ?? '',
+      refreshToken: result.refreshToken ?? '',
     });
   } catch (e) {
     LoggerInstance.error(e);
@@ -74,5 +75,5 @@ async function handleGetProfile(req: Request, res: Response) {
 authRouter.post('/login', loginValidator, handleLogin);
 authRouter.post('/signUp', signUpValidator, handleSignUp);
 authRouter.post('/verification', verificationValidator, handleVerification);
-authRouter.get('/', getProfileValidator, handleGetProfile);
+authRouter.get('/getProfile', getProfileValidator, handleGetProfile);
 export default authRouter;

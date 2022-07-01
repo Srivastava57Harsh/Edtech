@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProfile = exports.loginUser = exports.createUser = void 0;
+exports.getProfile = exports.loginUser = exports.verifyUser = exports.createUser = void 0;
 const token_1 = require("./../../shared/token");
 const database_1 = __importDefault(require("../../loaders/database"));
 const logger_1 = __importDefault(require("../../loaders/logger"));
@@ -65,6 +65,41 @@ async function createUser(user) {
     }
 }
 exports.createUser = createUser;
+async function verifyUser(phone, status) {
+    try {
+        const userData = await (await (0, database_1.default)()).collection('users').findOne({ phone: phone });
+        if (!userData) {
+            return {
+                message: 'User does not exist, Sign Up instead',
+                status: 404,
+            };
+        }
+        else {
+            if (status) {
+                const verification = (await (0, database_1.default)()).collection('users');
+                await verification.updateOne({ phone: phone }, { $set: { isVerified: true } });
+                return {
+                    message: 'User has been verified, record updated.',
+                    status: 200,
+                };
+            }
+            else {
+                return {
+                    message: 'User could not be verified.',
+                    status: 500,
+                };
+            }
+        }
+    }
+    catch (e) {
+        logger_1.default.error(e);
+        return {
+            message: `Something went wrong, [ERROR : ${e}]`,
+            status: 500,
+        };
+    }
+}
+exports.verifyUser = verifyUser;
 async function loginUser(email, password) {
     try {
         const userData = await (await (0, database_1.default)()).collection('users').findOne({ email: email });
@@ -80,7 +115,8 @@ async function loginUser(email, password) {
                     return {
                         message: 'Login Successful',
                         status: 200,
-                        token: (0, token_1.createToken)({ id: userData._id.toString() }),
+                        accessToken: (0, token_1.createToken)({ id: userData._id.toString() }, config_1.default.jwtSecret, '30d'),
+                        refreshToken: (0, token_1.createToken)({ id: userData._id.toString() }, config_1.default.jwtSecret, '1y'),
                     };
                 }
                 else {
@@ -110,7 +146,7 @@ exports.loginUser = loginUser;
 async function getProfile(token) {
     let id;
     try {
-        id = (0, token_1.verifyToken)(token).id;
+        id = (0, token_1.verifyToken)(token, config_1.default.jwtSecret).id;
     }
     catch (e) {
         logger_1.default.error(e);
@@ -121,7 +157,7 @@ async function getProfile(token) {
     }
     const user = await (await (0, database_1.default)())
         .collection('users')
-        .findOne({ _id: new mongodb_1.ObjectId(id) }, { projection: { email: 1, name: 1 } });
+        .findOne({ _id: new mongodb_1.ObjectId(id) }, { projection: { email: 1, name: 1, phone: 1 } });
     if (!user) {
         throw {
             message: 'User does not exist',

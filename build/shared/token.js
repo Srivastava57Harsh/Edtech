@@ -22,15 +22,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyToken = exports.createToken = void 0;
 const jwt = __importStar(require("jsonwebtoken"));
-const config_1 = __importDefault(require("../config"));
-const createToken = (data) => jwt.sign(data, config_1.default.jwtSecret, { expiresIn: '30 seconds' });
+const createToken = (data, secret, time) => jwt.sign(data, secret, { expiresIn: time });
 exports.createToken = createToken;
-const verifyToken = (token) => jwt.verify(token, config_1.default.jwtSecret);
+const verifyToken = (token, secret) => jwt.verify(token, secret);
 exports.verifyToken = verifyToken;
 //# sourceMappingURL=token.js.map

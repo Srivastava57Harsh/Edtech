@@ -9,6 +9,7 @@ interface User {
 export interface LoginResponse {
   message: string;
   status: number;
-  token?: string;
+  accessToken?: string;
+  refreshToken?: string;
 }
 export default User;

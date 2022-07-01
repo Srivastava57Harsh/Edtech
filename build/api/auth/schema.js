@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getProfileSchema = exports.signUpSchema = exports.loginSchema = void 0;
+exports.verificationSchema = exports.getProfileSchema = exports.signUpSchema = exports.loginSchema = void 0;
 const yup = __importStar(require("yup"));
 const login = {
     email: yup.string().email().required(),
@@ -38,7 +38,12 @@ const signUp = {
 const getProfile = {
     authorization: yup.string().required(),
 };
+const verify = {
+    phone: yup.number().required(),
+    status: yup.boolean().required(),
+};
 exports.loginSchema = new yup.ObjectSchema(login);
 exports.signUpSchema = new yup.ObjectSchema(signUp);
 exports.getProfileSchema = new yup.ObjectSchema(getProfile);
+exports.verificationSchema = new yup.ObjectSchema(verify);
 //# sourceMappingURL=schema.js.map
