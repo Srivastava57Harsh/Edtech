@@ -36,6 +36,38 @@ export async function createUser(user: User): Promise<any> {
   }
 }
 
+export async function verifyUser(phone: number, status: boolean): Promise<any> {
+  try {
+    const userData = await (await database()).collection('users').findOne({ phone: phone });
+    if (!userData) {
+      return {
+        message: 'User does not exist, Sign Up instead',
+        status: 404,
+      };
+    } else {
+      if (status) {
+        const verification = (await database()).collection('users');
+        await verification.updateOne({ phone: phone }, { $set: { isVerified: true } });
+        return {
+          message: 'User has been verified, record updated.',
+          status: 200,
+        };
+      } else {
+        return {
+          message: 'User could not be verified.',
+          status: 500,
+        };
+      }
+    }
+  } catch (e) {
+    LoggerInstance.error(e);
+    return {
+      message: `Something went wrong, [ERROR : ${e}]`,
+      status: 500,
+    };
+  }
+}
+
 export async function loginUser(email: string, password: string): Promise<LoginResponse> {
   try {
     const userData = await (await database()).collection('users').findOne({ email: email });
@@ -50,7 +82,8 @@ export async function loginUser(email: string, password: string): Promise<LoginR
           return {
             message: 'Login Successful',
             status: 200,
-            token: createToken({ id: userData._id.toString() }),
+            accessToken: createToken({ id: userData._id.toString() }, config.jwtSecret, '30d'),
+            refreshToken: createToken({ id: userData._id.toString() }, config.jwtSecret, '1y'),
           };
         } else {
           return {
@@ -77,7 +110,7 @@ export async function loginUser(email: string, password: string): Promise<LoginR
 export async function getProfile(token: string): Promise<User> {
   let id: string;
   try {
-    id = verifyToken(token).id;
+    id = verifyToken(token, config.jwtSecret).id;
   } catch (e) {
     LoggerInstance.error(e);
     throw {
@@ -87,7 +120,7 @@ export async function getProfile(token: string): Promise<User> {
   }
   const user = await (await database())
     .collection('users')
-    .findOne({ _id: new ObjectId(id) }, { projection: { email: 1, name: 1 } });
+    .findOne({ _id: new ObjectId(id) }, { projection: { email: 1, name: 1, phone: 1 } });
   if (!user) {
     throw {
       message: 'User does not exist',
