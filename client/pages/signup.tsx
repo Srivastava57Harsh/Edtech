@@ -11,10 +11,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import { otpSchema } from '../shared/models/otpSchema';
 import * as firebase from 'firebase/app';
-import config from '../config/';
+import firebaseConfig from '../shared/helper/firebase';
 
 const signUpPage: NextPage = () => {
-  firebase.initializeApp(config.firebaseConfig);
+  firebase.initializeApp(firebaseConfig);
 
   const [showOTPField, setOTPField] = useState(false);
   const [userData, setUserData] = useState<any>({});
