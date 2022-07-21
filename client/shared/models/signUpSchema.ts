@@ -1,9 +1,9 @@
 import { ref, object, string, TypeOf } from 'yup';
 
 export const signupSchema = object({
-  email: string().required().email(),
-  // firstName: string().required('Please enter your first name'),
-  // lastName: string().required('Please enter your last name'),
+  firstname: string().required('Please enter your first name'),
+  lastname: string().required('Please enter your last name'),
+  email: string().email().required(),
   phone: string()
     .required('Please enter a Number')
     .min(10, 'Enter a valid Phone Number')

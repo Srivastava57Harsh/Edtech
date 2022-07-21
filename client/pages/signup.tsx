@@ -8,19 +8,11 @@ import { signupSchema } from '../shared/models/signUpSchema';
 import { ToastContainer } from 'react-toastify';
 import { sendToast } from '../shared/helper/toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getAuth, RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
-import { otpSchema } from '../shared/models/otpSchema';
-import * as firebase from 'firebase/app';
-import firebaseConfig from '../shared/helper/firebase';
 
 const signUpPage: NextPage = () => {
-  firebase.initializeApp(firebaseConfig);
-
-  const [showOTPField, setOTPField] = useState(false);
   const [userData, setUserData] = useState<any>({});
-  const [recaptcha, setRecaptcha] = useState<any>({});
 
-  async function validateUserData(event: FormEvent<HTMLFormElement>) {
+  async function SignUpUser(event: FormEvent<HTMLFormElement>) {
     try {
       event.preventDefault();
       const formData = {
@@ -31,87 +23,31 @@ const signUpPage: NextPage = () => {
         password: (event.currentTarget.elements[4] as HTMLInputElement).value,
         passwordConfirmation: (event.currentTarget.elements[5] as HTMLInputElement).value,
       };
-
+      console.log(formData);
       await validation(formData, signupSchema);
       formData.phone = '+91' + formData.phone;
       console.log(formData);
-      await sendOTP(formData.phone);
       setUserData(formData);
-      console.log('c1');
-      setOTPField(true);
-    } catch (err: any) {
-      console.log(err);
-      sendToast(err.message || 'Something went wrong', 'warn');
-    }
-  }
-  async function SignUpUser(event: FormEvent<HTMLFormElement>) {
-    try {
-      event.preventDefault();
-      const formData = {
-        otp: (event.currentTarget.elements[0] as HTMLInputElement).value,
-      };
-      await validation(formData, otpSchema);
-      await verifyOTP(userData.phone, formData.otp);
-      console.log(formData);
 
       const response = await axios({
         method: 'post',
         url: '../../src/api/auth/signup',
         data: formData,
       });
-      await Router.push('/login');
+      if (response) {
+        await sendToast('success', 'Signup Successful');
+        await Router.push('/login');
+      }
     } catch (err: any) {
       console.log(err);
       sendToast(err.message || 'Something went wrong', 'warn');
     }
   }
 
-  const sendOTP = async (phoneNumber: string) => {
-    try {
-      const auth = getAuth();
-      var appVerifier = (window as any).recaptchaVerifier;
-      appVerifier = new RecaptchaVerifier(
-        'recaptcha-container',
-        {
-          size: 'normal',
-          callback: (response: any) => {
-            console.log('catcha resolved');
-            // reCAPTCHA solved, allow signInWithPhoneNumber.
-            // ...
-          },
-          'expired-callback': () => {
-            // Response expired. Ask user to solve reCAPTCHA again.
-            // ...
-            sendToast('Re-enter the captcha.', 'warn');
-          },
-        },
-        auth,
-      );
-      setRecaptcha(appVerifier);
-      //console.log(auth);
-
-      await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const verifyOTP = async (phoneNumber: string, otp: string) => {
-    try {
-      const auth = getAuth();
-      const appVerifier = recaptcha;
-      const signIn = await signInWithPhoneNumber(auth, phoneNumber, appVerifier);
-      const result = await signIn.confirm(otp);
-      console.log(result);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const GetOTP = () => (
+  const SignUpForm = () => (
     <form
       className="flex flex-col justify-center items-center text-primary min-w-full min-h-screen bg-gradient-to-r from-background to-bg-blue"
-      onSubmit={validateUserData}
+      onSubmit={SignUpUser}
       method="POST"
     >
       <h2 className="font-black text-5xl pb-2">
@@ -184,39 +120,9 @@ const signUpPage: NextPage = () => {
         className="mt-10 rounded-xl bg-primary min-w-[150px] text-xl hover:-translate-y-1 transition duration-500 ease-in-out hover:bg-primary-orange
         h-12 hover:shadow-md hover:shadow-primary-500/40 text-white"
         type="submit"
-        id="get-otp-button"
+        id="sign-up-button"
       >
-        Get OTP
-      </button>
-    </form>
-  );
-
-  const SubmitOTP = () => (
-    <form
-      className="flex flex-col justify-center items-center text-primary min-w-full min-h-screen bg-gradient-to-r from-background to-bg-blue"
-      onSubmit={SignUpUser}
-      method="POST"
-    >
-      <h2 className="font-black text-5xl pb-2">
-        Databuddy<span className="text-primary-orange">.</span>
-      </h2>
-      <h3 className="mb-9 text-slate-600">Learn with technology</h3>
-      <input
-        className="mt-4 pl-6 border border-slate-600 text-xl font-bold
-                          bg-dark-background active:border-primary focus:text-primary-orange rounded-xl h-12 min-w-[14px] active:shadow-2xl
-                           focus:outline-none focus:border-primary
-                          focus:ring-1 focus:ring-primary focus:bg-elevated"
-        type="number"
-        name="OTP"
-        id="otp"
-        placeholder="OTP"
-      />
-      <button
-        className="mt-10 rounded-xl bg-primary min-w-[150px] text-xl
-                      h-12 hover:shadow-md hover:shadow-primary-500/40 text-white"
-        type="submit"
-      >
-        Login
+        Sign Up
       </button>
     </form>
   );
@@ -231,8 +137,7 @@ const signUpPage: NextPage = () => {
   return (
     <>
       <ToastContainer />
-      {showOTPField ? <SubmitOTP /> : <GetOTP />}
-      <div id="recaptcha-container"></div>
+      <SignUpForm />
     </>
   );
 };
