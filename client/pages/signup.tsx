@@ -25,14 +25,20 @@ const signUpPage: NextPage = () => {
       };
       console.log(formData);
       await validation(formData, signupSchema);
-      formData.phone = '+91' + formData.phone;
-      console.log(formData);
-      setUserData(formData);
+      const body = {
+        name: formData.firstname + ' ' + formData.lastname,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password,
+      };
+      body.phone = '+91' + body.phone;
+      console.log(body);
+      setUserData(body);
 
       const response = await axios({
         method: 'post',
-        url: '../../src/api/auth/signup',
-        data: formData,
+        url: 'http://localhost:8080/api/auth/signUp',
+        data: body,
       });
       if (response) {
         await sendToast('success', 'Signup Successful');
@@ -130,7 +136,7 @@ const signUpPage: NextPage = () => {
   useEffect(() => {
     if (localStorage.getItem('jwtToken')) {
       //validatetoken here
-      Router.push('/dashboard');
+      // Router.push('/dashboard');
     }
   }, []);
 

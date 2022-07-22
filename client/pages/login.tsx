@@ -27,6 +27,11 @@ const LoginPage: NextPage = () => {
         localStorage.setItem('jwtToken', response.data.jwtToken);
       }
       //login here
+      const response = await axios({
+        method: 'post',
+        url: 'http://localhost:8080/api/auth/login',
+        data: formData,
+      });
       await Router.push('/dashboard');
     } catch (err: any) {
       console.log(err);
