@@ -9,9 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "axios": "^0.27.2",
     "next": "^12.1.6",
+    "next-connect": "^0.12.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-toastify": "^9.0.5",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@types/node": "18.0.0",
