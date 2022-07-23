@@ -1,9 +1,9 @@
 import { NextPage } from 'next';
-import SideNavigation from '../components/dashboard/sidenavigation';
-import TopNavigation from '../components/dashboard/topnavigation';
-import DashboardProvider from '../components/dashboard/provider/context';
-import Overlay from '../components/dashboard/provider/overlay';
-import CourseCard from '../components/CourseCard';
+import SideNavigation from '../../components/dashboard/sidenavigation';
+import TopNavigation from '../../components/dashboard/topnavigation';
+import DashboardProvider from '../../components/dashboard/provider/context';
+import Overlay from '../../components/dashboard/provider/overlay';
+import CourseCard from '../../components/CourseCard';
 
 const style = {
   container: `bg-gray-100 h-screen overflow-hidden relative`,
@@ -11,7 +11,7 @@ const style = {
   mainContainer: `flex flex-col h-screen pl-0 w-full lg:pl-24 lg:space-y-4`,
 };
 
-const dashboard: NextPage = () => {
+const MyCourses: NextPage = () => {
   return (
     <>
       <DashboardProvider>
@@ -24,12 +24,12 @@ const dashboard: NextPage = () => {
             </div>
           </div>
         </div>
-        <div>
-          <CourseCard />
-        </div>
       </DashboardProvider>
+      <div className="ml-40 mt-10 absolute top-20">
+        <CourseCard />
+      </div>
     </>
   );
 };
 
-export default dashboard;
+export default MyCourses;
