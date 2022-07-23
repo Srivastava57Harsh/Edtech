@@ -1,10 +1,13 @@
 interface User {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   phone: number;
   isVerified: boolean;
   isLoggedin: boolean;
+  secretQuestion: string;
+  secretAnswer: string;
 }
 
 export interface LoginResponse {
