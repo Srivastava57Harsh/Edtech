@@ -1,7 +1,13 @@
 import { Router, Request, Response } from 'express';
 import LoggerInstance from '../../loaders/logger';
-import { createUser, getProfile, loginUser, logoutUser } from './controller';
-import { getProfileValidator, loginValidator, signUpValidator } from './validator';
+import { createUser, forgotPassword, getProfile, loginUser, logoutUser, resetPassword } from './controller';
+import {
+  getProfileValidator,
+  loginValidator,
+  signUpValidator,
+  forgotPasswordValidator,
+  resetPasswordValidator,
+} from './validator';
 const authRouter = Router();
 
 async function handleSignUp(req: Request, res: Response) {
@@ -33,6 +39,14 @@ async function handleLogin(req: Request, res: Response) {
       accessToken: result.accessToken ?? '',
       refreshToken: result.refreshToken ?? '',
     });
+    res.cookie('accessToken', result.accessToken, {
+      expires: new Date(Date.now() + 2592000000),
+      httpOnly: true,
+    });
+    res.cookie('refreshToken', result.refreshToken, {
+      expires: new Date(Date.now() + 31536000000),
+      httpOnly: true,
+    });
   } catch (e) {
     LoggerInstance.error(e);
     res.status(e.status || 500).json({
@@ -47,6 +61,10 @@ async function handleLogout(req: Request, res: Response) {
     res.status(result.status).json({
       message: result.message,
     });
+    if (result.message == 200) {
+      res.clearCookie('accessToken');
+      res.clearCookie('refreshToken');
+    }
   } catch (e) {
     LoggerInstance.error(e);
     res.status(e.status || 500).json({
@@ -86,9 +104,43 @@ async function handleGetProfile(req: Request, res: Response) {
   }
 }
 
+async function handleForgotPassword(req: Request, res: Response) {
+  try {
+    const response = await forgotPassword(req.body.email, req.body.secretQuestion, req.body.secretAnswer);
+    res.status(200).json({
+      message: `${response.message}`,
+      data: response,
+    });
+  } catch (e) {
+    LoggerInstance.error(e);
+    res.status(e.status || 500).json({
+      message: e.message || 'Request Failed',
+    });
+  }
+}
+
+async function handleResetPassword(req: Request, res: Response) {
+  try {
+    const token = req.headers.authorization;
+    LoggerInstance.info(token);
+    const response = await resetPassword(req.body.id, token.substring(7, token.length), req.body.newPassword);
+    res.status(200).json({
+      message: `${response.message}`,
+      data: response,
+    });
+  } catch (e) {
+    LoggerInstance.error(e);
+    res.status(e.status || 500).json({
+      message: e.message || 'Request Failed',
+    });
+  }
+}
+
 authRouter.post('/login', loginValidator, handleLogin);
 authRouter.post('/logout', handleLogout);
 authRouter.post('/signUp', signUpValidator, handleSignUp);
 // authRouter.post('/verification', verificationValidator, handleVerification);
 authRouter.get('/getProfile', getProfileValidator, handleGetProfile);
+authRouter.post('/forgotPassword', forgotPasswordValidator, handleForgotPassword);
+authRouter.post('/resetPassword/:id/:token', resetPasswordValidator, handleResetPassword);
 export default authRouter;

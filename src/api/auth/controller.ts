@@ -168,16 +168,83 @@ export async function getProfile(token: string): Promise<User> {
       message: 'User does not exist',
       status: 404,
     };
+  }
+  return user;
+}
+
+export async function forgotPassword(email: string, secretQuestion: string, secretAnswer: string): Promise<any> {
+  const userExists = await (await database()).collection('users').findOne({ email: email });
+  if (!userExists) {
+    return {
+      bool: false,
+      message: 'User does not exist. Please sign up!',
+      status: 400,
+    };
   } else {
-    if (!user.isLoggedin) {
-      throw {
-        message: 'User Already Logged into some other device. Please log out from all other devices.',
-        status: 406,
+    try {
+      if (userExists.secretQuestion === secretQuestion && userExists.secretAnswer === secretAnswer) {
+        return {
+          bool: true,
+          message: 'Success, User found. Kindly reset your password.',
+          status: 200,
+          resetToken: createToken({ id: userExists._id.toString() }, config.jwtSecret + userExists.password, '10m'),
+          userId: userExists._id,
+        };
+      } else {
+        return {
+          bool: false,
+          message: 'Question and Answers do not match. Please try Again.',
+          status: 401,
+        };
+      }
+    } catch (e) {
+      LoggerInstance.error(e);
+      return {
+        message: `Something went wrong, [ERROR : ${e}]`,
+        status: 500,
+      };
+    }
+  }
+}
+
+// export async function verifyToken(id: string, Token: string,): Promise<any> {}
+
+export async function resetPassword(id: string, token: string, newPassword: string): Promise<any> {
+  try {
+    const userExists = await (await database()).collection('users').findOne({ _id: new ObjectId(id) });
+    if (!userExists) {
+      return {
+        bool: false,
+        message: 'User does not exist. Please sign up!',
+        status: 400,
       };
     } else {
-      const userStatus = (await database()).collection('users');
-      await userStatus.updateOne({ email: user.email }, { $set: { isLoggedin: true } });
-      return user;
+      let verification: string;
+      try {
+        verification = verifyToken(token, config.jwtSecret + userExists.password);
+        const userStatus = (await database()).collection('users');
+        const saltData = bcrypt.genSaltSync(config.salt);
+        newPassword = bcrypt.hashSync(newPassword, saltData);
+        await userStatus.updateOne({ _id: new ObjectId(id) }, { $set: { password: newPassword } });
+        await userStatus.updateOne({ _id: new ObjectId(id) }, { $set: { isLoggedin: false } });
+        return {
+          bool: true,
+          message: 'Password successfully changed.',
+          status: 200,
+        };
+      } catch (e) {
+        LoggerInstance.error(e);
+        throw {
+          message: 'Unauthorized Access',
+          status: 401,
+        };
+      }
     }
+  } catch (e) {
+    LoggerInstance.error(e);
+    return {
+      message: e,
+      status: e.status,
+    };
   }
 }
