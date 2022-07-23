@@ -4,6 +4,7 @@ interface User {
   password: string;
   phone: number;
   isVerified: boolean;
+  isLoggedin: boolean;
 }
 
 export interface LoginResponse {

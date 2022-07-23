@@ -18,7 +18,8 @@ export async function createUser(user: User): Promise<any> {
     try {
       const saltData = bcrypt.genSaltSync(config.salt);
       user.password = bcrypt.hashSync(user.password, saltData);
-      user.isVerified = false;
+      user.isVerified = true;
+      user.isLoggedin = false;
       await (await database()).collection('users').insertOne(user);
       return {
         bool: true,
@@ -36,26 +37,74 @@ export async function createUser(user: User): Promise<any> {
   }
 }
 
-export async function verifyUser(phone: number, status: boolean): Promise<any> {
+// export async function verifyUser(phone: number, status: boolean): Promise<any> {
+//   try {
+//     const userData = await (await database()).collection('users').findOne({ phone: phone });
+//     if (!userData) {
+//       return {
+//         message: 'User does not exist, Sign Up instead',
+//         status: 404,
+//       };
+//     } else {
+//       if (status) {
+//         const verification = (await database()).collection('users');
+//         await verification.updateOne({ phone: phone }, { $set: { isVerified: true } });
+//         return {
+//           message: 'User has been verified, record updated.',
+//           status: 200,
+//         };
+//       } else {
+//         return {
+//           message: 'User could not be verified.',
+//           status: 500,
+//         };
+//       }
+//     }
+//   } catch (e) {
+//     LoggerInstance.error(e);
+//     return {
+//       message: `Something went wrong, [ERROR : ${e}]`,
+//       status: 500,
+//     };
+//   }
+// }
+
+export async function loginUser(email: string, password: string): Promise<LoginResponse> {
   try {
-    const userData = await (await database()).collection('users').findOne({ phone: phone });
+    const userData = await (await database()).collection('users').findOne({ email: email });
     if (!userData) {
       return {
         message: 'User does not exist, Sign Up instead',
         status: 404,
       };
     } else {
-      if (status) {
-        const verification = (await database()).collection('users');
-        await verification.updateOne({ phone: phone }, { $set: { isVerified: true } });
-        return {
-          message: 'User has been verified, record updated.',
-          status: 200,
-        };
+      if (userData.isVerified) {
+        if (!userData.isLoggedin) {
+          if (bcrypt.compareSync(password, userData.password)) {
+            const userStatus = (await database()).collection('users');
+            await userStatus.updateOne({ email: email }, { $set: { isLoggedin: true } });
+            return {
+              message: 'Login Successful',
+              status: 200,
+              accessToken: createToken({ id: userData._id.toString() }, config.jwtSecret, '30d'),
+              refreshToken: createToken({ id: userData._id.toString() }, config.jwtSecret, '1y'),
+            };
+          } else {
+            return {
+              message: 'Password does not match',
+              status: 401,
+            };
+          }
+        } else {
+          return {
+            message: 'User Already Logged into some other device. Please log out from all other devices.',
+            status: 406,
+          };
+        }
       } else {
         return {
-          message: 'User could not be verified.',
-          status: 500,
+          message: 'User is not Verified',
+          status: 401,
         };
       }
     }
@@ -68,7 +117,7 @@ export async function verifyUser(phone: number, status: boolean): Promise<any> {
   }
 }
 
-export async function loginUser(email: string, password: string): Promise<LoginResponse> {
+export async function logoutUser(email: string): Promise<any> {
   try {
     const userData = await (await database()).collection('users').findOne({ email: email });
     if (!userData) {
@@ -77,24 +126,17 @@ export async function loginUser(email: string, password: string): Promise<LoginR
         status: 404,
       };
     } else {
-      if (userData.isVerified) {
-        if (bcrypt.compareSync(password, userData.password)) {
-          return {
-            message: 'Login Successful',
-            status: 200,
-            accessToken: createToken({ id: userData._id.toString() }, config.jwtSecret, '30d'),
-            refreshToken: createToken({ id: userData._id.toString() }, config.jwtSecret, '1y'),
-          };
-        } else {
-          return {
-            message: 'Password does not match',
-            status: 401,
-          };
-        }
+      if (userData.isLoggedin) {
+        const userStatus = (await database()).collection('users');
+        await userStatus.updateOne({ email: email }, { $set: { isLoggedin: false } });
+        return {
+          message: 'User successfully Logged out.',
+          status: 200,
+        };
       } else {
         return {
-          message: 'User is not Verified',
-          status: 401,
+          message: 'User is already logged out.',
+          status: 406,
         };
       }
     }
@@ -126,6 +168,16 @@ export async function getProfile(token: string): Promise<User> {
       message: 'User does not exist',
       status: 404,
     };
+  } else {
+    if (!user.isLoggedin) {
+      throw {
+        message: 'User Already Logged into some other device. Please log out from all other devices.',
+        status: 406,
+      };
+    } else {
+      const userStatus = (await database()).collection('users');
+      await userStatus.updateOne({ email: user.email }, { $set: { isLoggedin: true } });
+      return user;
+    }
   }
-  return user;
 }
