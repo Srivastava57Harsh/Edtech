@@ -1,6 +1,6 @@
 const CourseCard: React.FC<any> = () => {
   return (
-    <div className="max-w-sm bg-white rounded-lg shadow-md bg-gray-200 border-gray-700">
+    <div className="max-w-sm rounded-lg shadow-md bg-gray-200 border-gray-700">
       <a href="#">
         <img className="p-8 rounded-t-lg" src="/docs/images/products/apple-watch.png" alt="product image" />
       </a>

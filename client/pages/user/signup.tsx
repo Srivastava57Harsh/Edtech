@@ -3,12 +3,12 @@ import axios from 'axios';
 import Router from 'next/router';
 import { useState } from 'react';
 import { FormEvent, useEffect } from 'react';
-import { validation } from '../shared/helper/validator';
-import { signupSchema } from '../shared/models/signUpSchema';
+import { validation } from '../../shared/helper/validator';
+import { signupSchema } from '../../shared/models/signUpSchema';
 import { ToastContainer } from 'react-toastify';
-import { sendToast } from '../shared/helper/toastify';
+import { sendToast } from '../../shared/helper/toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { API_URL } from '../config';
+import { API_URL } from '../../config';
 
 const signUpPage: NextPage = () => {
   const [userData, setUserData] = useState<any>({});
