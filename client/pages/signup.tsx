@@ -22,14 +22,19 @@ const signUpPage: NextPage = () => {
         phone: (event.currentTarget.elements[3] as HTMLInputElement).value,
         password: (event.currentTarget.elements[4] as HTMLInputElement).value,
         passwordConfirmation: (event.currentTarget.elements[5] as HTMLInputElement).value,
+        secretQuestion: (event.currentTarget.elements[6] as HTMLInputElement).value,
+        secretAnswer: (event.currentTarget.elements[7] as HTMLInputElement).value,
       };
       console.log(formData);
       await validation(formData, signupSchema);
       const body = {
-        name: formData.firstname + ' ' + formData.lastname,
+        firstName: formData.firstname,
+        lastName: formData.lastname,
         email: formData.email,
         phone: formData.phone,
         password: formData.password,
+        secretQuestion: formData.secretQuestion,
+        secretAnswer: formData.secretAnswer,
       };
       body.phone = '+91' + body.phone;
       console.log(body);
@@ -119,6 +124,33 @@ const signUpPage: NextPage = () => {
           type="password"
           name="confirm-password"
           placeholder="Confirm Password"
+          id="confirm-password"
+        />
+        <select
+          className="mt-4 pl-4 border border-slate-600 text-md w-[360px]
+                          bg-dark-background active:border-primary focus:text-primary-orange rounded-xl h-12 active:drop-shadow-xl focus:shadow-black
+                          focus:outline-none focus:border-primary
+                          focus:ring-1 focus:ring-primary focus:bg-elevated"
+          name="Secret Question"
+          placeholder="Secret Question"
+          id="confirm-password"
+        >
+          <option value="" disabled selected>
+            Secret Question
+          </option>
+          <option value="What is your pet name?">What is your pet name?</option>
+          <option value="What is your birth city?">What is your birth city?</option>
+          <option value="What is your car name?">What is your car name?</option>
+          <option value="What is your school name?">What is your school name?</option>
+        </select>
+        <input
+          className="mt-4 pl-4 border border-slate-600 text-md w-[360px]
+                          bg-dark-background active:border-primary focus:text-primary-orange rounded-xl h-12 active:drop-shadow-xl focus:shadow-black
+                          focus:outline-none focus:border-primary
+                          focus:ring-1 focus:ring-primary focus:bg-elevated"
+          type="answer"
+          name="Secret Answer"
+          placeholder="Secret Answer"
           id="confirm-password"
         />
       </div>
