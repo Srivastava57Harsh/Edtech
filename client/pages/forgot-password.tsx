@@ -7,6 +7,7 @@ import { sendToast } from '../shared/helper/toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { validation } from '../shared/helper/validator';
 import { loginSchema } from '../shared/models/loginSchema';
+import { API_URL } from '../config';
 
 const LoginPage: NextPage = () => {
   async function LoginUser(event: FormEvent<HTMLFormElement>) {
@@ -22,7 +23,7 @@ const LoginPage: NextPage = () => {
       if (!localStorage.getItem('jwtToken')) {
         const response = await axios({
           method: 'post',
-          url: 'http://localhost:8080/api/auth/forgotPassword',
+          url: '/auth/forgotPassword',
           data: formData,
         });
         localStorage.setItem('jwtToken', response.data.jwtToken);
@@ -30,7 +31,7 @@ const LoginPage: NextPage = () => {
       //login here
       const response = await axios({
         method: 'post',
-        url: 'http://localhost:8080/api/auth/forgotPassword',
+        url: `${API_URL}/auth/forgotPassword`,
         data: formData,
       });
       console.log(response.data);

@@ -7,6 +7,7 @@ import { sendToast } from '../shared/helper/toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { validation } from '../shared/helper/validator';
 import { loginSchema } from '../shared/models/loginSchema';
+import { API_URL, FE_URL } from '../config';
 
 const LoginPage: NextPage = () => {
   async function LoginUser(event: FormEvent<HTMLFormElement>) {
@@ -21,7 +22,7 @@ const LoginPage: NextPage = () => {
       if (!localStorage.getItem('jwtToken')) {
         const response = await axios({
           method: 'post',
-          url: '../../src/api/auth/login',
+          url: `${API_URL}/auth/login`,
           data: formData,
         });
         localStorage.setItem('jwtToken', response.data.jwtToken);
@@ -29,7 +30,7 @@ const LoginPage: NextPage = () => {
       //login here
       const response = await axios({
         method: 'post',
-        url: 'http://localhost:8080/api/auth/login',
+        url: `${API_URL}/auth/login`,
         data: formData,
       });
       await Router.push('/dashboard');
@@ -86,10 +87,10 @@ const LoginPage: NextPage = () => {
           >
             Login
           </button>
-          <a href="http://localhost:3001/signup" className=" hover:text-orange-600">
+          <a href={`${FE_URL}/signup`} className=" hover:text-primary-orange">
             Don't have an account, Sign Up!
           </a>
-          <a href="http://localhost:3001/forgot-password" className=" hover:text-orange-600">
+          <a href={`${FE_URL}/forgot-password`} className=" hover:text-primary-orange">
             Forgot Password
           </a>
         </div>

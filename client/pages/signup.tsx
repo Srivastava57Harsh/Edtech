@@ -8,6 +8,7 @@ import { signupSchema } from '../shared/models/signUpSchema';
 import { ToastContainer } from 'react-toastify';
 import { sendToast } from '../shared/helper/toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { API_URL } from '../config';
 
 const signUpPage: NextPage = () => {
   const [userData, setUserData] = useState<any>({});
@@ -42,7 +43,7 @@ const signUpPage: NextPage = () => {
 
       const response = await axios({
         method: 'post',
-        url: 'http://localhost:8080/api/auth/signUp',
+        url: `${API_URL}/auth/signUp`,
         data: body,
       });
       if (response) {
