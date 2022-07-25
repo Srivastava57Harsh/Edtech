@@ -18,7 +18,7 @@ export async function loginAdmin(email: string, password: string): Promise<Login
       if (userData.isVerified) {
         if (!userData.isLoggedin) {
           if (bcrypt.compareSync(password, userData.password)) {
-            const userStatus = (await database()).collection('users');
+            const userStatus = (await database()).collection('admin');
             await userStatus.updateOne({ email: email }, { $set: { isLoggedin: true } });
             return {
               message: 'Login Successful',
@@ -64,7 +64,7 @@ export async function logoutAdmin(email: string): Promise<any> {
       };
     } else {
       if (userData.isLoggedin) {
-        const userStatus = (await database()).collection('users');
+        const userStatus = (await database()).collection('admin');
         await userStatus.updateOne({ email: email }, { $set: { isLoggedin: false } });
         return {
           message: 'Admin successfully Logged out.',
