@@ -1,18 +1,6 @@
 import axios from 'axios';
 import { API_URL } from '../../config';
-
-interface SignUpData {
-  firstname: string;
-  lastname: string;
-  email: string;
-  phone: string;
-  password: string;
-}
-
-interface LoginUser {
-  email: string;
-  password: string;
-}
+import { AddCourseSchema, LoginUser, SignUpData } from '../models';
 
 export const handleSignUpUser = async (userData: SignUpData) => {
   try {
@@ -69,6 +57,15 @@ export const fetchAdmin = async (token: string | boolean) => {
     const res = await axios.get(`${API_URL}/admin/getAdmin`, {
       headers: { authorization: token },
     });
+    return res.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const addCourse = async (data: AddCourseSchema) => {
+  try {
+    const res = await axios.post(`${API_URL}/admin/addCourse`, data);
     return res.data;
   } catch (err) {
     console.error(err);

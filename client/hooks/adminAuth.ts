@@ -14,9 +14,7 @@ const useAdminAuth = () => {
           await Router.push('/admin/login');
           return;
         }
-        console.log('token', token);
         const data = await fetchAdmin(token);
-        console.log('data', data);
         if (data.data.email) return;
         else {
           await Router.push('/admin/login');

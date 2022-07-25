@@ -82,6 +82,6 @@ async function handleAddCourse(req: Request, res: Response) {
 adminAuthRouter.post('/login', loginValidator, handleLogin);
 adminAuthRouter.post('/logout', handleLogout);
 adminAuthRouter.get('/getAdmin', getAdminValidator, handlegetAdmin);
-adminAuthRouter.post('/dashboard', addCourseValidator, handleAddCourse);
+adminAuthRouter.post('/addCourse', addCourseValidator, handleAddCourse);
 
 export default adminAuthRouter;

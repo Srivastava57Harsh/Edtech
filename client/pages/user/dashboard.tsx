@@ -6,6 +6,7 @@ import Overlay from '../../components/dashboard/provider/overlay';
 import CourseCard from '../../components/CourseCard';
 import useAuth from '../../hooks/useAuth';
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const style = {
   container: `bg-gray-100 h-screen overflow-hidden relative`,
