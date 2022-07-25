@@ -7,18 +7,20 @@ const adminAuthRouter = Router();
 async function handleLogin(req: Request, res: Response) {
   try {
     const result = await loginAdmin(req.body.email, req.body.password);
+    if (result.status === 200) {
+      res.cookie('accessToken', result.accessToken, {
+        expires: new Date(Date.now() + 2592000000),
+        httpOnly: true,
+      });
+      res.cookie('refreshToken', result.refreshToken, {
+        expires: new Date(Date.now() + 31536000000),
+        httpOnly: true,
+      });
+    }
     res.status(result.status).json({
       message: result.message,
       accessToken: result.accessToken ?? '',
       refreshToken: result.refreshToken ?? '',
-    });
-    res.cookie('accessToken', result.accessToken, {
-      expires: new Date(Date.now() + 2592000000),
-      httpOnly: true,
-    });
-    res.cookie('refreshToken', result.refreshToken, {
-      expires: new Date(Date.now() + 31536000000),
-      httpOnly: true,
     });
   } catch (e) {
     LoggerInstance.error(e);
