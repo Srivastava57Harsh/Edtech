@@ -4,6 +4,7 @@ import TopNavigation from '../../components/dashboard/topnavigation';
 import DashboardProvider from '../../components/dashboard/provider/context';
 import Overlay from '../../components/dashboard/provider/overlay';
 import CourseCard from '../../components/CourseCard';
+import { ToastContainer } from 'react-toastify';
 
 const style = {
   container: `bg-gray-100 h-screen overflow-hidden relative`,
@@ -14,6 +15,8 @@ const style = {
 const MyCourses: NextPage = () => {
   return (
     <>
+      <ToastContainer />
+
       <DashboardProvider>
         <div className={style.container}>
           <div className="flex items-start">

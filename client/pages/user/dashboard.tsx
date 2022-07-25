@@ -5,6 +5,7 @@ import DashboardProvider from '../../components/dashboard/provider/context';
 import Overlay from '../../components/dashboard/provider/overlay';
 import CourseCard from '../../components/CourseCard';
 import useAuth from '../../hooks/useAuth';
+import { ToastContainer } from 'react-toastify';
 
 const style = {
   container: `bg-gray-100 h-screen overflow-hidden relative`,
@@ -16,6 +17,8 @@ const dashboard: NextPage = () => {
   useAuth();
   return (
     <>
+      <ToastContainer />
+
       <DashboardProvider>
         <div className={style.container}>
           <div className="flex items-start">
