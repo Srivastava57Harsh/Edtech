@@ -1,4 +1,6 @@
+import useAuth from '../hooks/useAuth';
 const CourseCard: React.FC<any> = () => {
+  useAuth();
   return (
     <div className="max-w-sm rounded-lg shadow-md bg-gray-200 border-gray-700">
       <a href="#">

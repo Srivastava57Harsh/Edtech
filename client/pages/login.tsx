@@ -1,15 +1,18 @@
 import type { NextPage } from 'next';
-import axios from 'axios';
 import Router from 'next/router';
 import { FormEvent, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { sendToast } from '../../shared/helper/toastify';
+import { sendToast } from '../shared/helper/toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { validation } from '../../shared/helper/validator';
-import { loginSchema } from '../../shared/models/loginSchema';
-import { API_URL, FE_URL } from '../../config';
+import { validation } from '../shared/helper/validator';
+import { loginSchema } from '../shared/models/loginSchema';
+import { API_URL, FE_URL } from '../config';
+import { fetchUser, handleLoginUser, handleSignUpUser } from '../shared/helper/axios';
+import { hasCookie, getCookie } from 'cookies-next';
+import useAuth from '../hooks/useAuth';
 
 const LoginPage: NextPage = () => {
+  useAuth();
   async function LoginUser(event: FormEvent<HTMLFormElement>) {
     try {
       event.preventDefault();
@@ -20,19 +23,10 @@ const LoginPage: NextPage = () => {
       console.log(formData);
       await validation(formData, loginSchema);
       if (!localStorage.getItem('jwtToken')) {
-        const response = await axios({
-          method: 'post',
-          url: `${API_URL}/auth/login`,
-          data: formData,
-        });
+        const response = await handleLoginUser(formData);
         localStorage.setItem('jwtToken', response.data.jwtToken);
       }
       //login here
-      const response = await axios({
-        method: 'post',
-        url: `${API_URL}/auth/login`,
-        data: formData,
-      });
       await Router.push('/dashboard');
     } catch (err: any) {
       console.log(err);
@@ -40,11 +34,6 @@ const LoginPage: NextPage = () => {
     }
   }
 
-  useEffect(() => {
-    if (localStorage.getItem('jwtToken')) {
-      //Router.push('/dashboard');
-    }
-  }, []);
 
   return (
     <>
