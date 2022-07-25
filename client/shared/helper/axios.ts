@@ -16,7 +16,7 @@ interface LoginUser {
 
 export const handleSignUpUser = async (userData: SignUpData) => {
   try {
-    const res = await axios.post(`${API_URL}/signUp`, userData);
+    const res = await axios.post(`${API_URL}/auth/signUp`, userData);
     return res.data;
   } catch (err) {
     console.error(err);
@@ -25,7 +25,7 @@ export const handleSignUpUser = async (userData: SignUpData) => {
 
 export const handleLoginUser = async (userData: LoginUser) => {
   try {
-    const res = await axios.post(`${API_URL}/login`, userData);
+    const res = await axios.post(`${API_URL}/auth/login`, userData);
     return res.data;
   } catch (err) {
     console.error(err);
@@ -34,7 +34,7 @@ export const handleLoginUser = async (userData: LoginUser) => {
 
 export const fetchUser = async (token: string | string[] | boolean) => {
   try {
-    const res = await axios.post(`${API_URL}/getProfile`, {
+    const res = await axios.post(`${API_URL}/auth/getProfile`, {
       headers: { authorization: token },
     });
     return res.data;
