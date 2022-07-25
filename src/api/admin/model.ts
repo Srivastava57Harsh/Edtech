@@ -1,4 +1,4 @@
-interface User {
+interface Admin {
   firstName: string;
   lastName: string;
   email: string;
@@ -8,7 +8,6 @@ interface User {
   isLoggedin: boolean;
   secretQuestion: string;
   secretAnswer: string;
-  courses: [];
 }
 
 export interface LoginResponse {
@@ -17,4 +16,4 @@ export interface LoginResponse {
   accessToken?: string;
   refreshToken?: string;
 }
-export default User;
+export default Admin;
