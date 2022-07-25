@@ -3,9 +3,7 @@ const CourseCard: React.FC<any> = () => {
   useAuth();
   return (
     <div className="max-w-sm rounded-lg shadow-md bg-gray-200 border-gray-700">
-      <a href="#">
-        <img className="p-8 rounded-t-lg" src="/docs/images/products/apple-watch.png" alt="product image" />
-      </a>
+      <a href="#"></a>
 
       <div className="px-5 pb-5">
         <a href="#">
