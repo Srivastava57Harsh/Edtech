@@ -9,7 +9,7 @@ import { ObjectId } from 'mongodb';
 export async function createUser(user: User): Promise<any> {
   const userExists = await (await database()).collection('users').findOne({ email: user.email });
   if (userExists) {
-    return {
+    throw {
       bool: false,
       message: 'User already exists',
       status: 400,
@@ -20,15 +20,16 @@ export async function createUser(user: User): Promise<any> {
       user.password = bcrypt.hashSync(user.password, saltData);
       user.isVerified = true;
       user.isLoggedin = false;
+      user.courses = [];
       await (await database()).collection('users').insertOne(user);
       return {
         bool: true,
-        message: 'Success',
+        message: 'Success, User created.',
         status: 200,
       };
     } catch (e) {
       LoggerInstance.error(e);
-      return {
+      throw {
         bool: false,
         message: 'User could not be created',
         status: 400,
@@ -70,82 +71,66 @@ export async function createUser(user: User): Promise<any> {
 // }
 
 export async function loginUser(email: string, password: string): Promise<LoginResponse> {
-  try {
-    const userData = await (await database()).collection('users').findOne({ email: email });
-    if (!userData) {
-      return {
-        message: 'User does not exist, Sign Up instead',
-        status: 404,
-      };
-    } else {
-      if (userData.isVerified) {
-        if (!userData.isLoggedin) {
-          if (bcrypt.compareSync(password, userData.password)) {
-            const userStatus = (await database()).collection('users');
-            await userStatus.updateOne({ email: email }, { $set: { isLoggedin: true } });
-            return {
-              message: 'Login Successful',
-              status: 200,
-              accessToken: createToken({ id: userData._id.toString() }, config.jwtSecret, '30d'),
-              refreshToken: createToken({ id: userData._id.toString() }, config.jwtSecret, '1y'),
-            };
-          } else {
-            return {
-              message: 'Password does not match',
-              status: 401,
-            };
-          }
-        } else {
+  const userData = await (await database()).collection('users').findOne({ email: email });
+  if (!userData) {
+    throw {
+      message: 'User does not exist, Sign Up instead',
+      status: 404,
+    };
+  } else {
+    if (userData.isVerified) {
+      if (!userData.isLoggedin) {
+        if (bcrypt.compareSync(password, userData.password)) {
+          const userStatus = (await database()).collection('users');
+          await userStatus.updateOne({ email: email }, { $set: { isLoggedin: true } });
           return {
-            message: 'User Already Logged into some other device. Please log out from all other devices.',
-            status: 406,
+            message: 'Login Successful',
+            status: 200,
+            accessToken: createToken({ id: userData._id.toString() }, config.jwtSecret, '30d'),
+            refreshToken: createToken({ id: userData._id.toString() }, config.jwtSecret, '1y'),
+          };
+        } else {
+          throw {
+            message: 'Password does not match',
+            status: 401,
           };
         }
       } else {
-        return {
-          message: 'User is not Verified',
-          status: 401,
+        throw {
+          message: 'User Already Logged into some other device. Please log out from all other devices.',
+          status: 406,
         };
       }
+    } else {
+      throw {
+        message: 'User is not Verified',
+        status: 401,
+      };
     }
-  } catch (e) {
-    LoggerInstance.error(e);
-    return {
-      message: `Something went wrong, [ERROR : ${e}]`,
-      status: 500,
-    };
   }
 }
 
 export async function logoutUser(email: string): Promise<any> {
-  try {
-    const userData = await (await database()).collection('users').findOne({ email: email });
-    if (!userData) {
+  const userData = await (await database()).collection('users').findOne({ email: email });
+  if (!userData) {
+    throw {
+      message: 'User does not exist, Sign Up instead',
+      status: 404,
+    };
+  } else {
+    if (userData.isLoggedin) {
+      const userStatus = (await database()).collection('users');
+      await userStatus.updateOne({ email: email }, { $set: { isLoggedin: false } });
       return {
-        message: 'User does not exist, Sign Up instead',
-        status: 404,
+        message: 'User successfully Logged out.',
+        status: 200,
       };
     } else {
-      if (userData.isLoggedin) {
-        const userStatus = (await database()).collection('users');
-        await userStatus.updateOne({ email: email }, { $set: { isLoggedin: false } });
-        return {
-          message: 'User successfully Logged out.',
-          status: 200,
-        };
-      } else {
-        return {
-          message: 'User is already logged out.',
-          status: 406,
-        };
-      }
+      throw {
+        message: 'User is already logged out.',
+        status: 406,
+      };
     }
-  } catch (e) {
-    LoggerInstance.error(e);
-    return {
-      message: `Something went wrong, [ERROR : ${e}]`,
-      status: 500,
-    };
   }
 }
 
@@ -175,76 +160,95 @@ export async function getProfile(token: string): Promise<User> {
 export async function forgotPassword(email: string, secretQuestion: string, secretAnswer: string): Promise<any> {
   const userExists = await (await database()).collection('users').findOne({ email: email });
   if (!userExists) {
-    return {
+    throw {
       bool: false,
       message: 'User does not exist. Please sign up!',
       status: 400,
     };
   } else {
-    try {
-      if (userExists.secretQuestion === secretQuestion && userExists.secretAnswer === secretAnswer) {
-        return {
-          bool: true,
-          message: 'Success, User found. Kindly reset your password.',
-          status: 200,
-          resetToken: createToken({ id: userExists._id.toString() }, config.jwtSecret + userExists.password, '10m'),
-          userId: userExists._id,
-        };
-      } else {
-        return {
-          bool: false,
-          message: 'Question and Answers do not match. Please try Again.',
-          status: 401,
-        };
-      }
-    } catch (e) {
-      LoggerInstance.error(e);
+    if (userExists.secretQuestion === secretQuestion && userExists.secretAnswer === secretAnswer) {
       return {
-        message: `Something went wrong, [ERROR : ${e}]`,
-        status: 500,
+        bool: true,
+        message: 'Success, User found. Kindly reset your password.',
+        status: 200,
+        resetToken: createToken({ id: userExists._id.toString() }, config.jwtSecret + userExists.password, '10m'),
+        userId: userExists._id,
+      };
+    } else {
+      throw {
+        bool: false,
+        message: 'Question and Answers do not match. Please try Again.',
+        status: 401,
       };
     }
   }
 }
 
-// export async function verifyToken(id: string, Token: string,): Promise<any> {}
-
 export async function resetPassword(id: string, token: string, newPassword: string): Promise<any> {
-  try {
-    const userExists = await (await database()).collection('users').findOne({ _id: new ObjectId(id) });
-    if (!userExists) {
+  const userExists = await (await database()).collection('users').findOne({ _id: new ObjectId(id) });
+  if (!userExists) {
+    throw {
+      bool: false,
+      message: 'User does not exist. Please sign up!',
+      status: 400,
+    };
+  } else {
+    let verification: string;
+    try {
+      verification = verifyToken(token, config.jwtSecret + userExists.password);
+      const userStatus = (await database()).collection('users');
+      const saltData = bcrypt.genSaltSync(config.salt);
+      newPassword = bcrypt.hashSync(newPassword, saltData);
+      await userStatus.updateOne({ _id: new ObjectId(id) }, { $set: { password: newPassword } });
+      await userStatus.updateOne({ _id: new ObjectId(id) }, { $set: { isLoggedin: false } });
       return {
-        bool: false,
-        message: 'User does not exist. Please sign up!',
-        status: 400,
+        bool: true,
+        message: 'Password successfully changed.',
+        status: 200,
+      };
+    } catch (e) {
+      LoggerInstance.error(e);
+      throw {
+        message: 'Unauthorized Access',
+        status: 401,
+      };
+    }
+  }
+}
+
+export async function displayCourses(email: string): Promise<any> {
+  const userExists = await (await database()).collection('users').findOne({ email: email });
+  if (!userExists) {
+    throw {
+      bool: false,
+      message: 'User does not exist. Please sign up!',
+      status: 400,
+    };
+  } else {
+    if (userExists.courses.length > 0) {
+      let courseData = [];
+      for (let i = 0; i < userExists.courses.length; i++) {
+        const courseEntity = await (await database())
+          .collection('courses')
+          .findOne({ _id: new ObjectId(userExists.courses[i]) });
+        if (!courseEntity) {
+          continue;
+        } else {
+          courseData.push(courseEntity);
+        }
+      }
+
+      return {
+        bool: true,
+        message: 'Success, Courses are listed below.',
+        status: 200,
+        data: courseData,
       };
     } else {
-      let verification: string;
-      try {
-        verification = verifyToken(token, config.jwtSecret + userExists.password);
-        const userStatus = (await database()).collection('users');
-        const saltData = bcrypt.genSaltSync(config.salt);
-        newPassword = bcrypt.hashSync(newPassword, saltData);
-        await userStatus.updateOne({ _id: new ObjectId(id) }, { $set: { password: newPassword } });
-        await userStatus.updateOne({ _id: new ObjectId(id) }, { $set: { isLoggedin: false } });
-        return {
-          bool: true,
-          message: 'Password successfully changed.',
-          status: 200,
-        };
-      } catch (e) {
-        LoggerInstance.error(e);
-        throw {
-          message: 'Unauthorized Access',
-          status: 401,
-        };
-      }
+      throw {
+        message: 'No courses are bought by the user',
+        status: 404,
+      };
     }
-  } catch (e) {
-    LoggerInstance.error(e);
-    return {
-      message: e,
-      status: e.status,
-    };
   }
 }

@@ -1,6 +1,14 @@
 import { Router, Request, Response } from 'express';
 import LoggerInstance from '../../loaders/logger';
-import { createUser, forgotPassword, getProfile, loginUser, logoutUser, resetPassword } from './controller';
+import {
+  createUser,
+  displayCourses,
+  forgotPassword,
+  getProfile,
+  loginUser,
+  logoutUser,
+  resetPassword,
+} from './controller';
 import {
   getProfileValidator,
   loginValidator,
@@ -34,16 +42,6 @@ async function handleSignUp(req: Request, res: Response) {
 async function handleLogin(req: Request, res: Response) {
   try {
     const result = await loginUser(req.body.email, req.body.password);
-    if (result.status === 200) {
-      res.cookie('accessToken', result.accessToken, {
-        expires: new Date(Date.now() + 2592000000),
-        httpOnly: true,
-      });
-      res.cookie('refreshToken', result.refreshToken, {
-        expires: new Date(Date.now() + 31536000000),
-        httpOnly: true,
-      });
-    }
     res.status(result.status).json({
       message: result.message,
       accessToken: result.accessToken ?? '',
@@ -63,10 +61,6 @@ async function handleLogout(req: Request, res: Response) {
     res.status(result.status).json({
       message: result.message,
     });
-    if (result.message == 200) {
-      res.clearCookie('accessToken');
-      res.clearCookie('refreshToken');
-    }
   } catch (e) {
     LoggerInstance.error(e);
     res.status(e.status || 500).json({
@@ -138,6 +132,21 @@ async function handleResetPassword(req: Request, res: Response) {
   }
 }
 
+async function handleMyCourses(req: Request, res: Response) {
+  try {
+    const response = await displayCourses(req.body.email);
+    res.status(200).json({
+      message: `${response.message}`,
+      data: response.data || null,
+    });
+  } catch (e) {
+    LoggerInstance.error(e);
+    res.status(e.status || 500).json({
+      message: e.message || 'Request Failed',
+    });
+  }
+}
+
 authRouter.post('/login', loginValidator, handleLogin);
 authRouter.post('/logout', handleLogout);
 authRouter.post('/signUp', signUpValidator, handleSignUp);
@@ -145,4 +154,5 @@ authRouter.post('/signUp', signUpValidator, handleSignUp);
 authRouter.get('/getProfile', getProfileValidator, handleGetProfile);
 authRouter.post('/forgotPassword', forgotPasswordValidator, handleForgotPassword);
 authRouter.post('/resetPassword/:id/:token', resetPasswordValidator, handleResetPassword);
+authRouter.post('/displayCourses', handleMyCourses);
 export default authRouter;
