@@ -20,6 +20,7 @@ export async function createUser(user: User): Promise<any> {
       user.password = bcrypt.hashSync(user.password, saltData);
       user.isVerified = true;
       user.isLoggedin = false;
+      user.courses = [];
       await (await database()).collection('users').insertOne(user);
       return {
         bool: true,
@@ -183,8 +184,6 @@ export async function forgotPassword(email: string, secretQuestion: string, secr
   }
 }
 
-// export async function verifyToken(id: string, Token: string,): Promise<any> {}
-
 export async function resetPassword(id: string, token: string, newPassword: string): Promise<any> {
   const userExists = await (await database()).collection('users').findOne({ _id: new ObjectId(id) });
   if (!userExists) {
@@ -212,6 +211,43 @@ export async function resetPassword(id: string, token: string, newPassword: stri
       throw {
         message: 'Unauthorized Access',
         status: 401,
+      };
+    }
+  }
+}
+
+export async function displayCourses(email: string): Promise<any> {
+  const userExists = await (await database()).collection('users').findOne({ email: email });
+  if (!userExists) {
+    throw {
+      bool: false,
+      message: 'User does not exist. Please sign up!',
+      status: 400,
+    };
+  } else {
+    if (userExists.courses.length > 0) {
+      let courseData = [];
+      for (let i = 0; i < userExists.courses.length; i++) {
+        const courseEntity = await (await database())
+          .collection('courses')
+          .findOne({ _id: new ObjectId(userExists.courses[i]) });
+        if (!courseEntity) {
+          continue;
+        } else {
+          courseData.push(courseEntity);
+        }
+      }
+
+      return {
+        bool: true,
+        message: 'Success, Courses are listed below.',
+        status: 200,
+        data: courseData,
+      };
+    } else {
+      throw {
+        message: 'No courses are bought by the user',
+        status: 404,
       };
     }
   }
