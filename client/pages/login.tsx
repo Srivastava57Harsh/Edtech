@@ -8,7 +8,7 @@ import { validation } from '../shared/helper/validator';
 import { loginSchema } from '../shared/models/loginSchema';
 import { API_URL, FE_URL } from '../config';
 import { fetchUser, handleLoginUser, handleSignUpUser } from '../shared/helper/axios';
-import { hasCookie, getCookie } from 'cookies-next';
+import { setCookie } from 'cookies-next';
 import useAuth from '../hooks/useAuth';
 
 const LoginPage: NextPage = () => {
@@ -23,17 +23,20 @@ const LoginPage: NextPage = () => {
       console.log(formData);
       await validation(formData, loginSchema);
       if (!localStorage.getItem('jwtToken')) {
-        const response = await handleLoginUser(formData);
-        localStorage.setItem('jwtToken', response.data.jwtToken);
       }
       //login here
+      const response = await handleLoginUser(formData);
+      console.log(response);
+
+      //set cookie
+      setCookie('accessToken', response.accessToken);
+      setCookie('refreshToken', response.refreshToken);
       await Router.push('/dashboard');
     } catch (err: any) {
       console.log(err);
       sendToast(err.message || 'Something went wrong', 'warn');
     }
   }
-
 
   return (
     <>
