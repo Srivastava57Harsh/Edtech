@@ -52,3 +52,25 @@ export const handleLogout = async (email: string) => {
     console.error(err);
   }
 };
+
+//ADMIN
+export const handleLoginAdmin = async (userData: LoginUser) => {
+  try {
+    const res = await axios.post(`${API_URL}/admin/login`, userData);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const fetchAdmin = async (token: string | boolean) => {
+  try {
+    token = 'Bearer ' + token;
+    const res = await axios.get(`${API_URL}/admin/getAdmin`, {
+      headers: { authorization: token },
+    });
+    return res.data;
+  } catch (err) {
+    console.error(err);
+  }
+};

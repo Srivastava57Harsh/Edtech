@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import LoggerInstance from '../../loaders/logger';
-import { addCourseSchema, courseDataSchema, getProfileSchema, loginSchema } from './schema';
+import { addCourseSchema, courseDataSchema, getAdminSchema, loginSchema } from './schema';
 
 export async function loginValidator(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
@@ -15,9 +15,9 @@ export async function loginValidator(req: Request, res: Response, next: NextFunc
   }
 }
 
-export async function getProfileValidator(req: Request, res: Response, next: NextFunction): Promise<void> {
+export async function getAdminValidator(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    req.body = await getProfileSchema.validate(req.headers);
+    req.body = await getAdminSchema.validate(req.headers);
     next();
   } catch (e) {
     LoggerInstance.error(e);
