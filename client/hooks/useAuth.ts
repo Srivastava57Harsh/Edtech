@@ -4,32 +4,31 @@ import { useEffect } from 'react';
 import { API_URL } from '../config';
 import { sendToast } from '../shared/helper/toastify';
 import { getCookie, deleteCookie } from 'cookies-next';
+import { fetchUser } from '../shared/helper/axios';
 
 const useAuth = () => {
   useEffect(() => {
-    const token = getCookie('jwtToken');
+    const token = getCookie('accessToken');
     (async function () {
       try {
         if (!token) {
           await Router.push('/login');
           return;
         }
-        const data = await axios.get(`${API_URL}/getProfile`, {
-          headers: {
-            token,
-          },
-        });
+        console.log('token', token);
+        const data = await fetchUser(token);
+        console.log('data', data);
         if (data.data.email) return;
         else {
-          deleteCookie('jwtToken');
+          //deleteCookie('accessToken');
           await Router.push('/login');
           return;
         }
       } catch (err: any) {
-        console.log('err', err.message);
-        deleteCookie('jwtToken');
-        if (err.response.status === 401) sendToast('Invalid user token, please login again.', 'error');
-        else sendToast(err.message || 'Something went wrong', 'error');
+        console.log('err', err);
+        //deleteCookie('jwtToken');
+        //if (err.response.status === 401) sendToast('Invalid user token, please login again.', 'error');
+        //else sendToast(err.message || 'Something went wrong', 'error');
         await Router.push('/login');
         return;
       }

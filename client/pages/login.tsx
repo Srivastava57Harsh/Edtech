@@ -8,11 +8,10 @@ import { validation } from '../shared/helper/validator';
 import { loginSchema } from '../shared/models/loginSchema';
 import { API_URL, FE_URL } from '../config';
 import { fetchUser, handleLoginUser, handleSignUpUser } from '../shared/helper/axios';
-import { setCookie } from 'cookies-next';
+import { getCookie, setCookie } from 'cookies-next';
 import useAuth from '../hooks/useAuth';
 
 const LoginPage: NextPage = () => {
-  useAuth();
   async function LoginUser(event: FormEvent<HTMLFormElement>) {
     try {
       event.preventDefault();
@@ -27,11 +26,12 @@ const LoginPage: NextPage = () => {
       //login here
       const response = await handleLoginUser(formData);
       console.log(response);
-
+      const cookie = getCookie('accessToken');
+      console.log(cookie);
       //set cookie
       setCookie('accessToken', response.accessToken);
       setCookie('refreshToken', response.refreshToken);
-      await Router.push('/dashboard');
+      await Router.push('/user/dashboard');
     } catch (err: any) {
       console.log(err);
       sendToast(err.message || 'Something went wrong', 'warn');

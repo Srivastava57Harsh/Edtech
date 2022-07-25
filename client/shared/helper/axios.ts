@@ -32,11 +32,21 @@ export const handleLoginUser = async (userData: LoginUser) => {
   }
 };
 
-export const fetchUser = async (token: string | string[] | boolean) => {
+export const fetchUser = async (token: string | boolean) => {
   try {
-    const res = await axios.post(`${API_URL}/auth/getProfile`, {
+    token = 'Bearer ' + token;
+    const res = await axios.get(`${API_URL}/auth/getProfile`, {
       headers: { authorization: token },
     });
+    return res.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const handleLogout = async (email: string) => {
+  try {
+    const res = await axios.post(`${API_URL}/auth/logout`, { email: email });
     return res.data;
   } catch (err) {
     console.error(err);
