@@ -12,6 +12,8 @@ const getAdmin = {
 const addCourse = {
   name: yup.string().required(),
   data: yup.array().required(),
+  price: yup.number().required(),
+  slug: yup.string().required(),
 };
 
 const courseData = {
