@@ -20,7 +20,6 @@ interface CoursesArray {
 }
 const Dashboard = ({ courseData }: CoursesArray) => {
   useAuth();
-  console.log(courseData);
   return (
     <>
       <ToastContainer />
