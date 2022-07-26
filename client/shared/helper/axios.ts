@@ -55,7 +55,7 @@ export const getDashboardCourses = async () => {
 export const getOwnedCourses = async (token: string | boolean) => {
   try {
     const user = await fetchUser(token);
-    const res = await axios.post(`${API_URL}/courses`, user.data.email);
+    const res = await axios.post(`${API_URL}/dashboard/user/courses`, user.data.email);
     return res.data;
   } catch (err) {
     console.error(err);
