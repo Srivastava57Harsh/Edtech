@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import LoggerInstance from '../../loaders/logger';
-import { addCourse, getProfile, loginAdmin, logoutAdmin } from './controller';
-import { addCourseValidator, getProfileValidator, loginValidator } from './validator';
+import { addCourse, getAdmin, loginAdmin, logoutAdmin } from './controller';
+import { addCourseValidator, getAdminValidator, loginValidator } from './validator';
 const adminAuthRouter = Router();
 
 async function handleLogin(req: Request, res: Response) {
@@ -34,11 +34,11 @@ async function handleLogout(req: Request, res: Response) {
   }
 }
 
-async function handleGetProfile(req: Request, res: Response) {
+async function handlegetAdmin(req: Request, res: Response) {
   try {
     const token = req.headers.authorization;
     LoggerInstance.info(token);
-    const user = await getProfile(token.substring(7, token.length));
+    const user = await getAdmin(token.substring(7, token.length));
     res.status(200).json({
       message: 'Success',
       data: user,
@@ -67,7 +67,7 @@ async function handleAddCourse(req: Request, res: Response) {
 
 adminAuthRouter.post('/login', loginValidator, handleLogin);
 adminAuthRouter.post('/logout', handleLogout);
-adminAuthRouter.get('/getProfile', getProfileValidator, handleGetProfile);
-adminAuthRouter.post('/dashboard', addCourseValidator, handleAddCourse);
+adminAuthRouter.get('/getAdmin', getAdminValidator, handlegetAdmin);
+adminAuthRouter.post('/addCourse', addCourseValidator, handleAddCourse);
 
 export default adminAuthRouter;

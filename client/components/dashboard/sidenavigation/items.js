@@ -1,10 +1,13 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 
 import data from './data';
 import { useToggle } from '../provider/context';
 
 import LogoutIcon from './icons/logout';
+import { deleteCookie, getCookie } from 'cookies-next';
+import { fetchUser } from '../../../shared/helper/axios';
+import { handleLogout } from '../../../shared/helper/axios';
 
 const style = {
   title: `mx-4 text-sm`,
@@ -18,6 +21,20 @@ const style = {
 export default function SidenavItems() {
   const { asPath } = useRouter();
   const { open } = useToggle();
+  const logout = async () => {
+    try {
+      const token = getCookie('accessToken');
+      const data = await fetchUser(token);
+      console.log('data', data.data.email);
+      await handleLogout(data.data.email);
+      deleteCookie('accessToken');
+      deleteCookie('refreshToken');
+      Router.push('/login');
+    } catch (error) {
+      console.log('error', error.message);
+    }
+  };
+
   return (
     <>
       <ul className="md:pl-5">
@@ -37,7 +54,7 @@ export default function SidenavItems() {
         </div>
       </ul>
       <div className="flex absolute bottom-10 w-[100%] m-0 items-center justify-center">
-        <a href="/admin/logout">
+        <a onClick={logout}>
           <LogoutIcon />
         </a>
       </div>

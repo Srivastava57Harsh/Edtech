@@ -6,17 +6,17 @@ const data = [
   {
     title: 'Home',
     icon: <HomeIcon />,
-    link: '/dashboard',
+    link: '/user/dashboard',
   },
   {
     title: 'My Courses',
     icon: <MyCoursesIcon />,
-    link: '/admin/my-courses',
+    link: '/user/myCourses',
   },
   {
     title: 'Settings',
     icon: <SettingsIcon />,
-    link: '/admin/settings',
+    link: '/user/settings',
   },
 ];
 

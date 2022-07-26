@@ -9,32 +9,23 @@ import LoggerInstance from '../../loaders/logger';
 export async function loginAdmin(email: string, password: string): Promise<LoginResponse> {
   const userData = await (await database()).collection('admin').findOne({ email: email });
   if (!userData) {
-    throw {
+    return {
       message: 'Admin does not exist, Sign Up instead',
       status: 404,
     };
   } else {
     if (userData.isVerified) {
-      if (!userData.isLoggedin) {
-        if (bcrypt.compareSync(password, userData.password)) {
-          const userStatus = (await database()).collection('admin');
-          await userStatus.updateOne({ email: email }, { $set: { isLoggedin: true } });
-          return {
-            message: 'Login Successful',
-            status: 200,
-            accessToken: createToken({ id: userData._id.toString() }, config.jwtSecret, '30d'),
-            refreshToken: createToken({ id: userData._id.toString() }, config.jwtSecret, '1y'),
-          };
-        } else {
-          throw {
-            message: 'Password does not match',
-            status: 401,
-          };
-        }
+      if (bcrypt.compareSync(password, userData.password)) {
+        return {
+          message: 'Login Successful',
+          status: 200,
+          accessToken: createToken({ id: userData._id.toString() }, config.jwtSecret, '30d'),
+          refreshToken: createToken({ id: userData._id.toString() }, config.jwtSecret, '1y'),
+        };
       } else {
-        throw {
-          message: 'Admin Already Logged into some other device. Please log out from all other devices.',
-          status: 406,
+        return {
+          message: 'Password does not match',
+          status: 401,
         };
       }
     } else {
@@ -70,7 +61,7 @@ export async function logoutAdmin(email: string): Promise<any> {
   }
 }
 
-export async function getProfile(token: string): Promise<Admin> {
+export async function getAdmin(token: string): Promise<Admin> {
   let id: string;
   try {
     id = verifyToken(token, config.jwtSecret).id;
