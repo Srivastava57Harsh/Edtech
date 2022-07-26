@@ -15,9 +15,7 @@ const useAuth = () => {
           await Router.push('/login');
           return;
         }
-        console.log('token', token);
         const data = await fetchUser(token);
-        console.log('data', data);
         if (data.data.email) return;
         else {
           //deleteCookie('accessToken');
