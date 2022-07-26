@@ -12,6 +12,7 @@ const getProfile = {
 const addCourse = {
   name: yup.string().required(),
   data: yup.array().required(),
+  price: yup.number().required(),
 };
 
 const courseData = {
