@@ -1,5 +1,6 @@
 import useAuth from '../hooks/useAuth';
-const CourseCard: React.FC<any> = () => {
+import { CourseSchema } from '../shared/models';
+const CourseCard: React.FC<CourseSchema> = prop => {
   useAuth();
   return (
     <div className="max-w-sm rounded-lg shadow-md bg-gray-200 border-gray-700">
@@ -7,11 +8,9 @@ const CourseCard: React.FC<any> = () => {
 
       <div className="px-5 pb-5">
         <a href="#">
-          <h5 className="text-xl font-semibold tracking-tight text-black">
-            Beginner Course on Artificial Intelligence
-          </h5>
+          <h5 className="pt-5 text-xl font-semibold tracking-tight text-black">{prop.name}</h5>
         </a>
-        <div className="flex items-center mt-2.5 mb-5">
+        {/* <div className="flex items-center mt-2.5 mb-5">
           <svg
             aria-hidden="true"
             className="w-5 h-5 text-yellow-300"
@@ -65,14 +64,14 @@ const CourseCard: React.FC<any> = () => {
           <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
             5.0
           </span>
-        </div>
-        <div className="flex justify-between items-center">
-          <span className="text-3xl font-bold text-black">$599</span>
+        </div> */}
+        <div className="flex justify-between items-center mt-10">
+          <span className="text-3xl font-bold text-black">₹{prop.price}</span>
           <a
             href="#"
-            className="text-primary bg-primary-orange hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="ml-10 text-primary bg-primary-orange hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-orange-400 dark:focus:orange-800"
           >
-            Buy Now
+            View Details
           </a>
         </div>
       </div>

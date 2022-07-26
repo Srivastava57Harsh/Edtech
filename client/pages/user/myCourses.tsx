@@ -5,6 +5,9 @@ import DashboardProvider from '../../components/dashboard/provider/context';
 import Overlay from '../../components/dashboard/provider/overlay';
 import CourseCard from '../../components/CourseCard';
 import { ToastContainer } from 'react-toastify';
+import { getOwnedCourses } from '../../shared/helper/axios';
+import { getCookie } from 'cookies-next';
+import { CourseSchema } from '../../shared/models';
 
 const style = {
   container: `bg-gray-100 h-screen overflow-hidden relative`,
@@ -12,7 +15,11 @@ const style = {
   mainContainer: `flex flex-col h-screen pl-0 w-full lg:pl-24 lg:space-y-4`,
 };
 
-const MyCourses: NextPage = () => {
+interface CoursesArray {
+  courseData: CourseSchema[];
+}
+
+const MyCourses = ({ courseData }: CoursesArray) => {
   return (
     <>
       <ToastContainer />
@@ -28,11 +35,27 @@ const MyCourses: NextPage = () => {
           </div>
         </div>
       </DashboardProvider>
-      <div className="ml-40 mt-10 absolute top-20">
-        <CourseCard />
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 cards ml-40 mt-10 absolute top-20">
+        {courseData.map(course => (
+          <div className="m-10">
+            <CourseCard {...course} key={course.slug} />
+          </div>
+        ))}
       </div>
     </>
   );
 };
+
+export async function getServerSideProps() {
+  try {
+    var token = getCookie('accessToken')!.toString();
+    token = 'Bearer' + token;
+    const coursesRes: any = await getOwnedCourses(token);
+    const courseData = coursesRes.courses;
+    return { props: { courseData } };
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export default MyCourses;

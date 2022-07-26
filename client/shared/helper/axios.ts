@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { API_URL } from '../../config';
-import { AddCourseSchema, LoginUser, SignUpData } from '../models';
+import { CourseSchema, LoginUser, SignUpData } from '../models';
 
+//Authentication
 export const handleSignUpUser = async (userData: SignUpData) => {
   try {
     const res = await axios.post(`${API_URL}/auth/signUp`, userData);
@@ -41,6 +42,25 @@ export const handleLogout = async (email: string) => {
   }
 };
 
+//Dashboard
+export const getDashboardCourses = async () => {
+  try {
+    const res = await axios.post(`${API_URL}/dashboard/courses`);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const getOwnedCourses = async (token: string | boolean) => {
+  try {
+    const user = await fetchUser(token);
+    const res = await axios.post(`${API_URL}/courses`, user.data.email);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
 //ADMIN
 export const handleLoginAdmin = async (userData: LoginUser) => {
   try {
@@ -63,7 +83,7 @@ export const fetchAdmin = async (token: string | boolean) => {
   }
 };
 
-export const addCourse = async (data: AddCourseSchema) => {
+export const addCourse = async (data: CourseSchema) => {
   try {
     const res = await axios.post(`${API_URL}/admin/addCourse`, data);
     return res.data;
