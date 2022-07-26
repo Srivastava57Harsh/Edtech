@@ -4,8 +4,9 @@ import { FormEvent, useState } from 'react';
 import useAdminAuth from '../../hooks/adminAuth';
 import { addCourse } from '../../shared/helper/axios';
 import { sendToast } from '../../shared/helper/toastify';
-import { AddCourseSchema, Subtopic } from '../../shared/models/index';
+import { CourseSchema, Subtopic } from '../../shared/models/index';
 import 'react-toastify/dist/ReactToastify.css';
+import slugify from 'slugify';
 
 const style = {
   container: `bg-gray-100 h-screen overflow-hidden relative`,
@@ -35,8 +36,10 @@ const AdminDashboard: NextPage = () => {
       event.preventDefault();
       const formData = {
         topicName: (event.currentTarget.elements[0] as HTMLInputElement).value,
+        price: (event.currentTarget.elements[0] as HTMLInputElement).valueAsNumber,
       };
-      const course: AddCourseSchema = { data: subtopic, name: formData.topicName };
+      const slug = slugify(formData.topicName);
+      const course: CourseSchema = { data: subtopic, slug: slug, name: formData.topicName, price: formData.price };
       const res = await addCourse(course);
       if (res.message === 'Success') {
         await sendToast('Course added successfully', 'success');
@@ -71,6 +74,16 @@ const AdminDashboard: NextPage = () => {
                 name="topic"
                 placeholder="Topic"
                 id="topic-input"
+              />
+              <input
+                className="mt-4 pl-4 border border-slate-600 text-md w-[360px]
+                          bg-dark-background active:border-primary focus:text-primary-orange rounded-xl h-12 active:drop-shadow-xl focus:shadow-black
+                          focus:outline-none focus:border-primary
+                          focus:ring-1 focus:ring-primary focus:bg-elevated"
+                name="price"
+                type="number"
+                placeholder="Price"
+                id="price-input"
               />
             </div>
             <button
