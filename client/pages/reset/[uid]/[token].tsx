@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
+import { NextPage } from 'next';
 
-const ResetPassword = () => {
+const ResetPassword: NextPage = () => {
   const router = useRouter();
   const { uid, token } = router.query;
 

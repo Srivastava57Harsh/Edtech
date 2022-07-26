@@ -34,7 +34,7 @@ const courseData = {
 // };
 
 export const loginSchema = new yup.ObjectSchema(login);
-export const addCourseSchema = new yup.ObjectSchema(addCourse);
+export const CourseSchema = new yup.ObjectSchema(addCourse);
 export const courseDataSchema = new yup.ObjectSchema(courseData);
 // export const forgotPasswordSchema = new yup.ObjectSchema(forgotPassword);
 // export const resetPasswordSchema = new yup.ObjectSchema(resetPasswordBody);

@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import LoggerInstance from '../../loaders/logger';
-import { addCourseSchema, courseDataSchema, getAdminSchema, loginSchema } from './schema';
+import { CourseSchema, courseDataSchema, getAdminSchema, loginSchema } from './schema';
 
 export async function loginValidator(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
@@ -30,7 +30,7 @@ export async function getAdminValidator(req: Request, res: Response, next: NextF
 
 export async function addCourseValidator(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
-    req.body = await addCourseSchema.validate(req.body, { stripUnknown: true });
+    req.body = await CourseSchema.validate(req.body, { stripUnknown: true });
     for (let i = 0; i < req.body.data.length; i++) {
       await courseDataSchema.validate(req.body.data[i], { stripUnknown: true });
     }

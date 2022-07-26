@@ -19,7 +19,9 @@ export interface Subtopic {
   date: string;
 }
 
-export interface AddCourseSchema {
+export interface CourseSchema {
   data: Subtopic[];
   name: string;
+  slug: string;
+  price: number;
 }
