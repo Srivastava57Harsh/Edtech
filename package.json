@@ -28,6 +28,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.6.2",
     "razorpay": "^2.8.2",
+    "shortid": "^2.2.16",
     "winston": "^3.3.3",
     "yup": "^0.32.11"
   },

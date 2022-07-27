@@ -9,6 +9,7 @@ interface User {
   secretQuestion: string;
   secretAnswer: string;
   courses: [];
+  id?: string;
 }
 
 export interface LoginResponse {

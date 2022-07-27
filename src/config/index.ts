@@ -31,6 +31,12 @@ export default {
   salt: parseInt(process.env.SALT || '100'),
 
   /**
+   * Thse secret and id for razorpay
+   */
+  razorpay_key_id: process.env.RAZORPAY_KEY_ID,
+  razorpay_key_secret: process.env.RAZORPAY_KEY_SECRET,
+
+  /**
    * API configs
    */
   api: {

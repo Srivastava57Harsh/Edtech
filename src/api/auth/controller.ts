@@ -147,7 +147,7 @@ export async function getProfile(token: string): Promise<User> {
   }
   const user = await (await database())
     .collection('users')
-    .findOne({ _id: new ObjectId(id) }, { projection: { email: 1, name: 1, phone: 1 } });
+    .findOne({ _id: new ObjectId(id) }, { projection: { email: 1, name: 1, phone: 1, id: 1 } });
   if (!user) {
     throw {
       message: 'User does not exist',

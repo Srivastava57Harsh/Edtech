@@ -35,7 +35,7 @@ async function handleUserCourses(req: Request, res: Response) {
   }
 }
 
-dashboardRouter.post('/all/courses', handleDisplayAllCourses);
+dashboardRouter.post('/courses', handleDisplayAllCourses);
 dashboardRouter.post('/user/courses', handleUserCourses);
 
 export default dashboardRouter;
