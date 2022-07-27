@@ -2,14 +2,12 @@ import type { NextPage } from 'next';
 import Router from 'next/router';
 import { FormEvent, useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { sendToast } from '../shared/helper/toastify';
+import { sendToast } from '../../shared/helper/toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { validation } from '../shared/helper/validator';
-import { loginSchema } from '../shared/models/loginSchema';
-import { API_URL, FE_URL } from '../config';
-import { fetchUser, handleLoginUser, handleSignUpUser } from '../shared/helper/axios';
+import { validation } from '../../shared/helper/validator';
+import { loginSchema } from '../../shared/models/loginSchema';
+import { handleLoginAdmin } from '../../shared/helper/axios';
 import { getCookie, setCookie } from 'cookies-next';
-import useAuth from '../hooks/useAuth';
 
 const LoginPage: NextPage = () => {
   async function LoginUser(event: FormEvent<HTMLFormElement>) {
@@ -22,11 +20,14 @@ const LoginPage: NextPage = () => {
       console.log(formData);
       await validation(formData, loginSchema);
       //login here
-      const response = await handleLoginUser(formData);
+      const response = await handleLoginAdmin(formData);
+      console.log(response);
+      const cookie = getCookie('accessToken');
+      console.log(cookie);
       //set cookie
       setCookie('accessToken', response.accessToken);
       setCookie('refreshToken', response.refreshToken);
-      await Router.push('/user/dashboard');
+      await Router.push('/admin/dashboard');
     } catch (err: any) {
       console.log(err);
       sendToast(err.message || 'Something went wrong', 'warn');
@@ -45,7 +46,7 @@ const LoginPage: NextPage = () => {
         <h2 className="font-black text-5xl pb-2">
           Databuddy<span className="text-primary-orange">.</span>
         </h2>
-        <h3 className="mb-9 text-slate-600">Learn with technology</h3>
+        <h3 className="mb-9 text-slate-600">Admin</h3>
         <div className="flex flex-col items-center  w-2/3 sm:w-1/3 ">
           <input
             className="mt-4 pl-4 border border-slate-600 text-md w-[360px]
@@ -74,12 +75,6 @@ const LoginPage: NextPage = () => {
           >
             Login
           </button>
-          <a href={`${FE_URL}/signup`} className=" hover:text-primary-orange">
-            Don't have an account, Sign Up!
-          </a>
-          <a href={`${FE_URL}/forgot-password`} className=" hover:text-primary-orange">
-            Forgot Password
-          </a>
         </div>
       </form>
     </>
