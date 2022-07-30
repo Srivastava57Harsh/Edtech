@@ -38,38 +38,6 @@ export async function createUser(user: User): Promise<any> {
   }
 }
 
-// export async function verifyUser(phone: number, status: boolean): Promise<any> {
-//   try {
-//     const userData = await (await database()).collection('users').findOne({ phone: phone });
-//     if (!userData) {
-//       return {
-//         message: 'User does not exist, Sign Up instead',
-//         status: 404,
-//       };
-//     } else {
-//       if (status) {
-//         const verification = (await database()).collection('users');
-//         await verification.updateOne({ phone: phone }, { $set: { isVerified: true } });
-//         return {
-//           message: 'User has been verified, record updated.',
-//           status: 200,
-//         };
-//       } else {
-//         return {
-//           message: 'User could not be verified.',
-//           status: 500,
-//         };
-//       }
-//     }
-//   } catch (e) {
-//     LoggerInstance.error(e);
-//     return {
-//       message: `Something went wrong, [ERROR : ${e}]`,
-//       status: 500,
-//     };
-//   }
-// }
-
 export async function loginUser(email: string, password: string): Promise<LoginResponse> {
   const userData = await (await database()).collection('users').findOne({ email: email });
   if (!userData) {

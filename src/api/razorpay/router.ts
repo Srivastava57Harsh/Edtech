@@ -3,18 +3,16 @@ import LoggerInstance from '../../loaders/logger';
 import { getProfile } from '../auth/controller';
 import { createOrder } from './controller';
 
-// const razorpayClient = new Razorpay({
-//   key_id: 'rzp_test_J8B8I1nPVCk7rj',
-//   key_secret: 'pd9A4TQkTLx9EviYF6lVMkKd',
-// });
-
 async function handleCreateOrder(req: Request, res: Response) {
   try {
     const token = req.headers.authorization;
     LoggerInstance.info(token);
     const user = await getProfile(token.substring(7, token.length));
-    console.log('token validated');
-    const order = await createOrder(user.email, user.id, req.body.courseId);
+    const body = {
+      email: user.email,
+      courseId: req.body.courseId,
+    };
+    const order = await createOrder(body);
     res.status(200).json({
       message: order.message,
       data: order,
