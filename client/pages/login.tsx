@@ -77,7 +77,7 @@ const LoginPage: NextPage = () => {
           <a href={`${FE_URL}/signup`} className=" hover:text-primary-orange">
             Don't have an account, Sign Up!
           </a>
-          <a href={`${FE_URL}/forgot-password`} className=" hover:text-primary-orange">
+          <a href={`${FE_URL}/forgotpassword`} className=" hover:text-primary-orange">
             Forgot Password
           </a>
         </div>

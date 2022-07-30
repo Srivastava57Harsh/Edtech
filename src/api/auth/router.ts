@@ -130,6 +130,7 @@ authRouter.post('/signUp', signUpValidator, handleSignUp);
 // authRouter.post('/verification', verificationValidator, handleVerification);
 authRouter.get('/getProfile', getProfileValidator, handleGetProfile);
 authRouter.post('/forgotPassword', forgotPasswordValidator, handleForgotPassword);
-authRouter.post('/resetPassword/:id/:token', resetPasswordValidator, handleResetPassword);
+// authRouter.post('/resetPassword/:id/:token', resetPasswordValidator, handleResetPassword);
+authRouter.post('/resetPassword', resetPasswordValidator, handleResetPassword);
 
 export default authRouter;

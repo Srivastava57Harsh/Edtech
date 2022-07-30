@@ -95,7 +95,7 @@ const signUpPage: NextPage = () => {
           type="email"
           name="email"
           placeholder="E-Mail"
-          id="name"
+          id="email"
         />
         <input
           className="mt-4 pl-4 border border-slate-600 text-md w-[360px]
