@@ -1,13 +1,15 @@
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { sendToast } from '../../../shared/helper/toastify';
 import { handleResetPassword } from '../../../shared/helper/axios';
+import { resetPassSchema } from '../../../shared/models/resetSchema';
+import { validation } from '../../../shared/helper/validator';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ResetPassword = () => {
   const router = useRouter();
   const { uid, token } = router.query;
-
   const [userData, setUserData] = useState<any>({});
 
   async function ResetPassword(event: FormEvent<HTMLFormElement>) {
@@ -17,20 +19,20 @@ const ResetPassword = () => {
         password: (event.currentTarget.elements[0] as HTMLInputElement).value,
         passwordConfirmation: (event.currentTarget.elements[1] as HTMLInputElement).value,
       };
-      console.log(formData);
-      //   await validation(formData, signupSchema);
+      await validation(formData, resetPassSchema);
       const body = {
+        id: uid,
         newPassword: formData.password,
-        id: { uid },
       };
       console.log(body);
       setUserData(body);
 
-      const response = await handleResetPassword(body);
+      const response = await handleResetPassword(token!, body);
 
       if (response) {
-        await sendToast('Password has been reset.', 'success');
-        console.log('done');
+        alert('Password has been reset. Press OK to login');
+        await Router.push('/login');
+        console.log('Password reset for user with id: ', uid);
       }
     } catch (err: any) {
       console.log(err);

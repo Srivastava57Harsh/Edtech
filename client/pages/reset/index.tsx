@@ -5,6 +5,7 @@ import { ToastContainer } from 'react-toastify';
 import { API_URL } from '../../config';
 import { sendToast } from '../../shared/helper/toastify';
 import { handleResetAuth } from '../../shared/helper/axios';
+import 'react-toastify/dist/ReactToastify.css';
 
 const signUpPage = () => {
   const [userData, setUserData] = useState<any>({});

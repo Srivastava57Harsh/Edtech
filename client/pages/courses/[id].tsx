@@ -4,6 +4,7 @@ import TopNavigation from '../../components/dashboard/topnavigation';
 import Navbar from '../../components/home/navbar';
 import { getCourse, getDashboardCourses } from '../../shared/helper/axios';
 import { CourseSchema } from '../../shared/models';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface CoursesArray {
   courseData: CourseSchema;

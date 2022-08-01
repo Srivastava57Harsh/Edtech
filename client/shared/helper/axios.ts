@@ -42,9 +42,13 @@ export const handleLogout = async (email: string) => {
   }
 };
 
-export const handleResetPassword = async (data: any) => {
+export const handleResetPassword = async (token: any, data: any) => {
   try {
-    const res = await axios.post(`${API_URL}/auth/resetPassword`, data);
+    console.log('\ntoken', token, '\nbody', data);
+    token = 'Bearer ' + token;
+    const res = await axios.post(`${API_URL}/auth/resetPassword`, data, {
+      headers: { authorization: token },
+    });
     return res.data;
   } catch (err) {
     console.error(err);
