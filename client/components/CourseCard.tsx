@@ -1,7 +1,6 @@
 import useAuth from '../hooks/useAuth';
 import { CourseSchema } from '../shared/models';
 const CourseCard: React.FC<CourseSchema> = prop => {
-  useAuth();
   return (
     <div className="max-w-sm rounded-lg shadow-md bg-gray-200 border-gray-700">
       <a href="#"></a>

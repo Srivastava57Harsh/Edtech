@@ -20,7 +20,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className={`${bgColor}  w-full z-50 mt-[20px]`}>
+    <div className={`${bgColor}  w-full z-50 mt-[20px] border-b-4`}>
       <nav className=" p-1 mb-2 z-[99] w-full bg-transparent ">
         <div className="navmenu flex justify-between ">
           <div className="max-w-[350px]">
@@ -31,7 +31,7 @@ const Navbar = () => {
           </div>
           <div className="md:block hidden">
             <div style={{ position: 'fixed', marginLeft: '-12vw', zIndex: 1 }}>
-              <ul className="space-x-8 flex font-bold xl:ml-0 ">
+              <ul className="space-x-8 flex font-bold ml-[-80px] xl:ml-0 mt-4">
                 <Link href="/signup">
                   <a>
                     <li className="text-orange-500 transition-all duration-150 transform hover:scale-105 hover:underline">
