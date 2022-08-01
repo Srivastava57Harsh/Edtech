@@ -36,7 +36,7 @@ const AdminDashboard: NextPage = () => {
       event.preventDefault();
       const formData = {
         topicName: (event.currentTarget.elements[0] as HTMLInputElement).value,
-        price: (event.currentTarget.elements[0] as HTMLInputElement).valueAsNumber,
+        price: (event.currentTarget.elements[1] as HTMLInputElement).valueAsNumber,
       };
       const slug = slugify(formData.topicName);
       const course: CourseSchema = { data: subtopic, slug: slug, name: formData.topicName, price: formData.price };
