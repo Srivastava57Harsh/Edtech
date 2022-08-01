@@ -36,6 +36,6 @@ input[type=number]::-webkit-outer-spin-button {
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply w-2 bg-orange-600 rounded-full;
+    @apply w-2 bg-orange-500 rounded-full;
   }
 }

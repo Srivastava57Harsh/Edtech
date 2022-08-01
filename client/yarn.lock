@@ -17,7 +17,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.10.4", "@babel/runtime@^7.10.5":
+"@babel/runtime@^7.10.4", "@babel/runtime@^7.10.5", "@babel/runtime@^7.11.1":
   version "7.18.9"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.9.tgz#b4fcfce55db3d2e5e080d2490f608a3b9f407f4a"
   integrity sha512-lkqXDcvlFT5rvEjiu6+QYO+1GXrEHRo2LOtS7E4GtX5ESIZOgepqsZBVIj6Pv+a6zqsya9VCgiK1KAK4BvJDAw==
@@ -525,7 +525,7 @@ chokidar@^3.5.3:
   optionalDependencies:
     fsevents "~2.3.2"
 
-classnames@^2.2.5:
+classnames@^2.2.1, classnames@^2.2.5:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
   integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
@@ -1043,6 +1043,11 @@ follow-redirects@^1.14.9:
   version "1.15.1"
   resolved "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.15.1.tgz"
   integrity sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA==
+
+footer-fast@^1.0.28:
+  version "1.0.28"
+  resolved "https://registry.yarnpkg.com/footer-fast/-/footer-fast-1.0.28.tgz#a8afb498304982067614995dba8ab6ded2942494"
+  integrity sha512-pjEnapC6qtWtgiCXDmeCkneeO2Hg8LwYLKy92lpd+M3CfbFi/ILBSq70jfaCOCtLvZKQ4wUrNltkAZzzjePnXA==
 
 form-data@^4.0.0:
   version "4.0.0"
@@ -1820,6 +1825,14 @@ quick-lru@^5.1.1:
   resolved "https://registry.npmjs.org/quick-lru/-/quick-lru-5.1.1.tgz"
   integrity sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==
 
+rc-footer@^0.6.6:
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/rc-footer/-/rc-footer-0.6.6.tgz#9b319ff91a0bb5097cda84b6009c4cb26e8be8d7"
+  integrity sha512-D4Rv3ff+TY3OP5hAkW2zPpYSYgcgQ3HVMtS61Sxdg4rp87xe23eG5qcL64nXXk+MzpRtT2lH5pOebhS/KljYxQ==
+  dependencies:
+    "@babel/runtime" "^7.11.1"
+    classnames "^2.2.1"
+
 react-dom@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
@@ -1849,6 +1862,11 @@ react-is@^16.13.1, react-is@^16.6.3:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
+
+react-multi-carousel@^2.8.2:
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/react-multi-carousel/-/react-multi-carousel-2.8.2.tgz#4bbd7a9656d8e49e081745331593e5500eefdbe4"
+  integrity sha512-M9Y7DfAp8bA/r6yexttU6RLA7uyppje4c0ELRuCHZWswH+u7nr0uVP6qHNPjc4XGOEY1MYFOb5nBg7JvoKutuQ==
 
 react-popper@^2.3.0:
   version "2.3.0"
@@ -2031,6 +2049,11 @@ side-channel@^1.0.4:
     call-bind "^1.0.0"
     get-intrinsic "^1.0.2"
     object-inspect "^1.9.0"
+
+simple-react-footer@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/simple-react-footer/-/simple-react-footer-1.0.2.tgz#eb7cb26b4df207e6905e20a72c9ca9985f4e1115"
+  integrity sha512-m4iop6OLZqx/Avfn98T/97fAttt/dmRiiwXXIDv5Fmrq6hJOOCDloK0Ddawq1JtQ6ScfyiLd/L9gR8FxBF/paA==
 
 slash@^3.0.0:
   version "3.0.0"
