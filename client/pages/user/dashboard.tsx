@@ -34,9 +34,9 @@ const Dashboard = ({ courseData }: CoursesArray) => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 cards ml-40 mt-10 absolute top-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 cards ml-32 mt-8 absolute top-20">
           {courseData.map(course => (
-            <div className="m-10">
+            <div className="m-4">
               <CourseCard {...course} key={course.slug} />
             </div>
           ))}

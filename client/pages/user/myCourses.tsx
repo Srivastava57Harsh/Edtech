@@ -49,9 +49,7 @@ const MyCourses = ({ courseData }: CoursesArray) => {
 export async function getServerSideProps(context: any) {
   try {
     var token = cookie.parse(context.req.headers.cookie)['accessToken'];
-    console.log('zaidtoken', token);
     const coursesRes: any = await getOwnedCourses(token);
-    console.log(coursesRes);
     const courseData = coursesRes.data;
     return { props: { courseData } };
   } catch (error) {
