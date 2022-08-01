@@ -3,7 +3,9 @@ import { CourseSchema } from '../shared/models';
 const CourseCard: React.FC<CourseSchema> = prop => {
   return (
     <div className="max-w-sm rounded-lg shadow-md bg-gray-200 border-gray-700">
-      <a href="#"></a>
+      <a href="#">
+        <img className="p-8 rounded-t-lg" src={prop.imageURL} alt="product image" />
+      </a>
 
       <div className="px-5 pb-5">
         <a href="#">

@@ -40,7 +40,13 @@ const AdminDashboard: NextPage = () => {
         imageURL: (event.currentTarget.elements[2] as HTMLInputElement).value,
       };
       const slug = slugify(formData.topicName);
-      const course: CourseSchema = { data: subtopic, slug: slug, name: formData.topicName, price: formData.price };
+      const course: CourseSchema = {
+        data: subtopic,
+        slug: slug,
+        name: formData.topicName,
+        price: formData.price,
+        imageURL: formData.imageURL,
+      };
       const res = await addCourse(course);
       if (res.message === 'Success') {
         await sendToast('Course added successfully', 'success');
