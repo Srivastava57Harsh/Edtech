@@ -42,6 +42,23 @@ export const handleLogout = async (email: string) => {
   }
 };
 
+export const handleResetPassword = async (data: any) => {
+  try {
+    const res = await axios.post(`${API_URL}/auth/resetPassword`, data);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const handleResetAuth = async (data: any) => {
+  try {
+    const res = await axios.post(`${API_URL}/auth/forgotPassword`, data);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
 //Dashboard
 export const getDashboardCourses = async () => {
   try {
