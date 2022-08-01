@@ -20,6 +20,7 @@ export interface Subtopic {
 }
 
 export interface CourseSchema {
+  _id?: string;
   data: Subtopic[];
   name: string;
   slug: string;

@@ -49,7 +49,7 @@ export const handleResetPassword = async (data: any) => {
   } catch (err) {
     console.error(err);
   }
-}; 
+};
 
 export const handleResetAuth = async (data: any) => {
   try {
@@ -63,6 +63,15 @@ export const handleResetAuth = async (data: any) => {
 export const getDashboardCourses = async () => {
   try {
     const res = await axios.post(`${API_URL}/dashboard/courses`);
+    return res.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const getCourse = async (courseId: string) => {
+  try {
+    const res = await axios.post(`${API_URL}/getCourse`, { courseId: courseId });
     return res.data;
   } catch (err) {
     console.error(err);

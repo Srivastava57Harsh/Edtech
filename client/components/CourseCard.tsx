@@ -1,5 +1,8 @@
 import useAuth from '../hooks/useAuth';
 import { CourseSchema } from '../shared/models';
+import Link from 'next/link';
+import { FE_URL } from '../config';
+
 const CourseCard: React.FC<CourseSchema> = prop => {
   return (
     <div className="max-w-sm rounded-lg shadow-md bg-gray-200 border-gray-700">
@@ -69,7 +72,7 @@ const CourseCard: React.FC<CourseSchema> = prop => {
         <div className="flex justify-between items-center mt-10">
           <span className="text-3xl font-bold text-black">₹{prop.price}</span>
           <a
-            href="#"
+            href={'/courses/' + prop._id!}
             className="ml-10 text-primary bg-primary-orange hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-orange-400 dark:focus:orange-800"
           >
             View Details
