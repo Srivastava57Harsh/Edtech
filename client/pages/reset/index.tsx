@@ -2,9 +2,9 @@ import axios from 'axios';
 import Router from 'next/router';
 import { FormEvent, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { API_URL } from '../../../config';
-import { sendToast } from '../../../shared/helper/toastify';
-import { handleResetAuth } from '../../../shared/helper/axios';
+import { API_URL } from '../../config';
+import { sendToast } from '../../shared/helper/toastify';
+import { handleResetAuth } from '../../shared/helper/axios';
 
 const signUpPage = () => {
   const [userData, setUserData] = useState<any>({});
