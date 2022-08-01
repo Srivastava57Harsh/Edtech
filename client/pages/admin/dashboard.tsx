@@ -37,6 +37,7 @@ const AdminDashboard: NextPage = () => {
       const formData = {
         topicName: (event.currentTarget.elements[0] as HTMLInputElement).value,
         price: (event.currentTarget.elements[1] as HTMLInputElement).valueAsNumber,
+        imageURL: (event.currentTarget.elements[2] as HTMLInputElement).value,
       };
       const slug = slugify(formData.topicName);
       const course: CourseSchema = { data: subtopic, slug: slug, name: formData.topicName, price: formData.price };
@@ -84,6 +85,15 @@ const AdminDashboard: NextPage = () => {
                 type="number"
                 placeholder="Price"
                 id="price-input"
+              />
+              <input
+                className="mt-4 pl-4 border border-slate-600 text-md w-[360px]
+                          bg-dark-background active:border-primary focus:text-primary-orange rounded-xl h-12 active:drop-shadow-xl focus:shadow-black
+                          focus:outline-none focus:border-primary
+                          focus:ring-1 focus:ring-primary focus:bg-elevated"
+                name="imageurl"
+                placeholder="Image URL"
+                id="image-url"
               />
             </div>
             <button
