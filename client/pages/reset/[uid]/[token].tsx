@@ -1,8 +1,6 @@
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { FormEvent, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { API_URL } from '../../../config';
 import { sendToast } from '../../../shared/helper/toastify';
 import { handleResetPassword } from '../../../shared/helper/axios';
 

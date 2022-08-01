@@ -49,7 +49,7 @@ export const handleResetPassword = async (data: any) => {
   } catch (err) {
     console.error(err);
   }
-};
+}; 
 
 export const handleResetAuth = async (data: any) => {
   try {
