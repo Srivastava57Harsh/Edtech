@@ -24,12 +24,15 @@ const LoginPage: NextPage = () => {
       //login here
       const response = await handleLoginUser(formData);
       //set cookie
-      setCookie('accessToken', response.accessToken);
-      setCookie('refreshToken', response.refreshToken);
-      await Router.push('/user/dashboard');
+      if (response) {
+        setCookie('accessToken', response.accessToken);
+        setCookie('refreshToken', response.refreshToken);
+        await Router.push('/user/dashboard');
+      }
     } catch (err: any) {
-      console.log(err);
-      sendToast(err.message || 'Something went wrong', 'warn');
+      sendToast(err.response.data.message || 'Something went wrong', 'warn');
+
+      console.log(err.message);
     }
   }
 

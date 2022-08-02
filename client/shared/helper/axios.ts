@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API_URL } from '../../config';
 import { CourseSchema, LoginUser, SignUpData } from '../models';
+import { sendToast } from './toastify';
 
 //Authentication
 export const handleSignUpUser = async (userData: SignUpData) => {
@@ -16,8 +17,8 @@ export const handleLoginUser = async (userData: LoginUser) => {
   try {
     const res = await axios.post(`${API_URL}/auth/login`, userData);
     return res.data;
-  } catch (err) {
-    console.error(err);
+  } catch (err: any) {
+    throw err;
   }
 };
 
