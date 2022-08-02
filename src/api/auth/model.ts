@@ -18,4 +18,9 @@ export interface LoginResponse {
   accessToken?: string;
   refreshToken?: string;
 }
+
+export interface FetchCourse {
+  token?: string;
+  courseId: string;
+}
 export default User;

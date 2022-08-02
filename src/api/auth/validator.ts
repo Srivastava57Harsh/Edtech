@@ -14,6 +14,7 @@ export async function loginValidator(req: Request, res: Response, next: NextFunc
     });
   }
 }
+
 export async function signUpValidator(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
     req.body = await signUpSchema.validate(req.body, { stripUnknown: true });
@@ -26,19 +27,6 @@ export async function signUpValidator(req: Request, res: Response, next: NextFun
     });
   }
 }
-
-// export async function verificationValidator(req: Request, res: Response, next: NextFunction): Promise<void> {
-//   try {
-//     req.body = await verificationSchema.validate(req.body, { stripUnknown: true });
-//     next();
-//   } catch (e) {
-//     LoggerInstance.error(e);
-//     res.status(422).json({
-//       message: 'Validation Failed',
-//       error: e.errors.map(error => error),
-//     });
-//   }
-// }
 
 export async function getProfileValidator(req: Request, res: Response, next: NextFunction): Promise<void> {
   try {
@@ -79,3 +67,16 @@ export async function resetPasswordValidator(req: Request, res: Response, next: 
     });
   }
 }
+
+// export async function verificationValidator(req: Request, res: Response, next: NextFunction): Promise<void> {
+//   try {
+//     req.body = await verificationSchema.validate(req.body, { stripUnknown: true });
+//     next();
+//   } catch (e) {
+//     LoggerInstance.error(e);
+//     res.status(422).json({
+//       message: 'Validation Failed',
+//       error: e.errors.map(error => error),
+//     });
+//   }
+// }

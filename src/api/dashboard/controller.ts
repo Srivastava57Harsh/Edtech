@@ -1,5 +1,8 @@
 import database from '../../loaders/database';
 import { ObjectId } from 'mongodb';
+import { verifyToken } from '../../shared/token';
+import LoggerInstance from '../../loaders/logger';
+import config from '../../config';
 
 //TODO: Fix empty array
 export async function displayAllCourses(): Promise<any> {
@@ -46,5 +49,76 @@ export async function displayUserCourses(email: string): Promise<any> {
         status: 404,
       };
     }
+  }
+}
+
+export async function getTokenCourse(token: string, courseId: string): Promise<any> {
+  const courseEntity = await (await database()).collection('courses').findOne({ _id: new ObjectId(courseId) });
+  if (!courseEntity) {
+    throw {
+      message: 'Course does not exist',
+      status: 404,
+    };
+  }
+
+  let id: string;
+  try {
+    id = verifyToken(token, config.jwtSecret).id;
+  } catch (e) {
+    LoggerInstance.error(e);
+    throw {
+      message: 'Unauthorized Access',
+      status: 401,
+    };
+  }
+  console.log(id);
+  const user = await (await database()).collection('users').findOne({ _id: new ObjectId(id) });
+  if (!user) {
+    throw {
+      message: 'User does not exist',
+      status: 404,
+    };
+  } else {
+    if (user.courses.includes(courseId)) {
+      return {
+        message: 'Success, Course Details Below',
+        status: 200,
+        courseDetails: courseEntity,
+      };
+    } else {
+      return {
+        message: 'Success, Course Details Below',
+        status: 200,
+        courseDetails: {
+          _id: courseEntity._id,
+          name: courseEntity.name,
+          price: courseEntity.price,
+          slug: courseEntity.slug,
+          imageURL: courseEntity.imageURL,
+        },
+      };
+    }
+  }
+}
+
+export async function getNonTokenCourse(courseId: string): Promise<any> {
+  const courseEntity = await (await database()).collection('courses').findOne({ _id: new ObjectId(courseId) });
+  if (!courseEntity) {
+    throw {
+      message: 'Course does not exist',
+      status: 404,
+    };
+  } else {
+    return {
+      message: 'Success, Course Details Below',
+      status: 200,
+      courseDetails: {
+        _id: courseEntity._id,
+        name: courseEntity.name,
+        price: courseEntity.price,
+        slug: courseEntity.slug,
+        imageURL: courseEntity.imageURL,
+      },
+    };
   }
 }

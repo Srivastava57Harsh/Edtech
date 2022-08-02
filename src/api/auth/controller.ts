@@ -1,7 +1,7 @@
 import { createToken, verifyToken } from './../../shared/token';
 import database from '../../loaders/database';
 import LoggerInstance from '../../loaders/logger';
-import User, { LoginResponse } from './model';
+import User, { FetchCourse, LoginResponse } from './model';
 import * as bcrypt from 'bcrypt';
 import config from '../../config';
 import { ObjectId } from 'mongodb';

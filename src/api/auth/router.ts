@@ -124,13 +124,13 @@ async function handleResetPassword(req: Request, res: Response) {
   }
 }
 
+// authRouter.post('/verification', verificationValidator, handleVerification);
+
 authRouter.post('/login', loginValidator, handleLogin);
 authRouter.post('/logout', handleLogout);
 authRouter.post('/signUp', signUpValidator, handleSignUp);
-// authRouter.post('/verification', verificationValidator, handleVerification);
 authRouter.get('/getProfile', getProfileValidator, handleGetProfile);
 authRouter.post('/forgotPassword', forgotPasswordValidator, handleForgotPassword);
-// authRouter.post('/resetPassword/:id/:token', resetPasswordValidator, handleResetPassword);
 authRouter.post('/resetPassword', resetPasswordValidator, handleResetPassword);
 
 export default authRouter;

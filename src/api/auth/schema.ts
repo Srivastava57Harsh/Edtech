@@ -3,6 +3,7 @@ const login = {
   email: yup.string().email().required(),
   password: yup.string().min(6).required(),
 };
+
 const signUp = {
   firstName: yup.string().required(),
   lastName: yup.string().required(),
@@ -12,6 +13,7 @@ const signUp = {
   secretQuestion: yup.string().required(),
   secretAnswer: yup.string().required(),
 };
+
 const getProfile = {
   authorization: yup.string().required(),
 };
