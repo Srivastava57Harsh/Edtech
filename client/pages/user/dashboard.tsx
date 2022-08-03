@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getDashboardCourses } from '../../shared/helper/axios';
 import { CourseSchema } from '../../shared/models';
+import NextJsCarousel from '../../components/home/heroslider';
 
 const style = {
   container: `bg-gray-100 h-screen overflow-hidden relative`,
@@ -15,36 +16,31 @@ const style = {
   mainContainer: `flex flex-col h-screen pl-0 w-full lg:pl-24 lg:space-y-4`,
 };
 
-
 interface CoursesArray {
   courseData: CourseSchema[];
 }
-
 
 const Dashboard = ({ courseData }: CoursesArray) => {
   useAuth();
   return (
     <>
       <ToastContainer />
-
-      <DashboardProvider>
-        <div className={style.container}>
-          <div className="flex items-start">
-            <Overlay />
-            <SideNavigation mobilePosition="right" />
-            <div className={style.mainContainer}>
-              <TopNavigation />
-            </div>
+      <div className={style.container}>
+        <div className="flex items-start">
+          <SideNavigation mobilePosition="right" />
+          <div className={style.mainContainer}>
+            <TopNavigation />
+            <NextJsCarousel />
           </div>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 cards ml-32 mt-8 absolute top-20">
-          {courseData.map(course => (
-            <div className="m-4">
-              <CourseCard {...course} key={course.slug} />
-            </div>
-          ))}
-        </div>
-      </DashboardProvider>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-10 ml-[80px] ">
+        {courseData.map(course => (
+          <div className="m-10">
+            <CourseCard {...course} key={course.slug} />
+          </div>
+        ))}
+      </div>
     </>
   );
 };
