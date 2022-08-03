@@ -11,9 +11,9 @@ import { CourseSchema } from '../../shared/models';
 import NextJsCarousel from '../../components/home/heroslider';
 
 const style = {
-  container: `bg-gray-100 h-screen overflow-hidden relative`,
-  main: `h-screen overflow-auto pb-36 pt-4 px-2 md:pb-8 lg:px-4`,
-  mainContainer: `flex flex-col h-screen pl-0 w-full lg:pl-24 lg:space-y-4`,
+  container: `bg-gray-100`,
+  main: `pb-36 pt-4 px-2 md:pb-8 lg:px-4`,
+  mainContainer: `flex flex-col pl-0 w-full lg:space-y-4`,
 };
 
 interface CoursesArray {
@@ -27,19 +27,19 @@ const Dashboard = ({ courseData }: CoursesArray) => {
       <ToastContainer />
       <div className={style.container}>
         <div className="flex items-start">
-          <SideNavigation mobilePosition="right" />
+          <SideNavigation mobilePosition="left" />
           <div className={style.mainContainer}>
             <TopNavigation />
             <NextJsCarousel />
+            <div className="bg-gray-100 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 p-10">
+              {courseData.map(course => (
+                <div className="m-10">
+                  <CourseCard {...course} key={course.slug} />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-10 ml-[80px] ">
-        {courseData.map(course => (
-          <div className="m-10">
-            <CourseCard {...course} key={course.slug} />
-          </div>
-        ))}
       </div>
     </>
   );

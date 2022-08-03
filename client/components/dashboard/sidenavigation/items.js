@@ -20,7 +20,6 @@ const style = {
 
 export default function SidenavItems() {
   const { asPath } = useRouter();
-  const { open } = useToggle();
   const logout = async () => {
     try {
       const token = getCookie('accessToken');
