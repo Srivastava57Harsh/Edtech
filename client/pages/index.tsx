@@ -14,13 +14,12 @@ interface CoursesArray {
   courseData: CourseSchema[];
 }
 
-useEffect(() => {
-  if (getCookie('accessToken')) {
-    Router.push('/user/dashboard');
-  }
-}, []);
-
 const Hero = ({ courseData }: CoursesArray) => {
+  useEffect(() => {
+    if (getCookie('accessToken')) {
+      Router.push('/user/dashboard');
+    }
+  }, []);
   return (
     <>
       <Navbar />
