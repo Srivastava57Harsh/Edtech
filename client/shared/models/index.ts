@@ -26,4 +26,5 @@ export interface CourseSchema {
   slug: string;
   price: number;
   imageURL: string;
+  description: string;
 }

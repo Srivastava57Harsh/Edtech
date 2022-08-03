@@ -95,6 +95,7 @@ export async function getTokenCourse(token: string, courseId: string): Promise<a
           price: courseEntity.price,
           slug: courseEntity.slug,
           imageURL: courseEntity.imageURL,
+          description: courseEntity.description,
         },
       };
     }
@@ -118,6 +119,7 @@ export async function getNonTokenCourse(courseId: string): Promise<any> {
         price: courseEntity.price,
         slug: courseEntity.slug,
         imageURL: courseEntity.imageURL,
+        description: courseEntity.description,
       },
     };
   }

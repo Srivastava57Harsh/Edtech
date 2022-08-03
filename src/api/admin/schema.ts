@@ -14,6 +14,8 @@ const addCourse = {
   data: yup.array().required(),
   price: yup.number().required(),
   slug: yup.string().required(),
+  imageURL: yup.string().required(),
+  description: yup.string().required(),
 };
 
 const courseData = {
