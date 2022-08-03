@@ -6,10 +6,19 @@ import { getDashboardCourses } from '../shared/helper/axios';
 import { CourseSchema } from '../shared/models';
 import CourseCard from '../components/CourseCard';
 import Footer from '../components/home/footer';
+import { useEffect } from 'react';
+import { getCookie } from 'cookies-next';
+import Router from 'next/router';
 
 interface CoursesArray {
   courseData: CourseSchema[];
 }
+
+useEffect(() => {
+  if (getCookie('accessToken')) {
+    Router.push('/user/dashboard');
+  }
+}, []);
 
 const Hero = ({ courseData }: CoursesArray) => {
   return (

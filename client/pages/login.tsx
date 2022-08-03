@@ -36,6 +36,12 @@ const LoginPage: NextPage = () => {
     }
   }
 
+  useEffect(() => {
+    if (getCookie('accessToken')) {
+      Router.push('/user/dashboard');
+    }
+  }, []);
+  
   return (
     <>
       <ToastContainer />
