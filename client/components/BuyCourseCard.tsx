@@ -14,7 +14,7 @@ const BuyCourseCard: React.FC<CourseSchema> = prop => {
         <span className="ml-[-230px] mt-8 text-4xl font-bold text-black">₹{prop.price}</span>
         <a
           href={'/courses/' + prop._id!}
-          className="text-primary bg-primary-orange hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-md py-2.5 text-center dark:hover:bg-orange-400 dark:focus:orange-800 px-[100px] m-8 border-2 border-primary"
+          className="text-white bg-primary hover:text-primary-orange hover:-translate-y-1 transition duration-500 ease-in-out focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-md py-2.5 text-center  dark:focus:orange-800 px-[70px] m-8  text-xl"
         >
           Buy Now
         </a>

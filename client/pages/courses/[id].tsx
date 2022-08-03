@@ -20,12 +20,13 @@ const CoursePage = ({ courseData }: CoursesArray) => {
   };
 
   const ShowCourse = () => {
+    console.log(courseData.description);
     if (courseData.data) {
       return (
         <>
           <div className="p-10 bg-primary text-white">
             <h1 className="font-black text-2xl">Description</h1>
-            <h1 className="pt-4 pl-10 text-lg">{courseData.description}</h1>
+            <h1 className="pt-4 pl-10 text-lg mr-[500px]">{courseData.description}</h1>
           </div>
 
           <div className="p-10">
@@ -65,7 +66,7 @@ const CoursePage = ({ courseData }: CoursesArray) => {
       <>
         <div className="p-10">
           <h1 className="font-black text-2xl">Description</h1>
-          <h1 className="pt-4 pl-10 text-lg">{courseData.description}</h1>
+          <h1 className="pt-4  text-lg">{courseData.description}</h1>
         </div>
       </>
     );

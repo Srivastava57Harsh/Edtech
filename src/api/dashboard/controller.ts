@@ -71,7 +71,6 @@ export async function getTokenCourse(token: string, courseId: string): Promise<a
       status: 401,
     };
   }
-  console.log(id);
   const user = await (await database()).collection('users').findOne({ _id: new ObjectId(id) });
   if (!user) {
     throw {
