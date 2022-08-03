@@ -26,7 +26,7 @@ export async function createOrder(orderDetails: OrderDetails): Promise<any> {
       };
     } else {
       const options = {
-        amount: course.price,
+        amount: course.price * 100,
         currency: 'INR',
         receipt: shortid.generate(orderDetails.courseId),
       };

@@ -93,6 +93,21 @@ export const getCourse = async (courseid: string, token?: any) => {
   }
 };
 
+export const handleRazorpay = async (courseid: string, token: any) => {
+  try {
+    token = 'Bearer ' + token;
+    const res = await axios({
+      method: 'post',
+      url: `${API_URL}/razorpay/createOrder`,
+      data: { courseId: courseid },
+      headers: { authorization: token },
+    });
+    return res.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 export const getOwnedCourses = async (token: string | boolean) => {
   try {
     const user = await fetchUser(token);
