@@ -8,12 +8,13 @@ module.exports = {
         'primary-orange': '#F19D74',
         elevated: '#1F1F27',
         'elevated-hover': '#212129',
-        primary: '#000000',
+        primary: '#00172d',
         'primary-blue': '#F3FAFF',
         'blue-elevated': '#232B38',
         'blue-active': '#29323E',
       },
     },
   },
+  
   plugins: [],
 };

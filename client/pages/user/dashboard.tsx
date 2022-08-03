@@ -1,4 +1,3 @@
-import { NextPage } from 'next';
 import SideNavigation from '../../components/dashboard/sidenavigation';
 import TopNavigation from '../../components/dashboard/topnavigation';
 import DashboardProvider from '../../components/dashboard/provider/context';
@@ -15,9 +14,13 @@ const style = {
   main: `h-screen overflow-auto pb-36 pt-4 px-2 md:pb-8 lg:px-4`,
   mainContainer: `flex flex-col h-screen pl-0 w-full lg:pl-24 lg:space-y-4`,
 };
+
+
 interface CoursesArray {
   courseData: CourseSchema[];
 }
+
+
 const Dashboard = ({ courseData }: CoursesArray) => {
   useAuth();
   return (

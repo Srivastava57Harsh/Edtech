@@ -74,9 +74,19 @@ export const getDashboardCourses = async () => {
   }
 };
 
-export const getCourse = async (courseId: string) => {
+export const getCourse = async (courseid: string, token?: any) => {
   try {
-    const res = await axios.post(`${API_URL}/getCourse`, { courseId: courseId });
+    if (!token) {
+      const res = await axios({ method: 'get', url: `${API_URL}/dashboard/getCourse`, data: { courseId: courseid } });
+      return res.data;
+    }
+    token = 'Bearer ' + token;
+    const res = await axios({
+      method: 'get',
+      url: `${API_URL}/dashboard/getCourse`,
+      data: { courseId: courseid },
+      headers: { authorization: token },
+    });
     return res.data;
   } catch (err) {
     console.error(err);
