@@ -16,11 +16,10 @@ const BuyCourseCard: React.FC<CourseSchema> = prop => {
         <span className="ml-[-230px] mt-8 text-4xl font-bold text-black">₹{prop.price}</span>
 
         <button
-          className={
-            'text-primary bg-primary-orange focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-md py-2.5 text-center  dark:focus:orange-800 px-[100px] m-8 border-2 border-primary' +
-            (purchased ? 'disabled' : 'hover:bg-orange-400')
-          }
-          disabled={purchased ? false : true}
+          className={` focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium text-md py-2.5 text-center  dark:focus:orange-800 px-[100px] m-8 border-2 border-primary ${
+            purchased ? 'disabled text-white bg-primary' : 'text-primary bg-primary-orange hover:bg-orange-400'
+          }`}
+          disabled={purchased ? true : false}
         >
           {purchased ? 'Purchased' : 'Buy Now'}
         </button>

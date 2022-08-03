@@ -65,9 +65,12 @@ const CoursePage = ({ courseData }: CoursesArray) => {
     }
     return (
       <>
-        <div className="p-10">
+        <div className="p-10 bg-primary text-white">
           <h1 className="font-black text-2xl">Description</h1>
           <h1 className="pt-4 text-lg">{courseData.description}</h1>
+        </div>
+        <div className="p-10">
+          <h1 className="font-black text-2xl">To access the course, Kindly purchase it.</h1>
         </div>
       </>
     );
