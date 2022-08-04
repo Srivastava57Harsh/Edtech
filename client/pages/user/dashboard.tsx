@@ -1,7 +1,5 @@
 import SideNavigation from '../../components/dashboard/sidenavigation';
 import TopNavigation from '../../components/dashboard/topnavigation';
-import DashboardProvider from '../../components/dashboard/provider/context';
-import Overlay from '../../components/dashboard/provider/overlay';
 import CourseCard from '../../components/CourseCard';
 import useAuth from '../../hooks/useAuth';
 import { ToastContainer } from 'react-toastify';
@@ -9,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getDashboardCourses } from '../../shared/helper/axios';
 import { CourseSchema } from '../../shared/models';
 import NextJsCarousel from '../../components/home/heroslider';
+import { useEffect } from 'react';
 
 const style = {
   container: `bg-gray-100`,

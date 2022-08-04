@@ -13,7 +13,7 @@ const style = {
   title: `mx-4 text-sm`,
   inactive: `text-white`,
   active: `font-medium text-primary-orange hover:primary-orange`,
-  link: `flex items-center justify-start my-2 p-4 w-full hover:text-white`,
+  link: `flex items-center justify-start my-2 p-4 w-full text-white hover:text-primary-orange hover:-translate-y-1 transition duration-500 ease-in-out`,
   close: `lg:duration-700 lg:ease-out lg:invisible lg:opacity-0 lg:transition-all`,
   open: `lg:duration-500 lg:ease-in lg:h-auto lg:opacity-100 lg:transition-all lg:w-auto`,
 };
@@ -36,26 +36,26 @@ export default function SidenavItems() {
 
   return (
     <>
-      <ul className="md:pl-5">
+      <ul className="flex flex-col items-center">
         <div>
           <li>
             {data.map(item => (
-              <Link href={item.link} key={item.title}>
-                <a
-                  className={`${style.link} 
-            ${item.link === asPath ? style.active : style.inactive}`}
-                >
-                  <span>{item.icon}</span>
-                </a>
-              </Link>
+              <button
+                onClick={() => {
+                  Router.push(item.link);
+                }}
+                className={`${style.link}`}
+              >
+                {item.icon}
+              </button>
             ))}
           </li>
         </div>
       </ul>
       <div className="flex absolute bottom-10 w-[100%] m-0 items-center justify-center">
-        <a onClick={logout}>
+        <button className="hover:fill-primary-orange" onClick={logout}>
           <LogoutIcon />
-        </a>
+        </button>
       </div>
     </>
   );

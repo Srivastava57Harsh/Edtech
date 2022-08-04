@@ -2,6 +2,7 @@ import useAuth from '../hooks/useAuth';
 import { CourseSchema } from '../shared/models';
 import Link from 'next/link';
 import { FE_URL } from '../config';
+import Router from 'next/router';
 
 const CourseCard: React.FC<CourseSchema> = prop => {
   return (
@@ -10,9 +11,9 @@ const CourseCard: React.FC<CourseSchema> = prop => {
         <img className="rounded-t-lg" src={prop.imageURL} alt="course image" />
       </a>
 
-      <div className="px-5 pb-5">
+      <div className="flex lg:items-start md:flex-col md:items-center px-5 pb-5">
         <a href="#">
-          <h5 className="pt-5 text-xl font-semibold tracking-tight text-black">{prop.name}</h5>
+          <h5 className="pt-5 text-3xl font-semibold tracking-tight text-black">{prop.name}</h5>
         </a>
         {/* <div className="flex items-center mt-2.5 mb-5">
           <svg
@@ -69,14 +70,14 @@ const CourseCard: React.FC<CourseSchema> = prop => {
             5.0
           </span>
         </div> */}
-        <div className="flex justify-between items-center mt-10">
-          <span className="text-3xl font-bold text-black">₹{prop.price}</span>
-          <a
-            href={'/courses/' + prop._id!}
-            className="ml-10 text-primary bg-primary-orange hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-orange-400 dark:focus:orange-800"
+        <div className="flex lg:justify-start lg:items-center lg:mt-10 md:justify-center md:flex-col md:items-center md:mt-4">
+          <span className="text-2xl font-bold text-black">₹{prop.price}</span>
+          <button
+            onClick={() => Router.push(`'/courses/' + ${prop._id!}`)}
+            className="lg:ml-10 md:mt-4  text-primary bg-primary-orange hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-orange-400 dark:focus:orange-800"
           >
             View Details
-          </a>
+          </button>
         </div>
       </div>
     </div>

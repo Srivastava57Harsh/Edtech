@@ -13,11 +13,6 @@ const data = [
     icon: <MyCoursesIcon />,
     link: '/user/myCourses',
   },
-  {
-    title: 'Settings',
-    icon: <SettingsIcon />,
-    link: '/user/settings',
-  },
 ];
 
 export default data;

@@ -8,7 +8,7 @@ const style = {
     left: 'left-0 ',
     right: 'right-0 lg:left-0',
   },
-  container: `pb-32 lg:pb-12`,
+  container: `pb-32 lg:pb-12 md:pr-2`,
   close: `duration-700 ease-out sm-hidden transition-all lg:w-24`,
   default: `bg-black h-screen sticky top-0 lg:z-40`,
   open: `absolute duration-500 ease-in transition-all w-8/12 z-40 sm:w-5/12 md:w-64`,
