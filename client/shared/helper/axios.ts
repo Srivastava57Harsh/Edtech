@@ -45,7 +45,6 @@ export const handleLogout = async (email: string | string[]) => {
 
 export const handleResetPassword = async (token: any, data: any) => {
   try {
-    console.log('\ntoken', token, '\nbody', data);
     token = 'Bearer ' + token;
     const res = await axios.post(`${API_URL}/auth/resetPassword`, data, {
       headers: { authorization: token },

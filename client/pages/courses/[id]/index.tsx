@@ -19,7 +19,6 @@ const CoursePage = ({ courseData }: CoursesArray) => {
   };
 
   const ShowCourse = () => {
-    console.log(courseData.description);
     if (courseData.data) {
       return (
         <>
@@ -79,8 +78,10 @@ const CoursePage = ({ courseData }: CoursesArray) => {
     <>
       <div className={style.mainContainer}>
         <TopNavigation {...{ title: courseData.name }} />
+        <div className="flex p-10 bg-gray-100 sm:justify-center sm:p-10 lg:p-0 md:p-0">
+          <BuyCourseCard {...courseData} key={courseData.slug} />
+        </div>
         {ShowCourse()}
-        <BuyCourseCard {...courseData} key={courseData.slug} />
       </div>
     </>
   );
@@ -88,10 +89,14 @@ const CoursePage = ({ courseData }: CoursesArray) => {
 
 export async function getServerSideProps(context: any) {
   try {
+    if (!context.req.headers.cookie) {
+      const coursesRes: any = await getCourse(context.params.id);
+      const courseData = coursesRes.data.courseDetails;
+      return { props: { courseData } };
+    }
     var token = cookie.parse(context.req.headers.cookie)['accessToken'];
-    const coursesRes: any = await getCourse(context.params.id, token); //change api call to get single course
+    const coursesRes: any = await getCourse(context.params.id, token);
     const courseData = coursesRes.data.courseDetails;
-    console.log(courseData);
     return { props: { courseData } };
   } catch (error) {
     console.log(error);
