@@ -23,24 +23,21 @@ const MyCourses = ({ courseData }: CoursesArray) => {
   return (
     <>
       <ToastContainer />
-
-      <DashboardProvider>
-        <div className={style.container}>
-          <div className="flex items-start">
-            <Overlay />
-            <SideNavigation mobilePosition="right" />
-            <div className={style.mainContainer}>
-              <TopNavigation />
+      <div className={style.container}>
+        <div className="flex items-start">
+          {/* <Overlay /> */}
+          <SideNavigation mobilePosition="right" />
+          <div className={style.mainContainer}>
+            <TopNavigation />
+            <div className="bg-gray-100 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 p-10">
+              {courseData.map(course => (
+                <div className="m-10">
+                  <CourseCard {...course} key={course.slug} />
+                </div>
+              ))}
             </div>
           </div>
         </div>
-      </DashboardProvider>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 cards ml-40 mt-10 absolute top-20">
-        {courseData.map(course => (
-          <div className="m-10">
-            <CourseCard {...course} key={course.slug} />
-          </div>
-        ))}
       </div>
     </>
   );
