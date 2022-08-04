@@ -25,9 +25,11 @@ const MyCourses = ({ courseData }: CoursesArray) => {
       <ToastContainer />
       <div className={style.container}>
         <div className="flex items-start">
-          {/* <Overlay /> */}
           <SideNavigation mobilePosition="right" />
           <div className={style.mainContainer}>
+            <h1 className="absolute top-6 md:top-8 z-50 pl-[40px] text-primary font-bold text-xl md:text-3xl">
+              My Courses
+            </h1>
             <TopNavigation />
             <div className="bg-gray-100 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 p-10">
               {courseData.map(course => (

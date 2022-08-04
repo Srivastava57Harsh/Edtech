@@ -24,12 +24,12 @@ const CoursePage = ({ courseData }: CoursesArray) => {
         <>
           <div className="p-10 bg-primary text-white">
             <h1 className="font-black text-2xl">Description</h1>
-            <h1 className="pt-4 pl-10 text-lg mr-[500px]">{courseData.description}</h1>
+            <h1 className="pt-4 text-lg md:w-[50vw]">{courseData.description}</h1>
           </div>
 
           <div className="p-10">
             <h1 className="font-black text-2xl">Subtopics</h1>
-            <ol className="list-decimal pl-10 pt-4">
+            <ol className="list-decimal m:pl-10 pt-4">
               {courseData.data.map(subtopic => (
                 <div className="p-4">
                   <li className="font-bold text-xl">{subtopic.subname}</li>
@@ -39,7 +39,7 @@ const CoursePage = ({ courseData }: CoursesArray) => {
                   <div className="p-8">
                     <button
                       onClick={() => window.open(`${subtopic.githubLink}`, '_blank')}
-                      className="p-4 bg-primary text-white rounded-full text-md flex items-center justify-center hover:bg-primary-orange"
+                      className="ml-[-30px] md:ml-0 p-4 bg-primary text-white rounded-full text-md flex items-center justify-center hover:bg-primary-orange"
                     >
                       <svg
                         className="w-8 h-8 fill-white hover:fill-primary"
@@ -51,7 +51,7 @@ const CoursePage = ({ courseData }: CoursesArray) => {
                       <span className="pl-4">GitHub</span>
                     </button>
                   </div>
-                  <div className="pt-4">
+                  <div className="pt-4 ">
                     <iframe width="420" height="315" src={subtopic.youtubeLink}></iframe>
                   </div>
                 </div>
@@ -65,7 +65,7 @@ const CoursePage = ({ courseData }: CoursesArray) => {
       <>
         <div className="p-10 bg-primary text-white">
           <h1 className="font-black text-2xl">Description</h1>
-          <h1 className="pt-4 text-lg">{courseData.description}</h1>
+          <h1 className="pt-4 text-lg md:w-[50vw]">{courseData.description}</h1>
         </div>
         <div className="p-10">
           <h1 className="font-black text-2xl">To access the course, Kindly purchase it.</h1>

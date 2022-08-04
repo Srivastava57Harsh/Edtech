@@ -6,17 +6,70 @@ import Router from 'next/router';
 
 const CourseCard: React.FC<CourseSchema> = prop => {
   const route = '/courses/' + prop._id!;
+  const description = prop.description.substring(0, 80);
   return (
-    <div className="max-w-sm rounded-lg shadow-md bg-gray-200 border-gray-700">
-      <a href="#">
-        <img className="rounded-t-lg" src={prop.imageURL} alt="course image" />
-      </a>
-
-      <div className="flex lg:items-start md:flex-col md:items-center px-5 pb-5">
+    <>
+      {/* <div className="max-w-sm rounded-lg shadow-md bg-gray-200 border-gray-700">
         <a href="#">
-          <h5 className="pt-5 text-3xl font-semibold tracking-tight text-black">{prop.name}</h5>
+          <img className="rounded-t-lg" src={prop.imageURL} alt="course image" />
         </a>
-        {/* <div className="flex items-center mt-2.5 mb-5">
+        <div className="flex">
+          <div className=" px-5 pb-5">
+            <a href="#">
+              <h5 className="pt-5 text-3xl font-semibold tracking-tight text-black">{prop.name}</h5>
+            </a>
+            <div className="flex mt-3">
+              <span className="text-2xl font-bold text-black">₹{prop.price}</span>
+            </div>
+          </div>
+          <button
+            onClick={() => Router.push(`${route}`)}
+            className=" my-8  h-[60px] text-primary bg-primary-orange font-medium rounded-lg text-sm px-5 py-2.5 text-center hover:bg-orange-400 "
+          >
+            View Details
+          </button>
+        </div>
+      </div> */}
+      <div className="rounded-lg shadow-m bg-gray-200 ">
+        <a href="#">
+          <img className="rounded-t-lg" src={prop.imageURL} alt="" />
+        </a>
+        <div className="p-5">
+          <a href="#">
+            <h5 className="mb-2 text-3xl font-bold tracking-tight text-gray-900 ">{prop.name}</h5>
+          </a>
+          <p className="mb-3 text-xl text-gray-700 font-bold">₹{prop.price}</p>
+          <p className="mb-3 font-normal text-gray-500">{description}&nbsp;. . . . . .</p>
+          <a
+            onClick={() => Router.push(`${route}`)}
+            href="#"
+            className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-primary bg-primary-orange rounded-lg hover:bg-orange-400  focus:ring-4 focus:outline-none"
+          >
+            View Details
+            <svg
+              aria-hidden="true"
+              className="ml-2 -mr-1 w-4 h-4"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default CourseCard;
+
+{
+  /* <div className="flex items-center mt-2.5 mb-5">
           <svg
             aria-hidden="true"
             className="w-5 h-5 text-yellow-300"
@@ -70,19 +123,5 @@ const CourseCard: React.FC<CourseSchema> = prop => {
           <span className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
             5.0
           </span>
-        </div> */}
-        <div className="flex lg:justify-start lg:items-center lg:mt-10 md:justify-center md:flex-col md:items-center md:mt-4">
-          <span className="text-2xl font-bold text-black">₹{prop.price}</span>
-          <button
-            onClick={() => Router.push(`${route}`)}
-            className="lg:ml-10 md:mt-4  text-primary bg-primary-orange hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-orange-400 dark:focus:orange-800"
-          >
-            View Details
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default CourseCard;
+        </div> */
+}

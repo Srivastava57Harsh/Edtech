@@ -26,7 +26,7 @@ const Hero = ({ courseData }: CoursesArray) => {
       <NextJsCarousel />
       <h2 className="font-black text-4xl mx-4 md:mx-8 mt-[90px] pl-2">Recommended Courses</h2>
       <hr className="w-[20vw] border-b-[1vh] border-primary-orange ml-[40px]" />
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mt-10 ">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 mt-10 ">
         {courseData.map(course => (
           <div className="m-10">
             <CourseCard {...course} key={course.slug} />

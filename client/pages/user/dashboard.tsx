@@ -30,7 +30,7 @@ const Dashboard = ({ courseData }: CoursesArray) => {
           <div className={style.mainContainer}>
             <TopNavigation />
             <NextJsCarousel />
-            <div className="bg-gray-100 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 p-10">
+            <div className="bg-gray-100 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 p-10">
               {courseData.map(course => (
                 <div className="m-10">
                   <CourseCard {...course} key={course.slug} />
