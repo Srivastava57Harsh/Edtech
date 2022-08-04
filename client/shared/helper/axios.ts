@@ -162,7 +162,7 @@ export const addCourse = async (data: CourseSchema) => {
 export const checkRazorpayPayment = async (order_id: string) => {
   try {
     const res = await axios.post(`${API_URL}/razorpay/checkStatus`, { order_id: order_id });
-    return res.data;
+    return res;
   } catch (err) {
     throw err;
   }
