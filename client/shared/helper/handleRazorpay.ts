@@ -1,7 +1,8 @@
 import { getCookie } from 'cookies-next';
 import Router from 'next/router';
-import { handleRazorpay } from './axios';
+import { handleRazorpay, checkRazorpayPayment } from './axios';
 import Razorpay from 'razorpay';
+import handler from '../../pages/api/hello';
 
 function loadScript(src: string) {
   return new Promise(resolve => {
@@ -16,6 +17,19 @@ function loadScript(src: string) {
     document.body.appendChild(script);
   });
 }
+
+const RedirectToPage = async (orderID: string) => {
+  try {
+    const data = await checkRazorpayPayment(orderID);
+    if (!data.status) {
+      return Router.push('/payment-failed');
+    }
+    return Router.push('/payment-success');
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export default async function displayRazorpay(courseID: string, courseName: string) {
   const userToken = getCookie('accessToken');
   if (!userToken) {
@@ -34,6 +48,9 @@ export default async function displayRazorpay(courseID: string, courseName: stri
     const options = {
       order_id: data.data.orderData.id,
       name: `Buy ${courseName} Course`,
+      handler: function (response: any) {
+        RedirectToPage(response.razorpay_order_id);
+      },
     };
     const paymentObject = await new window.Razorpay(options);
     console.log(paymentObject);

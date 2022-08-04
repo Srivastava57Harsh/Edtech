@@ -1,18 +1,17 @@
 import Router, { useRouter } from 'next/router';
-import { getCourse } from '../../shared/helper/axios';
-import { CourseSchema } from '../../shared/models';
+import { getCourse } from '../../../shared/helper/axios';
+import { CourseSchema } from '../../../shared/models';
 import 'react-toastify/dist/ReactToastify.css';
 import * as cookie from 'cookie';
-import TopNavigation from '../../components/dashboard/topnavigation';
-import BuyCourseCard from '../../components/BuyCourseCard';
+import TopNavigation from '../../../components/dashboard/topnavigation';
+import BuyCourseCard from '../../../components/BuyCourseCard';
 
 interface CoursesArray {
   courseData: CourseSchema;
 }
 
 const CoursePage = ({ courseData }: CoursesArray) => {
-  const router = useRouter();
-  const { id } = router.query;
+  
   const style = {
     container: `bg-black h-screen overflow-hidden relative`,
     main: `h-screen overflow-auto pb-36 pt-4 md:pb-8`,
