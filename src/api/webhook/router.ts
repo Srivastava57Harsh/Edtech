@@ -6,15 +6,26 @@ const handleWebhook = async (req: Request, res: Response) => {
   try {
     const signature = req.headers['x-razorpay-signature'];
     const webhookEvent = req.body.event.toString();
-    switch (webhookEvent) {
-      case 'order.paid': {
-        await paymentSuccessService(req.body, signature);
-      }
-      case 'payment.failed': {
-        await paymentFailedService(req.body, signature);
-      }
+    console.log(webhookEvent);
+    const slug = {
+      status: 200,
+      success: true,
+      message: 'message',
+    };
+    if (webhookEvent == 'order.paid') {
+      // console.log('yes');
+      await paymentSuccessService(req.body, signature);
+      slug.status = 200;
+      slug.success = true;
+      slug.message = 'Data updated, course successfully added.';
+    } else {
+      // console.log('no');
+      await paymentFailedService(req.body, signature);
+      slug.status = 424;
+      slug.success = false;
+      slug.message = 'Data could not be updated';
     }
-    res.status(200).json({ success: true, message: 'Data updated' });
+    res.status(slug.status).json({ success: slug.success, message: slug.message });
   } catch (err) {
     LoggerInstance.error(err.message);
     res.status(err.code || 500).json({
@@ -26,6 +37,6 @@ const handleWebhook = async (req: Request, res: Response) => {
 
 const webhookRouter = Router();
 
-webhookRouter.post('/webhook', handleWebhook);
+webhookRouter.post('/validate', handleWebhook);
 
 export default webhookRouter;

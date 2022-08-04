@@ -18,26 +18,38 @@ const paymentSuccessService = async (razorpayPaymentDetails: any, signature: str
     throw { code: 400, message: 'Order is not paid' };
   }
   const db = await database();
-  const user = await db.collection('orders').findOne({ generatedOrderid: orderID });
-  if (!user) throw { code: 404, message: 'User not found' };
-  if (user.paymentStatus) throw { code: 409, message: 'Already paid' };
-  const ordersDB = await (await database()).collection('orders').findOne({ generatedOrderid: orderID });
-  if (!ordersDB) {
+  const userOrder = await db.collection('orders').findOne({ generateOrderId: orderID });
+  if (!userOrder) throw { code: 404, message: 'Order not found' };
+  if (userOrder.paymentStatus) throw { code: 409, message: 'Already paid' };
+  const orderStatus = await (await database()).collection('orders').findOne({ generateOrderId: orderID });
+  if (!orderStatus) {
     throw {
       code: 400,
       message: 'OrderId does not exist.',
     };
   } else {
-    await ordersDB.updateOne({ $set: { isPaid: true } });
+    const ordersDB = (await database()).collection('orders');
+    await ordersDB.updateOne({ generateOrderId: orderID }, { $set: { isPaid: true } });
   }
-  const userInfo = await (await database()).collection('users').findOne({ email: ordersDB.email });
+  const userInfo = await (await database()).collection('users').findOne({ email: orderStatus.email });
   if (!userInfo) {
     throw {
       code: 400,
       message: 'User does not exist.',
     };
   } else {
-    await userInfo.updateOne({ $push: { courses: ordersDB.courseId } });
+    if (userInfo.courses.includes(orderStatus.courseId)) {
+      throw {
+        message: 'User Already owns the course.',
+        code: 409,
+      };
+    }
+    const usersDB = (await database()).collection('users');
+    await usersDB.updateOne({ email: orderStatus.email }, { $push: { courses: orderStatus.courseId } });
+    return {
+      code: 200,
+      message: 'Course successfully added',
+    };
   }
 };
 
@@ -57,9 +69,9 @@ const paymentFailedService = async (razorpayPaymentDetails: any, signature: stri
     throw { code: 400, message: 'Order did not fail' };
   }
   const db = await database();
-  const user = await db.collection('orders').findOne({ generatedOrderid: orderID });
-  if (!user) throw { code: 404, message: 'User not found' };
+  const userOrder = await db.collection('orders').findOne({ generateOrderId: orderID });
+  if (!userOrder) throw { code: 404, message: 'Order not found' };
   const ordersDB = (await database()).collection('orders');
-  await ordersDB.updateOne({ generatedOrderid: orderID }, { $set: { isPaid: false } });
+  await ordersDB.updateOne({ generateOrderId: orderID }, { $set: { isPaid: false } });
 };
 export { paymentSuccessService, paymentFailedService };
