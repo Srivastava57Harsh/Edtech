@@ -6,7 +6,7 @@ import Router from 'next/router';
 
 const CourseCard: React.FC<CourseSchema> = prop => {
   const route = '/courses/' + prop._id!;
-  const description = prop.description.substring(0, 80);
+  const description = prop.description.substring(0, 65);
   return (
     <>
       {/* <div className="max-w-sm rounded-lg shadow-md bg-gray-200 border-gray-700">
