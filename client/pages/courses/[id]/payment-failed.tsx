@@ -1,6 +1,8 @@
 import Router, { useRouter } from 'next/router';
+import useAuth from '../../../hooks/useAuth';
 
 const PaymentFailedPage = () => {
+  useAuth();
   const router = useRouter();
   const { id } = router.query;
   return (

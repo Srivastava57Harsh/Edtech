@@ -1,7 +1,9 @@
 import Router, { useRouter } from 'next/router';
 import Footer from '../../../components/home/footer';
+import useAuth from '../../../hooks/useAuth';
 
 const PaymentSuccessPage = () => {
+  useAuth();
   const router = useRouter();
   const { id } = router.query;
   return (

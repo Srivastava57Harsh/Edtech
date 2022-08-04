@@ -5,13 +5,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import * as cookie from 'cookie';
 import TopNavigation from '../../../components/dashboard/topnavigation';
 import BuyCourseCard from '../../../components/BuyCourseCard';
+import useAuth from '../../../hooks/useAuth';
 
 interface CoursesArray {
   courseData: CourseSchema;
 }
 
 const CoursePage = ({ courseData }: CoursesArray) => {
-  
+  useAuth();
   const style = {
     container: `bg-black h-screen overflow-hidden relative`,
     main: `h-screen overflow-auto pb-36 pt-4 md:pb-8`,
