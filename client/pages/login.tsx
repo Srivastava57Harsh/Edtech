@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Router from 'next/router';
-import { FormEvent, useEffect } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { sendToast } from '../shared/helper/toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,6 +12,7 @@ import { getCookie, setCookie } from 'cookies-next';
 import useAuth from '../hooks/useAuth';
 
 const LoginPage: NextPage = () => {
+  const emailData = { email: '' };
   async function LoginUser(event: FormEvent<HTMLFormElement>) {
     try {
       event.preventDefault();
@@ -19,7 +20,7 @@ const LoginPage: NextPage = () => {
         email: (event.currentTarget.elements[0] as HTMLInputElement).value,
         password: (event.currentTarget.elements[1] as HTMLInputElement).value,
       };
-      console.log(formData);
+      emailData.email = formData.email;
       await validation(formData, loginSchema);
       //login here
       const response = await handleLoginUser(formData);
@@ -30,7 +31,14 @@ const LoginPage: NextPage = () => {
         await Router.push('/user/dashboard');
       }
     } catch (err: any) {
+      if (
+        err.response.data.message ==
+        'User Already Logged into some other device. Please log out from all other devices.'
+      ) {
+        return Router.push(`logout-devices?email=${emailData.email}`);
+      }
       sendToast(err.response.data.message || 'Something went wrong', 'warn');
+      console.log('error', err);
 
       console.log(err.message);
     }
@@ -41,7 +49,7 @@ const LoginPage: NextPage = () => {
       Router.push('/user/dashboard');
     }
   }, []);
-  
+
   return (
     <>
       <ToastContainer />

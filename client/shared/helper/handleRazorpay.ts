@@ -3,6 +3,7 @@ import Router from 'next/router';
 import { handleRazorpay, checkRazorpayPayment } from './axios';
 import Razorpay from 'razorpay';
 import handler from '../../pages/api/hello';
+import { sendToast } from './toastify';
 
 function loadScript(src: string) {
   return new Promise(resolve => {
@@ -25,7 +26,8 @@ const RedirectToPage = async (orderID: string) => {
       return Router.push('/payment-failed');
     }
     return Router.push('/payment-success');
-  } catch (error) {
+  } catch (error: any) {
+    sendToast(error.response.data.message || 'Something went wrong', 'warn');
     console.log(error);
   }
 };

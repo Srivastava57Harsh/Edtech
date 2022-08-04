@@ -34,7 +34,7 @@ export const fetchUser = async (token: string | boolean) => {
   }
 };
 
-export const handleLogout = async (email: string) => {
+export const handleLogout = async (email: string | string[]) => {
   try {
     const res = await axios.post(`${API_URL}/auth/logout`, { email: email });
     return res.data;
