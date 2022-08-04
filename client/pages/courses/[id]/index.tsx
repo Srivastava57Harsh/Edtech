@@ -12,7 +12,6 @@ interface CoursesArray {
 }
 
 const CoursePage = ({ courseData }: CoursesArray) => {
-  useAuth();
   const style = {
     container: `bg-black h-screen overflow-hidden relative`,
     main: `h-screen overflow-auto pb-36 pt-4 md:pb-8`,
