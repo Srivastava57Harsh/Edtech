@@ -29,8 +29,8 @@ const LoginPage: NextPage = () => {
       setCookie('refreshToken', response.refreshToken);
       await Router.push('/admin/dashboard');
     } catch (err: any) {
+      sendToast(err.response.data.message || 'Something went wrong', 'warn');
       console.log(err);
-      sendToast(err.message || 'Something went wrong', 'warn');
     }
   }
 
