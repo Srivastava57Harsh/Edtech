@@ -5,6 +5,7 @@ import { FE_URL } from '../config';
 import Router from 'next/router';
 
 const CourseCard: React.FC<CourseSchema> = prop => {
+  const route = '/courses/' + prop._id!;
   return (
     <div className="max-w-sm rounded-lg shadow-md bg-gray-200 border-gray-700">
       <a href="#">
@@ -73,7 +74,7 @@ const CourseCard: React.FC<CourseSchema> = prop => {
         <div className="flex lg:justify-start lg:items-center lg:mt-10 md:justify-center md:flex-col md:items-center md:mt-4">
           <span className="text-2xl font-bold text-black">₹{prop.price}</span>
           <button
-            onClick={() => Router.push(`'/courses/' + ${prop._id!}`)}
+            onClick={() => Router.push(`${route}`)}
             className="lg:ml-10 md:mt-4  text-primary bg-primary-orange hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:hover:bg-orange-400 dark:focus:orange-800"
           >
             View Details
