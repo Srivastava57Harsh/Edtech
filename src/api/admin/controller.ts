@@ -16,6 +16,9 @@ export async function loginAdmin(email: string, password: string): Promise<Login
   } else {
     if (userData.isVerified) {
       if (bcrypt.compareSync(password, userData.password)) {
+        // const userStatus = (await database()).collection('admin');
+        // await userStatus.updateOne({ email: email }, { $set: { isLoggedin: true } });
+
         return {
           message: 'Login Successful',
           status: 200,
@@ -45,19 +48,19 @@ export async function logoutAdmin(email: string): Promise<any> {
       status: 404,
     };
   } else {
-    if (userData.isLoggedin) {
-      const userStatus = (await database()).collection('admin');
-      await userStatus.updateOne({ email: email }, { $set: { isLoggedin: false } });
-      return {
-        message: 'Admin successfully Logged out.',
-        status: 200,
-      };
-    } else {
-      throw {
-        message: 'Admin is already logged out.',
-        status: 406,
-      };
-    }
+    // if (userData.isLoggedin) {
+    // const userStatus = (await database()).collection('admin');
+    // await userStatus.updateOne({ email: email }, { $set: { isLoggedin: false } });
+    return {
+      message: 'Admin successfully Logged out.',
+      status: 200,
+    };
+    // } else {
+    //   throw {
+    //     message: 'Admin is already logged out.',
+    //     status: 406,
+    //   };
+    // }
   }
 }
 

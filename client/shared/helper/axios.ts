@@ -9,7 +9,7 @@ export const handleSignUpUser = async (userData: SignUpData) => {
     const res = await axios.post(`${API_URL}/auth/signUp`, userData);
     return res.data;
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 };
 
@@ -30,7 +30,7 @@ export const fetchUser = async (token: string | boolean) => {
     });
     return res.data;
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 };
 
@@ -39,7 +39,7 @@ export const handleLogout = async (email: string) => {
     const res = await axios.post(`${API_URL}/auth/logout`, { email: email });
     return res.data;
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 };
 
@@ -52,7 +52,7 @@ export const handleResetPassword = async (token: any, data: any) => {
     });
     return res.data;
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 };
 
@@ -61,16 +61,18 @@ export const handleResetAuth = async (data: any) => {
     const res = await axios.post(`${API_URL}/auth/forgotPassword`, data);
     return res.data;
   } catch (err) {
-    console.error(err);
+    throw err;
+    throw err;
   }
 };
+
 //Dashboard
 export const getDashboardCourses = async () => {
   try {
     const res = await axios.post(`${API_URL}/dashboard/courses`);
     return res.data;
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 };
 
@@ -89,7 +91,7 @@ export const getCourse = async (courseid: string, token?: any) => {
     });
     return res.data;
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 };
 
@@ -104,7 +106,7 @@ export const handleRazorpay = async (courseid: string, token: any) => {
     });
     return res.data;
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 };
 
@@ -114,7 +116,7 @@ export const getOwnedCourses = async (token: string | boolean) => {
     const res = await axios.post(`${API_URL}/dashboard/user/courses`, { email: user.data.email });
     return res.data;
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 };
 //ADMIN
@@ -123,11 +125,11 @@ export const handleLoginAdmin = async (userData: LoginUser) => {
     const res = await axios.post(`${API_URL}/admin/login`, userData);
     return res.data;
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 };
 
-export const fetchAdmin = async (token: string | boolean) => {
+export const fetchAdmin = async (token: any) => {
   try {
     token = 'Bearer ' + token;
     const res = await axios.get(`${API_URL}/admin/getAdmin`, {
@@ -135,7 +137,16 @@ export const fetchAdmin = async (token: string | boolean) => {
     });
     return res.data;
   } catch (err) {
-    console.error(err);
+    throw err;
+  }
+};
+
+export const handleAdminLogout = async (email: string) => {
+  try {
+    const res = await axios.post(`${API_URL}/admin/logout`, { email: email });
+    return res.data;
+  } catch (err) {
+    throw err;
   }
 };
 
@@ -144,6 +155,6 @@ export const addCourse = async (data: CourseSchema) => {
     const res = await axios.post(`${API_URL}/admin/addCourse`, data);
     return res.data;
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 };

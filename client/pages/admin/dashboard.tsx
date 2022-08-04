@@ -2,11 +2,14 @@ import { NextPage } from 'next';
 import { ToastContainer } from 'react-toastify';
 import { FormEvent, useState } from 'react';
 import useAdminAuth from '../../hooks/adminAuth';
-import { addCourse } from '../../shared/helper/axios';
+import { addCourse, fetchAdmin, handleAdminLogout } from '../../shared/helper/axios';
 import { sendToast } from '../../shared/helper/toastify';
 import { CourseSchema, Subtopic } from '../../shared/models/index';
 import 'react-toastify/dist/ReactToastify.css';
 import slugify from 'slugify';
+import LogoutIcon from '../../components/dashboard/sidenavigation/icons/logout';
+import { deleteCookie, getCookie } from 'cookies-next';
+import Router from 'next/router';
 
 const style = {
   container: `bg-gray-100 h-screen overflow-hidden relative`,
@@ -29,6 +32,21 @@ const AdminDashboard: NextPage = () => {
     };
     setSubtopic((subtopic): any => [...subtopic, formData]);
     event.currentTarget.reset();
+  };
+
+  const AdminLogout = async () => {
+    try {
+      const token = getCookie('accessToken');
+      const data = await fetchAdmin(token!);
+      await handleAdminLogout(data.data.email);
+      deleteCookie('accessToken');
+      deleteCookie('refreshToken');
+      Router.push('/');
+    } catch (error: any) {
+      console.log(error);
+      sendToast(error.response.data.message || 'Something went wrong', 'warn');
+      console.log('error', error.message);
+    }
   };
 
   const AddCourse = async (event: FormEvent<HTMLFormElement>) => {
@@ -54,8 +72,8 @@ const AdminDashboard: NextPage = () => {
         await sendToast('Course added successfully', 'success');
       }
     } catch (error: any) {
+      sendToast(error.response.data.message || 'Something went wrong', 'warn');
       console.log(error);
-      await sendToast('error', error.message || 'Something went wrong');
     }
   };
 
@@ -63,7 +81,14 @@ const AdminDashboard: NextPage = () => {
     <>
       <ToastContainer />
 
-      <div className="min-h-screen bg-gradient-to-r from-background to-bg-blue">
+      <div className="sm:flex sm:flex-col sm:items-center min-h-screen bg-gradient-to-r from-background to-bg-blue">
+        <button
+          className="lg:absolute md:absolute sm:mt-4 top-5 right-4 rounded-full p-4 w-[125px] flex items-center justify-center bg-primary hover:text-primary-orange text-bold text-white hover:-translate-y-1 transition duration-500 ease-in-out"
+          onClick={AdminLogout}
+        >
+          <LogoutIcon />
+          <h1>Logout</h1>
+        </button>
         <div>
           <form
             className="flex flex-col justify-center items-center text-primary min-w-full "
