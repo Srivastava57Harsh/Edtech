@@ -6,20 +6,17 @@ const handleWebhook = async (req: Request, res: Response) => {
   try {
     const signature = req.headers['x-razorpay-signature'];
     const webhookEvent = req.body.event.toString();
-    console.log(webhookEvent);
     const slug = {
       status: 200,
       success: true,
       message: 'message',
     };
     if (webhookEvent == 'order.paid') {
-      // console.log('yes');
       await paymentSuccessService(req.body, signature);
       slug.status = 200;
       slug.success = true;
       slug.message = 'Data updated, course successfully added.';
     } else {
-      // console.log('no');
       await paymentFailedService(req.body, signature);
       slug.status = 424;
       slug.success = false;

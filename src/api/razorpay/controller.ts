@@ -53,3 +53,25 @@ export async function createOrder(orderDetails: OrderDetails): Promise<any> {
     }
   }
 }
+
+export async function checkOrderStatus(orderId: string): Promise<any> {
+  const orderStatus = await (await database()).collection('orders').findOne({ generateOrderId: orderId });
+  if (!orderStatus) {
+    throw {
+      message: 'OrderId does not exist.',
+      status: 404,
+    };
+  } else {
+    if (orderStatus.isPaid) {
+      return {
+        message: 'Success, Payment received.',
+        status: 200,
+      };
+    } else {
+      throw {
+        status: 424,
+        message: 'Payment not received.',
+      };
+    }
+  }
+}
