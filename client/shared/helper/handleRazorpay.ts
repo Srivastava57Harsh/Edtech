@@ -19,13 +19,13 @@ function loadScript(src: string) {
   });
 }
 
-const RedirectToPage = async (orderID: string) => {
+const RedirectToPage = async (courseid:string, orderID: string) => {
   try {
     const data = await checkRazorpayPayment(orderID);
     if (!data.status) {
-      return Router.push('/payment-failed');
+      return Router.push(`course/${courseID}/payment-failed`);
     }
-    return Router.push('/payment-success');
+    return Router.push(`course/${courseid}/payment-success`);
   } catch (error: any) {
     sendToast(error.response.data.message || 'Something went wrong', 'warn');
     console.log(error);
@@ -51,7 +51,7 @@ export default async function displayRazorpay(courseID: string, courseName: stri
       order_id: data.data.orderData.id,
       name: `Buy ${courseName} Course`,
       handler: function (response: any) {
-        RedirectToPage(response.razorpay_order_id);
+        RedirectToPage(courseID, response.razorpay_order_id);
       },
     };
     const paymentObject = await new window.Razorpay(options);
