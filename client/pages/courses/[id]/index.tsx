@@ -43,7 +43,7 @@ const CoursePage = ({ courseData }: CoursesArray) => {
                     <div className="p-8">
                       <button
                         onClick={() => window.open(`${subtopic.githubLink}`, '_blank')}
-                        className="ml-[-30px] md:ml-0 p-4 bg-primary text-white rounded-full text-md flex items-center justify-center hover:bg-primary-orange"
+                        className="ml-[-30px]  p-4 bg-primary text-white rounded-full text-md flex items-center justify-center hover:bg-primary-orange"
                       >
                         <svg
                           className="w-8 h-8 fill-white hover:fill-primary"
@@ -55,10 +55,10 @@ const CoursePage = ({ courseData }: CoursesArray) => {
                         <span className="pl-4">GitHub</span>
                       </button>
                     </div>
-                    <div className="pt-4 ">
+                    <div className="pt-4 w-[250px] sm:w-[300px] md:w-[400px] xl:w-[600px] h-[180px] sm:h-[200px] md:h-[300px] xl:h-[400px] ">
                       <iframe
-                        width="420"
-                        height="315"
+                        width="100%"
+                        height="100%"
                         title={`${subtopic.subname}`}
                         frameBorder="0"
                         src={`https://www.youtube.com/embed/${videoID}`}
