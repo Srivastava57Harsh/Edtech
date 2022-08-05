@@ -6,6 +6,7 @@ import * as cookie from 'cookie';
 import TopNavigation from '../../../components/dashboard/topnavigation';
 import BuyCourseCard from '../../../components/BuyCourseCard';
 import useAuth from '../../../hooks/useAuth';
+import HomeIcon from '../../../components/dashboard/sidenavigation/icons/home';
 
 interface CoursesArray {
   courseData: CourseSchema;
@@ -87,6 +88,16 @@ const CoursePage = ({ courseData }: CoursesArray) => {
   return (
     <>
       <div className={style.mainContainer}>
+        <button
+          className="flex absolute md:top-7 top-5 right-[100px] z-50"
+          onClick={() => {
+            {
+              courseData.data ? Router.push('/user/dashboard') : Router.push('/');
+            }
+          }}
+        >
+          <HomeIcon /> <p className="">Home</p>
+        </button>
         <TopNavigation {...{ title: courseData.name }} />
         <div className="flex p-10 bg-gray-100 sm:justify-center sm:p-10 lg:p-0 md:p-0">
           <BuyCourseCard {...courseData} key={courseData.slug} />

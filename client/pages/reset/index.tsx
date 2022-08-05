@@ -45,7 +45,7 @@ const signUpPage = () => {
       method="POST"
     >
       <h2 className="font-black text-5xl pb-2">
-        Databuddy<span className="text-primary-orange">.</span>
+        DataLync<span className="text-primary-orange">.</span>
       </h2>
       <h3 className="mb-4 text-slate-600">Learn with technology</h3>
       <h2 className="mb-4 text-2xl text-orange-500">Recover your Password</h2>

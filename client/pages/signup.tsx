@@ -63,7 +63,7 @@ const signUpPage: NextPage = () => {
       method="POST"
     >
       <h2 className="font-black text-5xl pb-2">
-        Databuddy<span className="text-primary-orange">.</span>
+        DataLync<span className="text-primary-orange">.</span>
       </h2>
       <h3 className="mb-9 text-slate-600">Learn with technology</h3>
       <div className="flex flex-col items-center  w-2/3 sm:w-1/3 ">

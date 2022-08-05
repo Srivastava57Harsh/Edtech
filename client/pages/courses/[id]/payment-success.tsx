@@ -10,7 +10,7 @@ const PaymentSuccessPage = () => {
     <>
       <div className="flex flex-col justify-center items-center text-primary min-w-full min-h-screen bg-gradient-to-r from-background to-bg-blue">
         <h2 className="font-black text-5xl pb-4">
-          Databuddy<span className="text-primary-orange">.</span>
+          DataLync<span className="text-primary-orange">.</span>
         </h2>
         <div className="flex items-center p-4">
           <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="60" height="60" viewBox="0 0 172 172">

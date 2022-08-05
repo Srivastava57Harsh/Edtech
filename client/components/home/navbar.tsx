@@ -25,7 +25,7 @@ const Navbar = () => {
         <div className="navmenu flex justify-between ">
           <div className="max-w-[350px]">
             <h2 className="font-black text-5xl mx-4 md:mx-8">
-              Databuddy<span className="text-primary-orange">.</span>
+              DataLync<span className="text-primary-orange">.</span>
             </h2>
             <h3 className=" text-slate-600 mx-[19px] md:mx-[34px] font-semibold">Learn with technology</h3>
           </div>

@@ -98,7 +98,7 @@ const AdminDashboard: NextPage = () => {
             <h2 className="font-black text-5xl pb-2 mt-10">
               Add Course<span className="text-primary-orange">.</span>
             </h2>
-            <h3 className="mb-9 text-slate-600">Databuddy</h3>
+            <h3 className="mb-9 text-slate-600">DataLync</h3>
             <div className="flex flex-col items-center  w-2/3 sm:w-1/3 ">
               <input
                 className="mt-4 pl-4 border border-slate-600 text-md w-[360px]
