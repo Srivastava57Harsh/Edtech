@@ -20,7 +20,7 @@ const CourseCard: React.FC<CourseSchema> = prop => {
           <p className="mb-3 text-xl text-gray-700 font-bold">₹{prop.price}</p>
           <p className="mb-3 font-normal text-gray-500">{description}&nbsp;. . . . . .</p>
           <a
-            onClick={() => Router.push(`${route}`)}
+            onClick={(e: any) => e.preventdefault() && Router.push(`${route}`)}
             href="#"
             className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-primary bg-primary-orange rounded-lg hover:bg-orange-400  focus:ring-4 focus:outline-none"
           >
