@@ -83,7 +83,7 @@ export const getCourse = async (courseid: string, token?: any) => {
     }
     token = 'Bearer ' + token;
     const res = await axios({
-      method: 'get',
+      method: 'post',
       url: `${API_URL}/dashboard/getCourse`,
       data: { courseId: courseid },
       headers: { authorization: token },
