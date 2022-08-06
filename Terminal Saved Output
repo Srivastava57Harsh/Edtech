@@ -1,0 +1,101 @@
+vashistagarwalla@Vashists-MacBook-Air client % docker build . -t edtech-fe
+[+] Building 3.6s (11/11) FINISHED                                                                                                                                                                              
+ => [internal] load build definition from Dockerfile                                                                                                                                                       0.0s
+ => => transferring dockerfile: 37B                                                                                                                                                                        0.0s
+ => [internal] load .dockerignore                                                                                                                                                                          0.0s
+ => => transferring context: 34B                                                                                                                                                                           0.0s
+ => [internal] load metadata for docker.io/library/node:lts                                                                                                                                                1.1s
+ => [1/7] FROM docker.io/library/node:lts@sha256:1ed1e17ccabb09038cfb8a965337ebcda51ef9e9d32082164c502d44d9731a02                                                                                          0.0s
+ => [internal] load build context                                                                                                                                                                          0.0s
+ => => transferring context: 11.97kB                                                                                                                                                                       0.0s
+ => CACHED [2/7] WORKDIR /app                                                                                                                                                                              0.0s
+ => CACHED [3/7] COPY package.json ./                                                                                                                                                                      0.0s
+ => CACHED [4/7] COPY yarn.lock ./                                                                                                                                                                         0.0s
+ => CACHED [5/7] RUN yarn install                                                                                                                                                                          0.0s
+ => CACHED [6/7] COPY . .                                                                                                                                                                                  0.0s
+ => ERROR [7/7] RUN yarn build                                                                                                                                                                             2.4s
+------                                                                                                                                                                                                          
+ > [7/7] RUN yarn build:                                                                                                                                                                                        
+#11 0.253 yarn run v1.22.19                                                                                                                                                                                     
+#11 0.270 $ next build                                                                                                                                                                                          
+#11 0.483 Attention: Next.js now collects completely anonymous telemetry regarding usage.                                                                                                                       
+#11 0.483 This information is used to shape Next.js' roadmap and prioritize features.                                                                                                                           
+#11 0.483 You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+#11 0.483 https://nextjs.org/telemetry
+#11 0.483 
+#11 0.532 info  - Linting and checking validity of types...
+#11 2.294 
+#11 2.294 Failed to compile.
+#11 2.294 
+#11 2.294 ./pages/courses/[id]/index.tsx
+#11 2.294 38:19  Error: Missing "key" prop for element in iterator  react/jsx-key
+#11 2.294 
+#11 2.294 ./pages/courses/[id]/payment-success.tsx
+#11 2.294 26:34  Error: Unknown property 'stop-color' found, use 'stopColor' instead  react/no-unknown-property
+#11 2.294 27:34  Error: Unknown property 'stop-color' found, use 'stopColor' instead  react/no-unknown-property
+#11 2.294 37:38  Error: Unknown property 'stop-color' found, use 'stopColor' instead  react/no-unknown-property
+#11 2.294 38:38  Error: Unknown property 'stop-color' found, use 'stopColor' instead  react/no-unknown-property
+#11 2.294 39:34  Error: Unknown property 'stop-color' found, use 'stopColor' instead  react/no-unknown-property
+#11 2.294 45:17  Error: Unknown property 'fill-rule' found, use 'fillRule' instead  react/no-unknown-property
+#11 2.294 47:17  Error: Unknown property 'stroke-width' found, use 'strokeWidth' instead  react/no-unknown-property
+#11 2.294 48:17  Error: Unknown property 'stroke-linecap' found, use 'strokeLinecap' instead  react/no-unknown-property
+#11 2.294 49:17  Error: Unknown property 'stroke-linejoin' found, use 'strokeLinejoin' instead  react/no-unknown-property
+#11 2.294 50:17  Error: Unknown property 'stroke-miterlimit' found, use 'strokeMiterlimit' instead  react/no-unknown-property
+#11 2.294 51:17  Error: Unknown property 'stroke-dasharray' found, use 'strokeDasharray' instead  react/no-unknown-property
+#11 2.294 52:17  Error: Unknown property 'stroke-dashoffset' found, use 'strokeDashoffset' instead  react/no-unknown-property
+#11 2.294 53:17  Error: Unknown property 'font-family' found, use 'fontFamily' instead  react/no-unknown-property
+#11 2.294 54:17  Error: Unknown property 'font-weight' found, use 'fontWeight' instead  react/no-unknown-property
+#11 2.294 55:17  Error: Unknown property 'font-size' found, use 'fontSize' instead  react/no-unknown-property
+#11 2.294 56:17  Error: Unknown property 'text-anchor' found, use 'textAnchor' instead  react/no-unknown-property
+#11 2.294 
+#11 2.294 ./pages/index.tsx
+#11 2.294 31:11  Error: Missing "key" prop for element in iterator  react/jsx-key
+#11 2.294 
+#11 2.294 ./pages/login.tsx
+#11 2.294 95:16  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+#11 2.294 
+#11 2.294 ./pages/reset/index.tsx
+#11 2.294 11:35  Error: React Hook "useState" is called in function "signUpPage" that is neither a React function component nor a custom React Hook function. React component names must start with an uppercase letter. React Hook names must start with the word "use".  react-hooks/rules-of-hooks
+#11 2.294 
+#11 2.294 ./pages/signup.tsx
+#11 2.294 14:35  Error: React Hook "useState" is called in function "signUpPage: NextPage" that is neither a React function component nor a custom React Hook function. React component names must start with an uppercase letter. React Hook names must start with the word "use".  react-hooks/rules-of-hooks
+#11 2.294 169:3  Error: React Hook "useEffect" is called in function "signUpPage: NextPage" that is neither a React function component nor a custom React Hook function. React component names must start with an uppercase letter. React Hook names must start with the word "use".  react-hooks/rules-of-hooks
+#11 2.294 
+#11 2.294 ./pages/user/dashboard.tsx
+#11 2.294 35:17  Error: Missing "key" prop for element in iterator  react/jsx-key
+#11 2.294 
+#11 2.294 ./pages/user/forgotpassword.tsx
+#11 2.294 12:35  Error: React Hook "useState" is called in function "signUpPage: NextPage" that is neither a React function component nor a custom React Hook function. React component names must start with an uppercase letter. React Hook names must start with the word "use".  react-hooks/rules-of-hooks
+#11 2.294 
+#11 2.294 ./pages/user/myCourses.tsx
+#11 2.294 36:17  Error: Missing "key" prop for element in iterator  react/jsx-key
+#11 2.294 
+#11 2.294 ./components/BuyCourseCard.tsx
+#11 2.294 55:9  Warning: Do not use <img>. Use Image from 'next/image' instead. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+#11 2.294 
+#11 2.294 ./components/CourseCard.tsx
+#11 2.294 14:11  Warning: Do not use <img>. Use Image from 'next/image' instead. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+#11 2.294 36:17  Error: Unknown property 'fill-rule' found, use 'fillRule' instead  react/no-unknown-property
+#11 2.294 38:17  Error: Unknown property 'clip-rule' found, use 'clipRule' instead  react/no-unknown-property
+#11 2.294 
+#11 2.294 ./components/dashboard/darktopnav/index.js
+#11 2.294 16:15  Warning: Do not use <img>. Use Image from 'next/image' instead. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+#11 2.294 
+#11 2.294 ./components/dashboard/sidenavigation/items.js
+#11 2.294 43:15  Error: Missing "key" prop for element in iterator  react/jsx-key
+#11 2.294 
+#11 2.294 ./components/dashboard/topnavigation/index.js
+#11 2.294 16:15  Warning: Do not use <img>. Use Image from 'next/image' instead. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+#11 2.294 
+#11 2.294 ./components/home/heroslider.tsx
+#11 2.294 11:13  Warning: Do not use <img>. Use Image from 'next/image' instead. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+#11 2.294 11:13  Warning: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+#11 2.294 14:13  Warning: Do not use <img>. Use Image from 'next/image' instead. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+#11 2.294 14:13  Warning: img elements must have an alt prop, either with meaningful text, or an empty string for decorative images.  jsx-a11y/alt-text
+#11 2.294 
+#11 2.294 info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+#11 2.315 error Command failed with exit code 1.
+#11 2.315 info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
+------
+executor failed running [/bin/sh -c yarn build]: exit code: 1
+vashistagarwalla@Vashists-MacBook-Air client % 

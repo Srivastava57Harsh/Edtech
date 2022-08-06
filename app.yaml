@@ -1,0 +1,9 @@
+runtime: nodejs16
+env_variables:
+  MONGODB_URI: 'mongodb+srv://databuddy:lB3xyTnXy1SX0iEa@databuddy.iucii.mongodb.net/edtech'
+  PORT: 8080
+  LOG_LEVEL: 'debug'
+  SALT: '10'
+  JWT_SECRET: '08af777ca8d5313e1bab05c299bf29993728d29fe3b72a80982ac3e77a8dfeeca09f331ffaa0875cb0a5e6b5715e1cd92d6490e15d0bb4e48b1eee4d643749ee'
+  RAZORPAY_KEY_ID: 'rzp_live_PHCfs1boFdeNgA'
+  RAZORPAY_KEY_SECRET: 'eZRZN2IpPdBHr5I2w0Ole831'

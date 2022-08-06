@@ -23,8 +23,8 @@ const PaymentSuccessPage = () => {
                 gradientUnits="userSpaceOnUse"
                 id="color-1_pIPl8tqh3igN_gr1"
               >
-                <stop offset="0" stop-color="#9dffce"></stop>
-                <stop offset="1" stop-color="#50d18d"></stop>
+                <stop offset="0" stopColor="#9dffce"></stop>
+                <stop offset="1" stopColor="#50d18d"></stop>
               </linearGradient>
               <linearGradient
                 x1="46.58333"
@@ -34,26 +34,26 @@ const PaymentSuccessPage = () => {
                 gradientUnits="userSpaceOnUse"
                 id="color-2_pIPl8tqh3igN_gr2"
               >
-                <stop offset="0.824" stop-color="#135d36"></stop>
-                <stop offset="0.931" stop-color="#125933"></stop>
-                <stop offset="1" stop-color="#11522f"></stop>
+                <stop offset="0.824" stopColor="#135d36"></stop>
+                <stop offset="0.931" stopColor="#125933"></stop>
+                <stop offset="1" stopColor="#11522f"></stop>
               </linearGradient>
             </defs>
             <g transform="">
               <g
                 fill="none"
-                fill-rule="nonzero"
+                fillRule="nonzero"
                 stroke="none"
-                stroke-width="1"
-                stroke-linecap="butt"
-                stroke-linejoin="miter"
-                stroke-miterlimit="10"
-                stroke-dasharray=""
-                stroke-dashoffset="0"
-                font-family="none"
-                font-weight="none"
-                font-size="none"
-                text-anchor="none"
+                strokeWidth="1"
+                strokeLinecap="butt"
+                strokeLinejoin="miter"
+                strokeMiterlimit="10"
+                strokeDasharray=""
+                strokeDashoffset="0"
+                fontFamily="none"
+                fontWeight="none"
+                fontSize="none"
+                textAnchor="none"
               >
                 <path d="M0,172v-172h172v172z" fill="none"></path>
                 <g>
