@@ -63,6 +63,6 @@ async function handleGetCourse(req: Request, res: Response) {
 
 dashboardRouter.post('/courses', handleDisplayAllCourses);
 dashboardRouter.post('/user/courses', handleUserCourses);
-dashboardRouter.get('/getCourse', getCourseValidator, handleGetCourse);
+dashboardRouter.post('/getCourse', getCourseValidator, handleGetCourse);
 
 export default dashboardRouter;
