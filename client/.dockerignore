@@ -1,1 +1,3 @@
 node_modules
+.NEXT_PUBLIC_API
+README.md
