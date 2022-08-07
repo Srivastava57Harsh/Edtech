@@ -10,18 +10,16 @@ const CourseCard: React.FC<CourseSchema> = prop => {
   return (
     <>
       <div className="rounded-lg shadow-m bg-gray-200 ">
-        <a href="#">
-          <img className="rounded-t-lg" src={prop.imageURL} alt="" />
-        </a>
+        
+        <img className="rounded-t-lg" src={prop.imageURL} alt="" />
+        
         <div className="p-5">
-          <a href="#">
-            <h5 className="mb-2 text-3xl font-bold tracking-tight text-gray-900 ">{prop.name}</h5>
-          </a>
+          <h5 className="mb-2 text-3xl font-bold tracking-tight text-gray-900 ">{prop.name}</h5>
+
           <p className="mb-3 text-xl text-gray-700 font-bold">₹{prop.price}</p>
           <p className="mb-3 font-normal text-gray-500">{description}&nbsp;. . . . . .</p>
-          <a
-            onClick={(e: any) => e.preventdefault() && Router.push(`${route}`)}
-            href="#"
+          <button
+            onClick={() => Router.push(`${route}`)}
             className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-primary bg-primary-orange rounded-lg hover:bg-orange-400  focus:ring-4 focus:outline-none"
           >
             View Details
@@ -38,7 +36,7 @@ const CourseCard: React.FC<CourseSchema> = prop => {
                 clip-rule="evenodd"
               ></path>
             </svg>
-          </a>
+          </button>
         </div>
       </div>
     </>

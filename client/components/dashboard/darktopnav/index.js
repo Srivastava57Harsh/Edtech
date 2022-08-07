@@ -12,7 +12,7 @@ export default function DarkTopNavigation(props) {
             </div>
           </div>
           <div className="flex items-center justify-end ml-5 p-1 relative w-full sm:mr-0 sm:right-auto">
-            <a href="#" className="block relative">
+            <a href="" className="block relative">
               <img alt="profile" src="/img/1.jpg" className="h-10 mx-auto object-cover rounded-full w-10" />
             </a>
           </div>

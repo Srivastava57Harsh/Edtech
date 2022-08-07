@@ -51,13 +51,10 @@ const BuyCourseCard: React.FC<CourseSchema> = prop => {
     // </div>
 
     <div className="md:absolute top-[150px] right-[75px] lg:w-[350px] md:w-[250px] shadow-xl bg-gray-200">
-      <a href="#">
-        <img className="" src={prop.imageURL} alt="product image" />
-      </a>
+      <img className="" src={prop.imageURL} alt="product image" />
+
       <div className="px-5 pb-5">
-        <a href="#">
-          <h5 className="text-3xl font-semibold tracking-tight text-gray-900 mt-4">{prop.name}&nbsp;Course</h5>
-        </a>
+        <h5 className="text-3xl font-semibold tracking-tight text-gray-900 mt-4">{prop.name}&nbsp;Course</h5>
         <div className="flex items-center mt-2.5 mb-5">
           <svg
             aria-hidden="true"
