@@ -7,6 +7,7 @@ import TopNavigation from '../../../components/dashboard/topnavigation';
 import BuyCourseCard from '../../../components/BuyCourseCard';
 import useAuth from '../../../hooks/useAuth';
 import HomeIcon from '../../../components/dashboard/sidenavigation/icons/home';
+import { deleteCookie } from 'cookies-next';
 
 interface CoursesArray {
   courseData: CourseSchema;
@@ -116,9 +117,15 @@ export async function getServerSideProps(context: any) {
       return { props: { courseData } };
     }
     var token = cookie.parse(context.req.headers.cookie)['accessToken'];
-    const coursesRes: any = await getCourse(context.params.id, token);
-    const courseData = coursesRes.data.courseDetails;
-    return { props: { courseData } };
+    try {
+      const coursesRes: any = await getCourse(context.params.id, token);
+      const courseData = coursesRes.data.courseDetails;
+      return { props: { courseData } };
+    } catch (error) {
+      deleteCookie('accessToken');
+      deleteCookie('refreshToken');
+      throw error;
+    }
   } catch (error) {
     console.log(error);
   }

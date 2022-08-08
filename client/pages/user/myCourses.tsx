@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import { getOwnedCourses } from '../../shared/helper/axios';
 import * as cookie from 'cookie';
 import { CourseSchema } from '../../shared/models';
+import { deleteCookie } from 'cookies-next';
 
 const style = {
   container: `bg-gray-100`,
@@ -52,6 +53,8 @@ export async function getServerSideProps(context: any) {
     const courseData = coursesRes.data;
     return { props: { courseData } };
   } catch (error) {
+    deleteCookie('accessToken');
+    deleteCookie('refreshToken');
     console.log(error);
   }
 }
