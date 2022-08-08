@@ -5,8 +5,13 @@ import User, { FetchCourse, LoginResponse } from './model';
 import * as bcrypt from 'bcrypt';
 import config from '../../config';
 import { ObjectId } from 'mongodb';
+import { access } from 'fs';
 
 export async function createUser(user: User): Promise<any> {
+  const userStatus = {
+    currentToken: 'NO-TOKEN-GENRATED',
+    email: '',
+  };
   const userExists = await (await database()).collection('users').findOne({ email: user.email });
   if (userExists) {
     throw {
@@ -21,7 +26,9 @@ export async function createUser(user: User): Promise<any> {
       user.isVerified = true;
       user.isLoggedin = false;
       user.courses = [];
+      userStatus.email = user.email;
       await (await database()).collection('users').insertOne(user);
+      await (await database()).collection('userStatus').insertOne(userStatus);
       return {
         bool: true,
         message: 'Success, User created.',
@@ -51,6 +58,11 @@ export async function loginUser(email: string, password: string): Promise<LoginR
         if (bcrypt.compareSync(password, userData.password)) {
           const userStatus = (await database()).collection('users');
           await userStatus.updateOne({ email: email }, { $set: { isLoggedin: true } });
+          const activityStatus = (await database()).collection('userStatus');
+          await activityStatus.updateOne(
+            { email: email },
+            { $set: { currentToken: createToken({ id: userData._id.toString() }, config.jwtSecret, '30d') } },
+          );
           return {
             message: 'Login Successful',
             status: 200,
@@ -89,6 +101,11 @@ export async function logoutUser(email: string): Promise<any> {
     if (userData.isLoggedin) {
       const userStatus = (await database()).collection('users');
       await userStatus.updateOne({ email: email }, { $set: { isLoggedin: false } });
+      const activity = (await database()).collection('userStatus');
+      await activity.updateOne(
+        { email: email },
+        { $set: { currentToken: `default:${bcrypt.hashSync(email, bcrypt.genSaltSync(config.salt))}` } },
+      );
       return {
         message: 'User successfully Logged out.',
         status: 200,
@@ -122,7 +139,21 @@ export async function getProfile(token: string): Promise<User> {
       status: 404,
     };
   }
-  return user;
+  const activityStatus = await (await database()).collection('userStatus').findOne({ email: user.email });
+  if (!activityStatus) {
+    throw {
+      message: 'User does not exist, Sign Up instead',
+      status: 404,
+    };
+  }
+  if (token === activityStatus.currentToken) {
+    return user;
+  } else {
+    throw {
+      message: 'Unauthorized Access',
+      status: 401,
+    };
+  }
 }
 
 export async function forgotPassword(email: string, secretQuestion: string, secretAnswer: string): Promise<any> {

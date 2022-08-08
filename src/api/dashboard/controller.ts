@@ -78,24 +78,38 @@ export async function getTokenCourse(token: string, courseId: string): Promise<a
       status: 404,
     };
   } else {
-    if (user.courses.includes(courseId)) {
-      return {
-        message: 'Success, Course Details Below',
-        status: 200,
-        courseDetails: courseEntity,
+    const activityStatus = await (await database()).collection('userStatus').findOne({ email: user.email });
+    if (!activityStatus) {
+      throw {
+        message: 'User does not exist, Sign Up instead',
+        status: 404,
       };
+    }
+    if (token === activityStatus.currentToken) {
+      if (user.courses.includes(courseId)) {
+        return {
+          message: 'Success, Course Details Below',
+          status: 200,
+          courseDetails: courseEntity,
+        };
+      } else {
+        return {
+          message: 'Success, Course Details Below',
+          status: 200,
+          courseDetails: {
+            _id: courseEntity._id,
+            name: courseEntity.name,
+            price: courseEntity.price,
+            slug: courseEntity.slug,
+            imageURL: courseEntity.imageURL,
+            description: courseEntity.description,
+          },
+        };
+      }
     } else {
-      return {
-        message: 'Success, Course Details Below',
-        status: 200,
-        courseDetails: {
-          _id: courseEntity._id,
-          name: courseEntity.name,
-          price: courseEntity.price,
-          slug: courseEntity.slug,
-          imageURL: courseEntity.imageURL,
-          description: courseEntity.description,
-        },
+      throw {
+        message: 'Unauthorized Access',
+        status: 401,
       };
     }
   }
