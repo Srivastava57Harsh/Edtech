@@ -1,8 +1,5 @@
-import axios from 'axios';
 import Router from 'next/router';
 import { useEffect } from 'react';
-import { API_URL } from '../config';
-import { sendToast } from '../shared/helper/toastify';
 import { getCookie, deleteCookie } from 'cookies-next';
 import { fetchUser } from '../shared/helper/axios';
 
@@ -18,13 +15,15 @@ const useAuth = () => {
         const data = await fetchUser(token);
         if (data.data.email) return;
         else {
-          //deleteCookie('accessToken');
+          deleteCookie('accessToken');
+          deleteCookie('refreshToken');
           await Router.push('/login');
           return;
         }
       } catch (err: any) {
         console.log('err', err);
-        //deleteCookie('jwtToken');
+        deleteCookie('accessToken');
+        deleteCookie('refreshToken');
         //if (err.response.status === 401) sendToast('Invalid user token, please login again.', 'error');
         //else sendToast(err.message || 'Something went wrong', 'error');
         await Router.push('/login');
