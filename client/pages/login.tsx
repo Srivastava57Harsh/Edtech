@@ -12,6 +12,7 @@ import { getCookie, setCookie } from 'cookies-next';
 import useAuth from '../hooks/useAuth';
 
 const LoginPage: NextPage = () => {
+  console.log(`${FE_URL}`);
   const emailData = { email: '' };
   async function LoginUser(event: FormEvent<HTMLFormElement>) {
     try {
@@ -91,10 +92,10 @@ const LoginPage: NextPage = () => {
           >
             Login
           </button>
-          <a href={`${FE_URL}/signup`} className=" hover:text-primary-orange">
+          <a href={`/signup`} className=" hover:text-primary-orange">
             Don't have an account, Sign Up!
           </a>
-          <a href={`${FE_URL}/reset`} className=" hover:text-primary-orange">
+          <a href={`/reset`} className=" hover:text-primary-orange">
             Forgot Password
           </a>
         </div>
