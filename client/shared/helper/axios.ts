@@ -61,7 +61,6 @@ export const handleResetAuth = async (data: any) => {
     return res.data;
   } catch (err) {
     throw err;
-    throw err;
   }
 };
 

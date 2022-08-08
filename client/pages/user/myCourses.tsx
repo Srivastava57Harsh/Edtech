@@ -1,8 +1,5 @@
-import { NextPage } from 'next';
 import SideNavigation from '../../components/dashboard/sidenavigation';
 import TopNavigation from '../../components/dashboard/topnavigation';
-import DashboardProvider from '../../components/dashboard/provider/context';
-import Overlay from '../../components/dashboard/provider/overlay';
 import CourseCard from '../../components/CourseCard';
 import { ToastContainer } from 'react-toastify';
 import { getOwnedCourses } from '../../shared/helper/axios';
@@ -56,6 +53,12 @@ export async function getServerSideProps(context: any) {
     deleteCookie('accessToken');
     deleteCookie('refreshToken');
     console.log(error);
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/login',
+      },
+    };
   }
 }
 

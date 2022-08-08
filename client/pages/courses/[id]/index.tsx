@@ -124,7 +124,13 @@ export async function getServerSideProps(context: any) {
     } catch (error) {
       deleteCookie('accessToken');
       deleteCookie('refreshToken');
-      throw error;
+      return {
+        redirect: {
+          permanent: false,
+          destination: '/login',
+        },
+      };
+      
     }
   } catch (error) {
     console.log(error);

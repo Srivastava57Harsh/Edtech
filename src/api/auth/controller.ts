@@ -54,8 +54,8 @@ export async function loginUser(email: string, password: string): Promise<LoginR
     };
   } else {
     if (userData.isVerified) {
-      if (!userData.isLoggedin) {
-        if (bcrypt.compareSync(password, userData.password)) {
+      if (bcrypt.compareSync(password, userData.password)) {
+        if (!userData.isLoggedin) {
           const userStatus = (await database()).collection('users');
           await userStatus.updateOne({ email: email }, { $set: { isLoggedin: true } });
           const activityStatus = (await database()).collection('userStatus');
@@ -71,14 +71,14 @@ export async function loginUser(email: string, password: string): Promise<LoginR
           };
         } else {
           throw {
-            message: 'Password does not match',
-            status: 401,
+            message: 'User Already Logged into some other device. Please log out from all other devices.',
+            status: 406,
           };
         }
       } else {
         throw {
-          message: 'User Already Logged into some other device. Please log out from all other devices.',
-          status: 406,
+          message: 'Password does not match',
+          status: 401,
         };
       }
     } else {
