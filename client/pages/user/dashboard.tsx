@@ -47,7 +47,6 @@ const Dashboard = ({ courseData }: CoursesArray) => {
 
 export async function getServerSideProps() {
   try {
-    useAuth();
     const coursesRes: any = await getDashboardCourses();
     const courseData = coursesRes.courses;
     return { props: { courseData } };
