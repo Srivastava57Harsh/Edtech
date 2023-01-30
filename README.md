@@ -75,3 +75,7 @@ $ yarn dev
 * MongoDB deployed at https://cloud.mongodb.com/. Its a serverless instance deployed to AWS. 
 * Deployed on vercel/railway. 
 * DB name: databuddy
+
+### Contributers
+| <p align="center">![Harsh Srivastava](https://github.com/Srivastava57Harsh.png?size=128)<br>[Harsh Srivastava](https://github.com/Srivastava57Harsh)</p> | <p align="center">![Mohd Zaid](https://github.com/dev-zaid.png?size=128)<br>[Mohd Zaid](https://github.com/dev-zaid)</p> |
+| -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
