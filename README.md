@@ -27,6 +27,7 @@ Such Organizations can bootstrap the same thereby contributing a minor role in t
 - Supports OTP validation (currently not in use //commented) 🟢
 - Showcases the numerous courses added by admin but in protected manner (courses are locked until bought) 🔴
 - Admin can add limitless number of course with appropriate github repositories and youtube videos
+- Self Integrated Razorpay payment portal for payments (including webhook)
 
 ### Unique Feature
 - Restricts multiple device login (like OTT platforms) to avoid the loss of data 
