@@ -72,8 +72,8 @@ $ yarn dev
 ```
 
 ## Production
-* MongoDB deployed at https://cloud.mongodb.com/. Its a serverless instance deployed to AWS. 
-* Deployed on vercel/railway. 
+* MongoDB deployed at https://cloud.mongodb.com/. 
+* Its a serverless instance deployed to railway.app && vercel. 
 * DB name: databuddy
 
 ### Contributers
