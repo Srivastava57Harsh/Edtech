@@ -127,6 +127,17 @@ export const handleLoginAdmin = async (userData: LoginUser) => {
   }
 };
 
+export const deleteCourse = async (courseId: string) => {
+  try {
+    const res = await axios.post(`${API_URL}/admin/removeCourse`, {
+      id: courseId,
+    });
+    return res.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const fetchAdmin = async (token: any) => {
   try {
     token = 'Bearer ' + token;

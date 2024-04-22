@@ -104,3 +104,21 @@ export async function addCourse(course: any): Promise<any> {
     };
   }
 }
+
+export async function removeCourse(course: any): Promise<any> {
+  try {
+    await (await database()).collection('courses').deleteOne({ _id: ObjectId(course.id) });
+    return {
+      bool: true,
+      message: 'Success, Course removed successfully',
+      status: 200,
+    };
+  } catch (e) {
+    LoggerInstance.error(e);
+    throw {
+      bool: false,
+      message: 'Course could not be removed.',
+      status: 400,
+    };
+  }
+}

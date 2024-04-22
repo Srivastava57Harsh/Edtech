@@ -51,8 +51,9 @@ const signUpPage: NextPage = () => {
         await Router.push('/login');
       }
     } catch (err: any) {
-      sendToast(err.response.data.message || 'Something went wrong', 'warn');
       console.log(err);
+      if (err.response) return sendToast(err.response.data.message || 'Something went wrong', 'warn');
+      return sendToast(err.message || 'Something went wrong', 'warn');
     }
   }
 

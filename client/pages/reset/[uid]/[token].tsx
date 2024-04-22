@@ -35,8 +35,9 @@ const ResetPassword = () => {
         console.log('Password reset for user with id: ', uid);
       }
     } catch (err: any) {
-      sendToast(err.response.data.message || 'Something went wrong', 'warn');
-      // console.log(err.code);
+      console.log(err);
+      if (err.response) return sendToast(err.response.data.message || 'Something went wrong', 'warn');
+      return sendToast(err.message || 'Something went wrong', 'warn');
     }
   }
 

@@ -33,8 +33,9 @@ const signUpPage = () => {
         await Router.push(`/reset/${response.data.userId}/${response.data.resetToken}`);
       }
     } catch (err: any) {
-      sendToast(err.response.data.message || 'Something went wrong', 'warn');
       console.log(err);
+      if (err.response) return sendToast(err.response.data.message || 'Something went wrong', 'warn');
+      return sendToast(err.message || 'Something went wrong', 'warn');
     }
   }
 

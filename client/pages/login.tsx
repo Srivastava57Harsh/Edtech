@@ -33,14 +33,15 @@ const LoginPage: NextPage = () => {
       }
     } catch (err: any) {
       if (
-        err.response.data.message ==
-        'User Already Logged into some other device. Please log out from all other devices.'
+        err.response &&
+        err.response!.data!.message! ==
+          'User Already Logged into some other device. Please log out from all other devices.'
       ) {
+        sendToast(err.response.data.message || 'Something went wrong', 'warn');
         return Router.push(`logout-devices?email=${emailData.email}`);
       }
-      sendToast(err.response.data.message || 'Something went wrong', 'warn');
+      sendToast(err.message || 'Something went wrong', 'warn');
       console.log('error', err);
-
       console.log(err.message);
     }
   }

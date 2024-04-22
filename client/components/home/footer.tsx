@@ -21,16 +21,6 @@ export default function Footer() {
                   databuddy19@gmail.com
                 </a>
               </div>
-              <div className="flex flex-row">
-                <a href="tel:+91 84275 58164" className="text-lg pl-1">
-                  Mohd Zaid
-                </a>
-              </div>
-              <div className="flex flex-row">
-                <a href="tel:+919337837362" className="text-lg pl-1">
-                  Amish Dutta
-                </a>
-              </div>
             </div>
           </div>
         </div>
