@@ -12,7 +12,7 @@ const AdminCourseCard: React.FC<CourseSchema> = prop => {
       const response = await deleteCourse(prop._id!);
       console.log('Course deleted successfully:', response);
 
-      //   Router.reload();
+      Router.reload();
     } catch (error) {
       console.error('Error deleting course:', error);
     }
