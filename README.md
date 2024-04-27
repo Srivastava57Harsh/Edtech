@@ -1,5 +1,5 @@
 <div align="center">
-<h1 style="margin: 0">DataBuddy</h1>
+<h1 style="margin: 0">DataLync</h1>
 </div>
 
 <p align="center">
